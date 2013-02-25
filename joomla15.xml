@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="component" version="1.5.0" method="upgrade">
+
+<name>SimplePlot</name>
+<creationDate>2 February 2013</creationDate>
+<author>Les Arbres Design</author>
+<authorUrl>http://extensions.lesarbresdesign.info</authorUrl>
+<version>3.00</version>
+<copyright>Les Arbres Design 2010-2013</copyright>
+<license>GNU General Public License</license>
+<description>A sample component embedding Plotalot in the front end. To see SimplePlot in action, create a menu item of type SimplePlot, go to your site front end, and click on the new menu item.</description>
+
+<files folder="site">
+	<filename>simpleplot.php</filename>
+	<folder>views</folder>
+</files>
+
+<install>
+	<sql>
+		<file charset="utf8" driver="mysql">install.sql</file>
+	</sql>
+</install>
+
+<administration>
+	<menu img="../administrator/components/com_plotalot/assets/plotalot-16.png">SimplePlot</menu>
+	
+	<files folder="admin">
+		<filename>simpleplot.php</filename>
+		<filename>install.sql</filename>
+		<folder>helpers</folder>
+	</files>
+</administration>
+
+</install>
