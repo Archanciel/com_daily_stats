@@ -10,42 +10,47 @@ Description: Simplest possible component to demonstrate embedded Plotalot
 *********************************************************************/
 defined('_JEXEC') or die('Restricted Access'); 
 
-	JToolBarHelper::title('SimplePlot', '');
+	JToolBarHelper::title('Daily Stats', '');
 
-// get a list of years from the jos_plot_sample table
+	if(version_compare(JVERSION,'1.6.0','ge')) {
 
-	$db	= JFactory::getDBO();
-	$query = "SELECT DISTINCT(YEAR(`Date`)) AS year FROM `#__plot_sample`";
-	$db->setQuery($query);
-	$rows = $db->loadObjectList();
+		// get list of categories
 
-// get the selected year from the select list (default it to zero)
+		$db	= JFactory::getDBO();
+		$query = "SELECT id,path FROM #__categories WHERE extension LIKE 'com_content' ORDER BY path";
+		$db->setQuery($query);
+		$rows = $db->loadObjectList();
 
-	$year = JRequest::getVar('select_year',0);
-	if ($year == 0)
-		$year = $rows[0]->year;		// default to the first row
+		// get the selected year from the select list (default it to zero)
 
-// Build an html select list of years (include Javascript to submit the form)
+		// 	$year = JRequest::getVar('select_year',0);
+		// 	if ($year == 0)
+			// 		$year = $rows[0]->year;		// default to the first row
 
-	foreach ($rows as $row)
-		$title_array[] = JHTML::_('select.option', $row->year, $row->year);
-	$select_list = JHTML::_('select.genericlist', $title_array, 'select_year', 
-		'class="inputbox" size="1" onchange="document.adminForm.submit();"', 'value', 'text', $year);
+			// Build an html select list of years (include Javascript to submit the form)
+		foreach ($rows as $row)
+			$title_array[] = JHTML::_('select.option', $row->id, $row->path);
+		$select_list = JHTML::_('select.genericlist', $title_array, 'select_category',
+				'class="inputbox" size="1" onchange="document.adminForm.submit();"', 'value', 'text');
 
-// draw the form with the select list
+		// draw the form with the select list
 
-	echo '<form action="index.php" method="post" name="adminForm" method="post">';
-	echo '<input type="hidden" name="option" value="com_simpleplot" />';
-	echo 'Select a year: ';
-	echo $select_list;
-	echo '</form>';
-	
+		echo '<form action="index.php" method="post" name="adminForm" method="post">';
+		echo '<input type="hidden" name="option" value="com_simpleplot" />';
+		echo 'Select a year: ';
+		echo $select_list;
+		echo '</form>';
+	} else {
+		// Joomla! 1.5 code here
+	}
+
 // pull in the Plotalot helper file from the backend helpers directory
 
 	require_once JPATH_COMPONENT_ADMINISTRATOR.'/helpers/plotalot.php';
 
 // construct the plot info structure
-
+	$year = 2007;
+	
 	$plot_info = new stdclass();
 	$plot_info->id = 1;						// the id must match the html element that the chart will be drawn in
 	$plot_info->chart_title = "Temperatures for $year";
@@ -79,18 +84,14 @@ defined('_JEXEC') or die('Restricted Access');
 	$plotalot = new Plotalot;
 	$chart = $plotalot->drawChart($plot_info);
 
-	if ($chart == '')
+	if ($chart == '') {
 		echo $plotalot->error;
-	else
-		{
+	} else {
 		$document = JFactory::getDocument();
 		$document->addScript("https://www.google.com/jsapi");	// load the Google jsapi
 		$document->addCustomTag($chart);						// load the chart script
 		echo '<div id="chart_1"></div>';						// create an element for the chart to be drawn in
-		}
-
-	echo "<br /><br /><b>Simple Plot also works on the front end. </b><br />";
-	echo "Create a menu item of type SimplePlot, then go the your site front end and click on the new menu item";
+	}
 	
 
 ?>
