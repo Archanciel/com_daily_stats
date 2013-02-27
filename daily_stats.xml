@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="1.6.0" method="upgrade">
 
-<name>Daily_stats</name>
-<creationDate>26 February 2013</creationDate>
-<author>JP Schnyder</author>
-<authorUrl>http://com.jps.dev</authorUrl>
-<version>1.0</version>
-<copyright>com.jps.dev 2013-2015</copyright>
-<license>GNU General Public License</license>
-<description>Component charting com_content daily historical data.</description>
+	<name>Daily_stats</name>
+	<creationDate>26 February 2013</creationDate>
+	<author>JP Schnyder</author>
+	<authorUrl>http://com.jps.dev</authorUrl>
+	<version>1.0</version>
+	<copyright>com.jps.dev 2013-2015</copyright>
+	<license>GNU General Public License</license>
+	<description>Component charting com_content daily historical data.
+	</description>
 
-<files folder="site">
-	<filename>daily_stats.php</filename>
-	<filename>index.html</filename>
-</files>
-
-<administration>
-	<menu img="assets/plotalot-16.png">DailyStats</menu>
-	
-	<files folder="admin">
+	<files folder="site">
 		<filename>daily_stats.php</filename>
 		<filename>index.html</filename>
-		<folder>helpers</folder>
 	</files>
-</administration>
+
+	<administration>
+		<menu img="assets/plotalot-16.png">DailyStats</menu>
+
+		<files folder="admin">
+			<filename>daily_stats.php</filename>
+			<filename>index.html</filename>
+			<folder>helpers</folder>
+		</files>
+	</administration>
 
 </extension>

@@ -1,42 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="com_daily_stats" basedir="." default="build_install_zip">
- 
-        <property name="artifact.name" value="daily_stats" />
-        <property name="joomla.root" value="C:\Development\WorkPHP\www\plusconscient25_dev" />        
-        <property name="src" value="${joomla.root}\administrator\components\com_${artifact.name}" />
-        <property name="packaging.dir" value="${joomla.root}\tmp\packaging\com_${artifact.name}" />
-        <property name="install.zip.file.dest" value="C:\Development\WorkPHP\www\plusconscient15_int\attachments" override="true" />
-        <property name="version">v1.0</property>
 
-		<target name="build_packaging_dir" description="Copies files to component packaging dir">
-			<delete dir="${packaging.dir}" includeemptydirs="true" verbose="false" />
-			<copy todir="${packaging.dir}/admin" overwrite="true">
-	        	<fileset dir="${src}" >
-    	            <include name="${artifact.name}.php" />
-            	    <include name="index.html" />
-                	<include name="helpers/*" />
-                	<include name="assets/*" />
-        		</fileset>
-        	</copy>
-			<copy todir="${packaging.dir}" overwrite="true">
-	        	<fileset dir="${src}" >
-        	        <include name="${artifact.name}.xml" />
-        		</fileset>
-        	</copy>
-			<copy todir="${packaging.dir}/site" overwrite="true">
-	        	<fileset dir="${src}" >
-    	            <include name="${artifact.name}.php" />
-            	    <include name="index.html" />
-        		</fileset>
-        	</copy>
-        </target>
+	<property name="artifact.name" value="daily_stats" />
+	<property name="joomla.root"
+		value="C:\Development\WorkPHP\www\plusconscient25_dev" />
+	<property name="src"
+		value="${joomla.root}\administrator\components\com_${artifact.name}" />
+	<property name="packaging.dir"
+		value="${joomla.root}\tmp\packaging\com_${artifact.name}" />
+	<property name="install.zip.file.dest"
+		value="C:\Development\WorkPHP\www\plusconscient15_int\attachments"
+		override="true" />
+	<property name="version">v1.0</property>
 
-        <target name="build_install_zip" depends="build_packaging_dir" description="build the install zip">
-                <delete file="${install.zip.file.dest}/com_${artifact.name}_${version}.zip" />
-                <zip destfile="${install.zip.file.dest}/com_${artifact.name}_${version}.zip">
-					<fileset dir="${packaging.dir}">
-						<include name="**/**" />
-					</fileset>
-                </zip>
-        </target>
+	<target name="build_packaging_dir" description="Copies files to component packaging dir">
+		<delete dir="${packaging.dir}" includeemptydirs="true" verbose="false" />
+		<copy todir="${packaging.dir}/admin" overwrite="true">
+			<fileset dir="${src}">
+				<include name="${artifact.name}.php" />
+				<include name="index.html" />
+				<include name="helpers/*" />
+				<include name="assets/*" />
+			</fileset>
+		</copy>
+		<copy todir="${packaging.dir}" overwrite="true">
+			<fileset dir="${src}">
+				<include name="${artifact.name}.xml" />
+			</fileset>
+		</copy>
+		<copy todir="${packaging.dir}/site" overwrite="true">
+			<fileset dir="${src}">
+				<include name="${artifact.name}.php" />
+				<include name="index.html" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="build_install_zip" depends="build_packaging_dir"
+		description="build the install zip">
+		<delete file="${install.zip.file.dest}/com_${artifact.name}_${version}.zip" />
+		<zip destfile="${install.zip.file.dest}/com_${artifact.name}_${version}.zip">
+			<fileset dir="${packaging.dir}">
+				<include name="**/**" />
+			</fileset>
+		</zip>
+	</target>
 </project>
