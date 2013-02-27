@@ -14,6 +14,7 @@
 	<files folder="site">
 		<filename>daily_stats.php</filename>
 		<filename>index.html</filename>
+		<folder>views</folder>
 	</files>
 
 	<administration>
