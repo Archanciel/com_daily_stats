@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="1.5.0" method="upgrade">
+<extension type="component" version="1.6.0" method="upgrade">
 
 	<name>Daily Stats</name>
 	<creationDate>26 February 2013</creationDate>
@@ -18,12 +18,13 @@
 	</files>
 
 	<administration>
-		<menu img="assets/plotalot-16.png">Daily stats</menu>
+		<menu img="assets/plotalot-16.png">COM_DAILYSTATS_MENU</menu>
 
 		<files folder="admin">
 			<filename>dailystats.php</filename>
 			<filename>index.html</filename>
 			<folder>helpers</folder>
+			<folder>language</folder>  <!-- related to COM_DAILYSTATS_MENU in menu tag -->
 		</files>
 	</administration>
 

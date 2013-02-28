@@ -21,6 +21,7 @@
 				<include name="index.html" />
 				<include name="helpers/*" />
 				<include name="assets/*" />
+				<include name="language/**" /> <!-- include the sys.ini file used to translate the COM_DAILYSTATS_MENU in dailystats.xml -->
 			</fileset>
 		</copy>
 		<copy todir="${packaging.dir}" overwrite="true">
