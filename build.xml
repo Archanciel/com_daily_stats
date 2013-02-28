@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="com_daily_stats" basedir="." default="build_install_zip">
+<project name="com_dailystats" basedir="." default="build_install_zip">
 
-	<property name="artifact.name" value="daily_stats" />
+	<property name="artifact.name" value="dailystats" />
 	<property name="joomla.root"
 		value="C:\Development\WorkPHP\www\plusconscient25_dev" />
 	<property name="src"
@@ -15,7 +15,7 @@
 
 	<target name="build_packaging_dir" description="Copies files to component packaging dir">
 		<delete dir="${packaging.dir}" includeemptydirs="true" verbose="false" />
-		<copy todir="${packaging.dir}/com_${artifact.name}_${version}/admin" overwrite="true">
+		<copy todir="${packaging.dir}/admin" overwrite="true">
 			<fileset dir="${src}">
 				<include name="${artifact.name}.php" />
 				<include name="index.html" />
@@ -23,14 +23,14 @@
 				<include name="assets/*" />
 			</fileset>
 		</copy>
-		<copy todir="${packaging.dir}/com_${artifact.name}_${version}" overwrite="true">
+		<copy todir="${packaging.dir}" overwrite="true">
 			<fileset dir="${src}">
 				<include name="${artifact.name}.xml" />
 				<include name="joomla15.xml" />
 				<include name="site/views/**" />
 			</fileset>
 		</copy>
-		<copy todir="${packaging.dir}/com_${artifact.name}_${version}/site" overwrite="true">
+		<copy todir="${packaging.dir}/site" overwrite="true">
 			<fileset dir="${src}">
 				<include name="${artifact.name}.php" />
 				<include name="index.html" />
