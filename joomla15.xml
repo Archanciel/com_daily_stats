@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="1.5.0" method="upgrade">
+<install type="component" version="1.5.0" method="upgrade">
 
-	<name>Daily Sstats</name>
+	<name>Daily Stats</name>
 	<creationDate>26 February 2013</creationDate>
 	<author>JP Schnyder</author>
 	<authorUrl>http://com.jps.dev</authorUrl>
@@ -27,4 +27,4 @@
 		</files>
 	</administration>
 
-</extension>
+</install>
