@@ -14,8 +14,8 @@ defined('_JEXEC') or die('Restricted Access');
 define(EXCLUDED_CATEGORIES_SET,"116, 2, 129, 133, 128, 115, 127");
 define(SECTION_LEVEL, 1);
 
-error_reporting(E_ALL | E_STRICT);
-ini_set('display_errors', 'on');
+// error_reporting(E_ALL | E_STRICT);
+// ini_set('display_errors', 'on');
 
 	JToolBarHelper::title('Daily Stats', '');
 
@@ -33,14 +33,15 @@ ini_set('display_errors', 'on');
 		
 		$categoryId = JRequest::getVar('select_category',0);
 		$previouslySelectedCategoryId = $mainframe->getUserState( "option.previous_select_category", 0 );
-		echo 'curr ' . $categoryId . ' previous ' . $previouslySelectedCategoryId;
-
+// 		echo 'Category: from request ' . $categoryId . ' previous from session ' . $previouslySelectedCategoryId;
+		
 		if ($categoryId != $previouslySelectedCategoryId	||
 			$previouslySelectedCategoryId == 0) {
 			$mainframe->setUserState( "option.previous_select_category",$categoryId);
 			$articleId = 0;
 		} else {
 			$articleId = JRequest::getVar('select_article',0);
+// 			echo ' Article: from request ' . $articleId;
 		}
 		
 		if ($categoryId == 0) {
@@ -67,7 +68,8 @@ ini_set('display_errors', 'on');
 		// get the selected article from the select list (default it to zero)
 		
 		if ($articleId == 0 && sizeof($rows) > 0) {
-			$articleId = $rows[0]->id;		// default to the first row
+			// default to the first row
+			$articleId = $rows[0]->id;
 		}
 		
 		// Build an html select list of articles (include Javascript to submit the form)
@@ -81,6 +83,13 @@ ini_set('display_errors', 'on');
 			}
 		}
 		
+		if (!isset($articleTitle)) {
+			// is the case if the user refreshes the page right after having changed the category
+			$articleId = $rows[0]->id;
+			$articleTitle = $rows[0]->title;	
+// 			echo ' Article: row 0 (refresh) ' . $articleId;
+		}
+
 		$select_article_list = JHTML::_('select.genericlist', $article_array, 'select_article',
 				'class="inputbox" size="1" onchange="document.adminForm.submit();"', 'value', 'text', $articleId);
 		
