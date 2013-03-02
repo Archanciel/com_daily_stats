@@ -5,7 +5,7 @@
 	<creationDate>26 February 2013</creationDate>
 	<author>JP Schnyder</author>
 	<authorUrl>http://com.jps.dev</authorUrl>
-	<version>1.0</version>
+	<version>1.1</version>
 	<copyright>com.jps.dev 2013-2015</copyright>
 	<license>GNU General Public License</license>
 	<description>Component charting com_content daily historical data.
@@ -18,12 +18,13 @@
 	</files>
 
 	<administration>
-		<menu img="assets/plotalot-16.png">COM_DAILYSTATS_MENU</menu>
+		<menu img="components/com_dailystats/assets/plotalot-16.png">COM_DAILYSTATS_MENU</menu>
 
 		<files folder="admin">
 			<filename>dailystats.php</filename>
 			<filename>index.html</filename>
 			<folder>helpers</folder>
+			<folder>assets</folder>
 			<folder>language</folder>  <!-- related to COM_DAILYSTATS_MENU in menu tag -->
 		</files>
 	</administration>
