@@ -15,6 +15,8 @@ define(EXCLUDED_J16_CATEGORIES_SET,"116, 2, 129, 133, 128, 115, 127");
 define(J16_SECTION_LEVEL, 1);
 define(EXCLUDED_J15_SECTIONS_SET,"6, 7, 22, 23");
 
+define(CHART_X_SIZE,1290);
+
 // error_reporting(E_ALL | E_STRICT);
 // ini_set('display_errors', 'on');
 
@@ -125,14 +127,15 @@ require_once JPATH_COMPONENT_ADMINISTRATOR.'/helpers/plotalot.php';
 $plot_info = new stdclass();
 $plot_info->id = 1;						// the id must match the html element that the chart will be drawn in
 $plot_info->chart_title = "Hits: " . $articleTitle;
-$plot_info->chart_type = CHART_TYPE_LINE;
-$plot_info->x_size = 1200;
+$plot_info->chart_type = CHART_TYPE_BAR_V_GROUP;
+$plot_info->x_size = CHART_X_SIZE;
 $plot_info->y_size = 280;
 $plot_info->x_title = "Date";
-$plot_info->x_labels = 20;
+$plot_info->x_labels = 10;
 $plot_info->x_format = FORMAT_DATE_DMY;
-$plot_info->x_start = "SELECT MIN(UNIX_TIMESTAMP(date)) FROM #__daily_stats WHERE article_id = $articleId";
-$plot_info->x_end = "";
+// $plot_info->x_start = "SELECT MIN(UNIX_TIMESTAMP(date)) FROM #__daily_stats WHERE article_id = $articleId";
+$plot_info->x_start = "";
+$plot_info->x_end = "SELECT MAX(UNIX_TIMESTAMP(date)) FROM #__daily_stats WHERE article_id = $articleId";
 $plot_info->y_title = "Hits";
 $plot_info->y_labels = 7;
 $plot_info->y_start = 0;
@@ -140,7 +143,7 @@ $plot_info->y_start = 0;
 $plot_info->legend_type = LEGEND_NONE;
 $plot_info->show_grid = 1;
 $plot_info->num_plots = 1;
-$plot_info->extra_parms = ",chartArea:{left:'8%',top:'10%',width:'90%',height:'75%'}";
+$plot_info->extra_parms = ",chartArea:{left:'3%',top:'10%',width:'90%',height:'75%'}";
 
 // construct the plot array
 
@@ -149,7 +152,7 @@ $plot_info->plot_array[0]['enable'] = 1;
 $plot_info->plot_array[0]['colour'] = '7C78FF';
 $plot_info->plot_array[0]['style'] = LINE_THICK_SOLID;
 $plot_info->plot_array[0]['legend'] = 'Hits';
-$plot_info->plot_array[0]['query'] = "SELECT UNIX_TIMESTAMP(date), date_hits FROM #__daily_stats WHERE article_id = $articleId";
+$plot_info->plot_array[0]['query'] = "SELECT DATE_FORMAT(date,'%d-%m-%y'), date_hits FROM #__daily_stats WHERE article_id = $articleId";
 
 // draw the chart
 
@@ -172,14 +175,15 @@ if ($chart == '') {
 $plot_info = new stdclass();
 $plot_info->id = 2;						// the id must match the html element that the chart will be drawn in
 $plot_info->chart_title = "Downloads: " . $articleTitle;
-$plot_info->chart_type = CHART_TYPE_LINE;
-$plot_info->x_size = 1200;
+$plot_info->chart_type = CHART_TYPE_BAR_V_GROUP;
+$plot_info->x_size = CHART_X_SIZE;
 $plot_info->y_size = 180;
 $plot_info->x_title = "Date";
-$plot_info->x_labels = 20;
+$plot_info->x_labels = 10;
 $plot_info->x_format = FORMAT_DATE_DMY;
-$plot_info->x_start = "SELECT MIN(UNIX_TIMESTAMP(date)) FROM #__daily_stats WHERE article_id = $articleId";
-$plot_info->x_end = "";
+// $plot_info->x_start = "SELECT MIN(UNIX_TIMESTAMP(date)) FROM #__daily_stats WHERE article_id = $articleId";
+$plot_info->x_start = "";
+$plot_info->x_end = "SELECT MAX(UNIX_TIMESTAMP(date)) FROM #__daily_stats WHERE article_id = $articleId";
 $plot_info->y_title = "Downloads";
 $plot_info->y_labels = 7;
 $plot_info->y_start = 0;
@@ -187,7 +191,7 @@ $plot_info->y_start = 0;
 $plot_info->legend_type = LEGEND_NONE;
 $plot_info->show_grid = 1;
 $plot_info->num_plots = 1;
-$plot_info->extra_parms = ",chartArea:{left:'8%',top:'10%',width:'90%',height:'75%'}";
+$plot_info->extra_parms = ",chartArea:{left:'3%',top:'10%',width:'90%',height:'75%'}";
 
 // construct the plot array
 
@@ -196,7 +200,7 @@ $plot_info->plot_array[0]['enable'] = 1;
 $plot_info->plot_array[0]['colour'] = 'FF0000';
 $plot_info->plot_array[0]['style'] = LINE_THICK_SOLID;
 $plot_info->plot_array[0]['legend'] = 'Downloads';
-$plot_info->plot_array[0]['query'] = "SELECT UNIX_TIMESTAMP(date), date_downloads FROM #__daily_stats WHERE article_id = $articleId";
+$plot_info->plot_array[0]['query'] = "SELECT DATE_FORMAT(date,'%d-%m-%y'), date_downloads FROM #__daily_stats WHERE article_id = $articleId";
 
 // draw the chart
 
