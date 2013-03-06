@@ -11,7 +11,7 @@
 	<property name="install.zip.file.dest"
 		value="C:\Development\WorkPHP\www\plusconscient15_int\attachments"
 		override="true" />
-	<property name="version">v1.2</property>
+	<property name="version">v1.3</property>
 
 	<target name="build_packaging_dir" description="Copies files to component packaging dir">
 		<delete dir="${packaging.dir}" includeemptydirs="true" verbose="false" />
@@ -22,6 +22,7 @@
 				<include name="helpers/*" />
 				<include name="assets/*" />
 				<include name="language/**" /> <!-- include the sys.ini file used to translate the COM_DAILYSTATS_MENU in dailystats.xml -->
+				<include name="js/*" />
 			</fileset>
 		</copy>
 		<copy todir="${packaging.dir}" overwrite="true">

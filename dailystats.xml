@@ -5,7 +5,7 @@
 	<creationDate>26 February 2013</creationDate>
 	<author>JP Schnyder</author>
 	<authorUrl>http://com.jps.dev</authorUrl>
-	<version>1.2</version>
+	<version>1.3</version>
 	<copyright>com.jps.dev 2013-2015</copyright>
 	<license>GNU General Public License</license>
 	<description>Component charting com_content daily historical data.
@@ -26,6 +26,7 @@
 			<folder>helpers</folder>
 			<folder>assets</folder>
 			<folder>language</folder>  <!-- related to COM_DAILYSTATS_MENU in menu tag -->
+			<folder>js</folder>
 		</files>
 	</administration>
 
