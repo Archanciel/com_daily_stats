@@ -8,6 +8,7 @@ Licence    : GNU General Public License
 Description: Simplest possible component to demonstrate embedded Plotalot
 (not intended as an example of how to build a Joomla component!)
 *********************************************************************/
+
 defined('_JEXEC') or die('Restricted Access');
 
 // categories to exclude from caregory list: aide, uncategorized, en conscience, les incontournables, pensées, site, webmaster
@@ -16,9 +17,22 @@ define(J16_SECTION_LEVEL, 1);
 define(EXCLUDED_J15_SECTIONS_SET,"6, 7, 22, 23");
 
 define(CHART_X_SIZE,1290);
+define(MAX_PLOT_POINTS,581);	// floor(CHART_X_SIZE / 2.2);
 
 // error_reporting(E_ALL | E_STRICT);
 // ini_set('display_errors', 'on');
+
+function buildQuery($articleId, $yValName) {
+	return "SELECT DATE_FORMAT(T1.date,'%d-%m-%Y'), T1." . $yValName . " 
+			FROM ( 
+				SELECT date, " . $yValName . " 
+				FROM #__daily_stats 
+				WHERE article_id = $articleId 
+				ORDER BY date DESC 
+				LIMIT " . MAX_PLOT_POINTS . " 
+			) T1 
+			ORDER BY T1.date";	
+}
 
 JToolBarHelper::title('Daily Stats', '');
 
@@ -152,7 +166,7 @@ $plot_info->plot_array[0]['enable'] = 1;
 $plot_info->plot_array[0]['colour'] = '7C78FF';
 $plot_info->plot_array[0]['style'] = LINE_THICK_SOLID;
 $plot_info->plot_array[0]['legend'] = 'Hits';
-$plot_info->plot_array[0]['query'] = "SELECT DATE_FORMAT(date,'%d-%m-%y'), date_hits FROM #__daily_stats WHERE article_id = $articleId";
+$plot_info->plot_array[0]['query'] = buildQuery($articleId, "date_hits");
 
 // draw the chart
 
@@ -200,7 +214,7 @@ $plot_info->plot_array[0]['enable'] = 1;
 $plot_info->plot_array[0]['colour'] = 'FF0000';
 $plot_info->plot_array[0]['style'] = LINE_THICK_SOLID;
 $plot_info->plot_array[0]['legend'] = 'Downloads';
-$plot_info->plot_array[0]['query'] = "SELECT DATE_FORMAT(date,'%d-%m-%y'), date_downloads FROM #__daily_stats WHERE article_id = $articleId";
+$plot_info->plot_array[0]['query'] = buildQuery($articleId, "date_downloads");
 
 // draw the chart
 
