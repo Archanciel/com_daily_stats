@@ -16,10 +16,11 @@ defined('_JEXEC') or die('Restricted Access');
 // categories to exclude from caregory list: aide, uncategorized, en conscience, les incontournables, pensées, site, webmaster
 define(EXCLUDED_J16_CATEGORIES_SET,"116, 2, 129, 133, 128, 115, 127");
 define(J16_SECTION_LEVEL, 1);
-define(EXCLUDED_J15_SECTIONS_SET,"6, 7, 22, 23");
+define(EXCLUDED_J15_SECTIONS_SET,"6, 7, 22, 23, 29");
 
 define(CHART_X_SIZE,1290);
 define(MAX_PLOT_POINTS,581);	// floor(CHART_X_SIZE / 2.2);
+define(NO_ARTICLE_SELECTED,0);
 
 // add form controls manipulation javascript
 $document = JFactory::getDocument();
@@ -61,16 +62,19 @@ $rows = $db->loadObjectList();
 
 $categorySectionId = JRequest::getVar('select_category_section',0);
 $previouslySelectedCategorySectionId = $mainframe->getUserState( "option.previous_select_category_section", 0 );
-// 		echo 'Category: from request ' . $categorySectionId . ' previous from session ' . $previouslySelectedCategorySectionId;
+// echo 'Category: from request ' . $categorySectionId . ' previous from session ' . $previouslySelectedCategorySectionId , ' articleId ' . $articleId;
 
-if ($categorySectionId != $previouslySelectedCategorySectionId	||
-		$previouslySelectedCategorySectionId == 0) {
+if ($categorySectionId != $previouslySelectedCategorySectionId	&&
+		$categorySectionId != 0	&&
+		$previouslySelectedCategorySectionId	!= 0) {	// $categorySectionId == 0 and $previouslySelectedCategorySectionId ==0 when launching the Daily Stats component for the first time after login
+	// current category did change, so current article selection must be reset
 	$mainframe->setUserState( "option.previous_select_category_section",$categorySectionId);
-	$articleId = 0;
+	$articleId = NO_ARTICLE_SELECTED;
 } else {
 	$articleId = JRequest::getVar('select_article',0);
-	// 			echo ' Article: from request ' . $articleId;
 }
+
+// echo 'Category: from request ' . $categorySectionId . ' previous from session ' . $mainframe->getUserState( "option.previous_select_category_section", 0 ) , ' articleId ' . $articleId;
 
 if ($categorySectionId == 0) {
 	$categorySectionId = $rows[0]->id;		// default to the first row
@@ -88,33 +92,27 @@ $select_category_section_list = JHTML::_('select.genericlist', $category_array, 
 // get list of articles
 
 $db	= JFactory::getDBO();
-$query = "SELECT id,title FROM #__content WHERE sectionid = $categorySectionId ORDER BY title";
+$query = "SELECT id, title, DATE_FORMAT(created,'%a %D, %M %Y') as creation_date FROM #__content WHERE sectionid = $categorySectionId ORDER BY title";
 $db->setQuery($query);
 $rows = $db->loadObjectList();
 
-// get the selected article from the select list (default it to zero)
-
-if ($articleId == 0 && sizeof($rows) > 0) {
-	// default to the first row
-	$articleId = $rows[0]->id;
-}
-
 // Build an html select list of articles (include Javascript to submit the form)
+
+$article_array[] = JHTML::_('select.option', NO_ARTICLE_SELECTED, '- Select article -');
 
 foreach ($rows as $row) {
 	$article_array[] = JHTML::_('select.option', $row->id, $row->title);
 		
 	// store selected article title
 	if ($row->id == $articleId) {
-		$articleTitle = $row->title;
+		$articleTitle = $row->title . ' (created ' . $row->creation_date . ')';
 	}
 }
 
 if (!isset($articleTitle)) {
 	// is the case if the user refreshes the page right after having changed the category
-	$articleId = $rows[0]->id;
-	$articleTitle = $rows[0]->title;
-	// 			echo ' Article: row 0 (refresh) ' . $articleId;
+	$articleId = NO_ARTICLE_SELECTED;
+	$articleTitle = '';
 }
 
 $select_article_list = JHTML::_('select.genericlist', $article_array, 'select_article',
@@ -139,7 +137,8 @@ echo '</form>';
 
 $drawChart = JRequest::getVar('draw_chart','no');
 
-if (strcmp($drawChart, 'no') != 0) {
+if (strcmp($drawChart, 'no') != 0	&&
+	$articleId > 0) {
 // 	echo 'draw';
 	// pull in the Plotalot helper file from the backend helpers directory
 
@@ -150,7 +149,7 @@ if (strcmp($drawChart, 'no') != 0) {
 	// construct the plot info structure
 
 	$plot_info = new stdclass();
-	$plot_info->id = 1;						// the id must match the html element that the chart will be drawn in
+	$plot_info->id = 1;		// the id must match the html element that the chart will be drawn in
 	$plot_info->chart_title = "Hits: " . $articleTitle;
 	$plot_info->chart_type = CHART_TYPE_BAR_V_GROUP;
 	$plot_info->x_size = CHART_X_SIZE;
