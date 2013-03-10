@@ -11,10 +11,30 @@ Based on   : SimplePlot from Les Arbres Design
 *********************************************************************/
 
 /**
+ * Called when an article is selected in the article combo
+ */
+function handleSelectArticle() {
+	drawChart();
+}
+
+/**
+ * Called when the chart whole category checkbox is checked/unchecked
+ */
+function handleChartWholeCategory(checkbox) {
+	if (checkbox.checked) {
+		document.getElementById('select_article').disabled=true;
+	} else {
+		document.getElementById('select_article').disabled=false;
+	}
+	
+	drawChart();
+}
+
+/**
  * Sets the hidden draw_chart input field to yes and submit the form causing
  * the chart to be drawn.
  */
-function handleSelectArticle() {
+function drawChart() {
 	document.forms['dailyStatsForm'].draw_chart.value = 'yes';
 	document.dailyStatsForm.submit();
 }
