@@ -25,9 +25,12 @@ define(NO_ARTICLE_SELECTED,0);
 define(CHART_MODE_ARTICLE,100);
 define(CHART_MODE_CATEGORY,200);
 
+define(CALLED_FROM_FRONTEND,100);
+define(CALLED_FROM_BACKEND,200);
+
 // add form controls manipulation javascript
 $document = JFactory::getDocument();
-$document->addScript(JURI::base().'components/com_dailystats/js/dailystats.js');
+$document->addScript(JURI::root().'administrator/components/com_dailystats/js/dailystats.js');
 
 // error_reporting(E_ALL | E_STRICT);
 // ini_set('display_errors', 'on');
@@ -73,7 +76,29 @@ function buildPlotDataQuery($articleId, $categoryId, $yValName, $chartMode) {
 	}
 }
 
-JToolBarHelper::title('Daily Stats', '');
+/**
+ * 
+ * @return either CALLED_FROM_BACKEND or CALLED_FROM_FRONTEND
+ */
+function determineExecEnv() {
+	return (strpos(__FILE__, 'administrator')) ? CALLED_FROM_BACKEND : CALLED_FROM_FRONTEND; 
+}
+
+// perfcorms page initialisation differently according to where compponent is called from, front or backend
+$execEnv = determineExecEnv();
+
+if ($execEnv == CALLED_FROM_BACKEND) {
+	JToolBarHelper::title('Daily Stats', '');	
+} else {
+	// get parameters from the active menu item
+	$app = JFactory::getApplication('site');
+	$menu_params =  $app->getParams();
+	
+	if ($menu_params != null) {
+		echo '<div class="componentheading">'.$menu_params->get('page_hdr').'</div>';
+		echo $menu_params->get('page_text');
+	}
+}
 
 $mainframe = JFactory::getApplication();
 
@@ -174,7 +199,13 @@ $select_article_list = JHTML::_('select.genericlist', $article_array, 'select_ar
 
 // draw the form with the select lists
 
-echo '<form action="index.php" method="post" name="dailyStatsForm" method="post">';
+// WARNING: action defers for back and front component 
+if ($execEnv == CALLED_FROM_BACKEND) {
+	echo '<form action="index.php" method="post" name="dailyStatsForm" method="post">';
+} else {
+	echo '<form action="'.JRoute::_('index.php').'" method="post" name="dailyStatsForm">';
+}
+
 echo '<input type="hidden" name="option" value="com_dailystats" />';
 echo '<input type="hidden" name="draw_chart" value="no" />';
 

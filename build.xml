@@ -6,12 +6,27 @@
 		value="C:\Development\WorkPHP\www\plusconscient25_dev" />
 	<property name="src"
 		value="${joomla.root}\administrator\components\com_${artifact.name}" />
+	<property name="front.src"
+		value="${joomla.root}\components\com_${artifact.name}" />
 	<property name="packaging.dir"
 		value="${joomla.root}\tmp\packaging\com_${artifact.name}" />
 	<property name="install.zip.file.dest"
 		value="C:\Development\WorkPHP\www\plusconscient15_int\attachments"
 		override="true" />
-	<property name="version">v1.4</property>
+	<property name="version">v2.0</property>
+
+	<target name="copy_to_front_dir" description="Copies files to front component src dir">
+		<delete dir="${front.src}" includeemptydirs="true" verbose="false" />
+		<copy todir="${front.src}" overwrite="true">
+			<fileset dir="${src}">
+				<include name="${artifact.name}.php" />
+				<include name="index.html" />
+			</fileset>
+			<fileset dir="${src}/site">
+				<include name="views/**" />
+			</fileset>
+		</copy>
+	</target>
 
 	<target name="build_packaging_dir" description="Copies files to component packaging dir">
 		<delete dir="${packaging.dir}" includeemptydirs="true" verbose="false" />
@@ -40,7 +55,7 @@
 		</copy>
 	</target>
 
-	<target name="build_install_zip" depends="build_packaging_dir"
+	<target name="build_install_zip" depends="copy_to_front_dir, build_packaging_dir"
 		description="build the install zip">
 		<delete file="${install.zip.file.dest}/com_${artifact.name}_${version}.zip" />
 		<zip destfile="${install.zip.file.dest}/com_${artifact.name}_${version}.zip">
