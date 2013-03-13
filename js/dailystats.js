@@ -13,6 +13,17 @@ Based on   : SimplePlot from Les Arbres Design
 /**
  * Called when an article is selected in the article combo
  */
+function handleSelectCategory() {
+//	if (catId == PHP_INT_MAX) {
+//		document.getElementById('chart_whole_category').checked=true;
+//	}
+	
+	document.dailyStatsForm.submit();
+}
+
+/**
+ * Called when an article is selected in the article combo
+ */
 function handleSelectArticle() {
 	drawChart();
 }

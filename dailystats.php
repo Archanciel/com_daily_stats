@@ -58,16 +58,30 @@ function buildPlotDataQuery($articleId, $categoryId, $yValName, $chartMode) {
 			return $qu;
 			break;
 		case CHART_MODE_CATEGORY:
-			$qu =	"SELECT DATE_FORMAT(T1.date,'%d-%m-%Y'), T1.sum AS {$yValName}
-					FROM (
+			if ($categoryId < PHP_INT_MAX) {
+				$qu =	"SELECT DATE_FORMAT(T1.date,'%d-%m-%Y'), T1.sum AS {$yValName}
+						FROM (
+							SELECT s.date, SUM(s.{$yValName}) AS sum
+							FROM #__daily_stats AS s, #__content as c
+							WHERE s.article_id = c.id AND c.sectionid = $categoryId
+							GROUP BY s.date
+							ORDER BY s.date DESC
+							LIMIT " . MAX_PLOT_POINTS . "
+						) T1
+						ORDER BY T1.date";
+			} else {
+				// plotting total site (all categries activity
+				$qu =	"SELECT DATE_FORMAT(T1.date,'%d-%m-%Y'), T1.sum AS {$yValName}
+						FROM (
 						SELECT s.date, SUM(s.{$yValName}) AS sum
 						FROM #__daily_stats AS s, #__content as c
-						WHERE s.article_id = c.id AND c.sectionid = $categoryId
+						WHERE s.article_id = c.id
 						GROUP BY s.date
 						ORDER BY s.date DESC
 						LIMIT " . MAX_PLOT_POINTS . "
-					) T1
-					ORDER BY T1.date";
+						) T1
+						ORDER BY T1.date";
+			}
 			return $qu;
 			break;	
 		default:
@@ -153,8 +167,12 @@ foreach ($rows as $row) {
 	}
 }
 
+// adding a row for all categories
+
+$category_array[] = JHTML::_('select.option', PHP_INT_MAX, 'All categories');
+
 $select_category_section_list = JHTML::_('select.genericlist', $category_array, 'select_category_section',
-		'class="inputbox" size="1" onchange="document.dailyStatsForm.submit();"', 'value', 'text', $categorySectionId);
+		'class="inputbox" size="1" onchange="handleSelectCategory();"', 'value', 'text', $categorySectionId);
 
 // Build an html select list of articles (include Javascript to submit the form)
 
