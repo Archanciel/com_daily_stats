@@ -11,13 +11,16 @@ Based on   : SimplePlot from Les Arbres Design
 *********************************************************************/
 
 /**
- * Called when an article is selected in the article combo
+ * Called when a category is selected in the category combo
  */
 function handleSelectCategory() {
-//	if (catId == PHP_INT_MAX) {
-//		document.getElementById('chart_whole_category').checked=true;
-//	}
-	
+	var selectBox = document.forms['dailyStatsForm'].select_category_section;
+
+	if (selectBox.options[0].selected) {
+		// All categories was selected
+		document.forms['dailyStatsForm'].chart_whole_category.checked = true;
+	}
+
 	document.dailyStatsForm.submit();
 }
 

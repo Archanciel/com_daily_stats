@@ -153,10 +153,15 @@ if ($categorySectionId != $previouslySelectedCategorySectionId	&&
 // echo 'Category: from request ' . $categorySectionId . ' previous from session ' . $mainframe->getUserState( "option.previous_select_category_section", 0 ) , ' articleId ' . $articleId;
 
 if ($categorySectionId == 0) {
-	$categorySectionId = $rows[0]->id;		// default to the first row
+	$categorySectionId = PHP_INT_MAX;		// default to the first row which is the All category row
 }
 
 // Build an html select list of categories (include Javascript to submit the form)
+
+
+// adding a row for all categories
+
+$category_array[] = JHTML::_('select.option', PHP_INT_MAX, 'All categories');
 
 foreach ($rows as $row) {
 	$category_array[] = JHTML::_('select.option', $row->id, $row->title);
@@ -167,9 +172,10 @@ foreach ($rows as $row) {
 	}
 }
 
-// adding a row for all categories
-
-$category_array[] = JHTML::_('select.option', PHP_INT_MAX, 'All categories');
+if ($categorySectionId == PHP_INT_MAX) {
+	$displayDataTitle = 'All categories';
+	$chartMode = CHART_MODE_CATEGORY;
+}
 
 $select_category_section_list = JHTML::_('select.genericlist', $category_array, 'select_category_section',
 		'class="inputbox" size="1" onchange="handleSelectCategory();"', 'value', 'text', $categorySectionId);
