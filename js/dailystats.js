@@ -17,7 +17,7 @@ function handleSelectCategory() {
 	var selectBox = document.forms['dailyStatsForm'].select_category_section;
 
 	if (selectBox.options[0].selected) {
-		// All categories was selected
+		// 'All categories' was selected
 		document.forms['dailyStatsForm'].chart_whole_category.checked = true;
 	}
 

@@ -24,6 +24,7 @@ define(NO_ARTICLE_SELECTED,0);
 
 define(CHART_MODE_ARTICLE,100);
 define(CHART_MODE_CATEGORY,200);
+define(CHART_MODE_CATEGORY_ALL,300);
 
 define(CALLED_FROM_FRONTEND,100);
 define(CALLED_FROM_BACKEND,200);
@@ -47,43 +48,43 @@ function buildPlotDataQuery($articleId, $categoryId, $yValName, $chartMode) {
 	switch ($chartMode) {
 		case CHART_MODE_ARTICLE:
 			$qu =  "SELECT DATE_FORMAT(T1.date,'%d-%m-%Y'), T1.{$yValName}
+			FROM (
+			SELECT date, $yValName
+			FROM #__daily_stats
+			WHERE article_id = $articleId
+			ORDER BY date DESC
+			LIMIT " . MAX_PLOT_POINTS . "
+			) T1
+			ORDER BY T1.date";
+			return $qu;
+			break;
+		case CHART_MODE_CATEGORY:
+			$qu =	"SELECT DATE_FORMAT(T1.date,'%d-%m-%Y'), T1.sum AS {$yValName}
 					FROM (
-						SELECT date, $yValName
-						FROM #__daily_stats
-						WHERE article_id = $articleId
-						ORDER BY date DESC
-						LIMIT " . MAX_PLOT_POINTS . "
+					SELECT s.date, SUM(s.{$yValName}) AS sum
+					FROM #__daily_stats AS s, #__content as c
+					WHERE s.article_id = c.id AND c.sectionid = $categoryId
+					GROUP BY s.date
+					ORDER BY s.date DESC
+					LIMIT " . MAX_PLOT_POINTS . "
 					) T1
 					ORDER BY T1.date";
 			return $qu;
 			break;
-		case CHART_MODE_CATEGORY:
-			if ($categoryId < PHP_INT_MAX) {
-				$qu =	"SELECT DATE_FORMAT(T1.date,'%d-%m-%Y'), T1.sum AS {$yValName}
-						FROM (
-							SELECT s.date, SUM(s.{$yValName}) AS sum
-							FROM #__daily_stats AS s, #__content as c
-							WHERE s.article_id = c.id AND c.sectionid = $categoryId
-							GROUP BY s.date
-							ORDER BY s.date DESC
-							LIMIT " . MAX_PLOT_POINTS . "
-						) T1
-						ORDER BY T1.date";
-			} else {
-				// plotting total site (all categries activity
-				$qu =	"SELECT DATE_FORMAT(T1.date,'%d-%m-%Y'), T1.sum AS {$yValName}
-						FROM (
-						SELECT s.date, SUM(s.{$yValName}) AS sum
-						FROM #__daily_stats AS s, #__content as c
-						WHERE s.article_id = c.id
-						GROUP BY s.date
-						ORDER BY s.date DESC
-						LIMIT " . MAX_PLOT_POINTS . "
-						) T1
-						ORDER BY T1.date";
-			}
+		case CHART_MODE_CATEGORY_ALL:
+			// plotting total site (all categries activity
+			$qu =	"SELECT DATE_FORMAT(T1.date,'%d-%m-%Y'), T1.sum AS {$yValName}
+					FROM (
+					SELECT s.date, SUM(s.{$yValName}) AS sum
+					FROM #__daily_stats AS s, #__content as c
+					WHERE s.article_id = c.id
+					GROUP BY s.date
+					ORDER BY s.date DESC
+					LIMIT " . MAX_PLOT_POINTS . "
+					) T1
+					ORDER BY T1.date";
 			return $qu;
-			break;	
+			break;
 		default:
 			return '';
 			break;
@@ -116,11 +117,6 @@ if ($execEnv == CALLED_FROM_BACKEND) {
 
 $mainframe = JFactory::getApplication();
 
-// get chart mode, either chart an individual article hisctrory or a category summary history
-$chartWholeCategory = (JRequest::getVar('chart_whole_category',""));
-$chartMode = (strcmp($chartWholeCategory,"on") == 0) ? CHART_MODE_CATEGORY : CHART_MODE_ARTICLE;
-
-
 // get list of categories
 
 $db	= JFactory::getDBO();
@@ -141,20 +137,28 @@ $previouslySelectedCategorySectionId = $mainframe->getUserState( "option.previou
 // echo 'Category: from request ' . $categorySectionId . ' previous from session ' . $previouslySelectedCategorySectionId , ' articleId ' . $articleId;
 
 if ($categorySectionId != $previouslySelectedCategorySectionId	&&
-		$categorySectionId != 0	&&
-		$previouslySelectedCategorySectionId	!= 0) {	// $categorySectionId == 0 and $previouslySelectedCategorySectionId ==0 when launching the Daily Stats component for the first time after login
+		$categorySectionId != 0									&&
+		$previouslySelectedCategorySectionId != 0) {	// $categorySectionId == 0 and $previouslySelectedCategorySectionId ==0 when launching the Daily Stats component for the first time after login
 	// current category did change, so current article selection must be reset
 	$mainframe->setUserState( "option.previous_select_category_section",$categorySectionId);
 	$articleId = NO_ARTICLE_SELECTED;
 } else {
-	$articleId = JRequest::getVar('select_article',0);
+	$articleId = JRequest::getVar('select_article',NO_ARTICLE_SELECTED);
 }
 
 // echo 'Category: from request ' . $categorySectionId . ' previous from session ' . $mainframe->getUserState( "option.previous_select_category_section", 0 ) , ' articleId ' . $articleId;
 
 if ($categorySectionId == 0) {
-	$categorySectionId = PHP_INT_MAX;		// default to the first row which is the All category row
+	$chartMode = CHART_MODE_CATEGORY_ALL;
+	$categorySectionId = PHP_INT_MAX;
+} else if ($categorySectionId == PHP_INT_MAX) {
+	$chartMode = CHART_MODE_CATEGORY_ALL;
+} else {
+	// get chart mode, either chart an individual article hisctrory or a category summary history
+	$chartWholeCategory = (JRequest::getVar('chart_whole_category',""));
+	$chartMode = (strcmp($chartWholeCategory,"on") == 0) ? CHART_MODE_CATEGORY : CHART_MODE_ARTICLE;
 }
+
 
 // Build an html select list of categories (include Javascript to submit the form)
 
@@ -172,9 +176,8 @@ foreach ($rows as $row) {
 	}
 }
 
-if ($categorySectionId == PHP_INT_MAX) {
+if ($chartMode == CHART_MODE_CATEGORY_ALL) {
 	$displayDataTitle = 'All categories';
-	$chartMode = CHART_MODE_CATEGORY;
 }
 
 $select_category_section_list = JHTML::_('select.genericlist', $category_array, 'select_category_section',
@@ -245,9 +248,15 @@ echo $select_category_section_list;
 
 echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Chart whole category: ';
 echo '<input type="checkbox" name="chart_whole_category" ';
-if ($chartMode == CHART_MODE_CATEGORY) {
+if ($chartMode == CHART_MODE_CATEGORY	||
+	$chartMode == CHART_MODE_CATEGORY_ALL) {
 	echo 'checked '; 
 }
+
+if ($chartMode == CHART_MODE_CATEGORY_ALL) {
+	echo 'disabled="disabled"';
+} 
+
 echo 'onclick="handleChartWholeCategory(this)" />';
 
 // article ----------------------------------------
@@ -256,13 +265,13 @@ echo $select_article_list;
 
 echo '</form>';
 
-$drawChart = JRequest::getVar('draw_chart','no');
+$drawChart = (strcmp(JRequest::getVar('draw_chart','no'),'no') != 0);
 
 if (($chartMode == CHART_MODE_ARTICLE	&&
-	strcmp($drawChart, 'no') != 0		&&
-	$articleId > 0)							||
-	($chartMode == CHART_MODE_CATEGORY	&&
-	$categorySectionId > 0)) {
+	$drawChart							&&
+	$articleId != NO_ARTICLE_SELECTED)		||
+	$chartMode == CHART_MODE_CATEGORY		||
+	$chartMode == CHART_MODE_CATEGORY_ALL) {
 // 	echo 'draw';
 	// pull in the Plotalot helper file from the backend helpers directory
 
