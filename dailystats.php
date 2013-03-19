@@ -13,94 +13,19 @@ Based on   : SimplePlot from Les Arbres Design
 
 defined('_JEXEC') or die('Restricted Access');
 
-// categories to exclude from caregory list: aide, uncategorized, en conscience, les incontournables, pensées, site, webmaster
-define(EXCLUDED_J16_CATEGORIES_SET,"116, 2, 129, 133, 128, 115, 127");
-define(J16_SECTION_LEVEL, 1);
-define(EXCLUDED_J15_SECTIONS_SET,"6, 7, 22, 23, 29");
+// error_reporting(E_ALL | E_STRICT);
+// ini_set('display_errors', 'on');
 
-define(CHART_X_SIZE,1290);
-define(MAX_PLOT_POINTS,581);	// floor(CHART_X_SIZE / 2.2);
-define(NO_ARTICLE_SELECTED,0);
-
-define(CHART_MODE_ARTICLE,100);
-define(CHART_MODE_CATEGORY,200);
-define(CHART_MODE_CATEGORY_ALL,300);
-
-define(CALLED_FROM_FRONTEND,100);
-define(CALLED_FROM_BACKEND,200);
+require_once JPATH_COMPONENT_ADMINISTRATOR.'/dailyStatsConstants.php';
+require_once JPATH_COMPONENT_ADMINISTRATOR.'/dao/dailyStatsDao.php';
+require_once JPATH_COMPONENT_ADMINISTRATOR.'/helpers/dailyStatsHelper.php';
 
 // add form controls manipulation javascript
 $document = JFactory::getDocument();
 $document->addScript(JURI::root().'administrator/components/com_dailystats/js/dailystats.js');
 
-// error_reporting(E_ALL | E_STRICT);
-// ini_set('display_errors', 'on');
-
-/**
- * 
- * @param unknown_type $articleId
- * @param unknown_type $categoryId
- * @param unknown_type $yValName
- * @param unknown_type $chartMode
- * @return string
- */
-function buildPlotDataQuery($articleId, $categoryId, $yValName, $chartMode) {
-	switch ($chartMode) {
-		case CHART_MODE_ARTICLE:
-			$qu =  "SELECT DATE_FORMAT(T1.date,'%d-%m-%Y'), T1.{$yValName}
-			FROM (
-			SELECT date, $yValName
-			FROM #__daily_stats
-			WHERE article_id = $articleId
-			ORDER BY date DESC
-			LIMIT " . MAX_PLOT_POINTS . "
-			) T1
-			ORDER BY T1.date";
-			return $qu;
-			break;
-		case CHART_MODE_CATEGORY:
-			$qu =	"SELECT DATE_FORMAT(T1.date,'%d-%m-%Y'), T1.sum AS {$yValName}
-					FROM (
-					SELECT s.date, SUM(s.{$yValName}) AS sum
-					FROM #__daily_stats AS s, #__content as c
-					WHERE s.article_id = c.id AND c.sectionid = $categoryId
-					GROUP BY s.date
-					ORDER BY s.date DESC
-					LIMIT " . MAX_PLOT_POINTS . "
-					) T1
-					ORDER BY T1.date";
-			return $qu;
-			break;
-		case CHART_MODE_CATEGORY_ALL:
-			// plotting total site (all categries activity
-			$qu =	"SELECT DATE_FORMAT(T1.date,'%d-%m-%Y'), T1.sum AS {$yValName}
-					FROM (
-					SELECT s.date, SUM(s.{$yValName}) AS sum
-					FROM #__daily_stats AS s, #__content as c
-					WHERE s.article_id = c.id
-					GROUP BY s.date
-					ORDER BY s.date DESC
-					LIMIT " . MAX_PLOT_POINTS . "
-					) T1
-					ORDER BY T1.date";
-			return $qu;
-			break;
-		default:
-			return '';
-			break;
-	}
-}
-
-/**
- * 
- * @return either CALLED_FROM_BACKEND or CALLED_FROM_FRONTEND
- */
-function determineExecEnv() {
-	return (strpos(__FILE__, 'administrator')) ? CALLED_FROM_BACKEND : CALLED_FROM_FRONTEND; 
-}
-
 // perfcorms page initialisation differently according to where compponent is called from, front or backend
-$execEnv = determineExecEnv();
+$execEnv = DailyStatsHelper::determineExecEnv(__FILE__);
 
 if ($execEnv == CALLED_FROM_BACKEND) {
 	JToolBarHelper::title('Daily Stats', '');	
@@ -122,9 +47,9 @@ $mainframe = JFactory::getApplication();
 $db	= JFactory::getDBO();
 
 if(version_compare(JVERSION,'1.6.0','ge')) {
-	$query = "SELECT id,title FROM #__categories WHERE extension LIKE 'com_content' AND level = " . J16_SECTION_LEVEL . " AND id NOT IN (" . EXCLUDED_J16_CATEGORIES_SET . ") ORDER BY title";
+	$query = DailyStatsDao::getCategoryQuery();
 } else {	// Joomla 1.5
-	$query = "SELECT id,title FROM #__sections WHERE scope LIKE 'content' AND id NOT IN (" . EXCLUDED_J15_SECTIONS_SET . ") ORDER BY title";
+	$query = DailyStatsDao::getSectionQuery();
 }
 
 $db->setQuery($query);
@@ -162,7 +87,6 @@ if ($categorySectionId == 0) {
 
 // Build an html select list of categories (include Javascript to submit the form)
 
-
 // adding a row for all categories
 
 $category_array[] = JHTML::_('select.option', PHP_INT_MAX, 'All categories');
@@ -191,7 +115,7 @@ $article_array[] = JHTML::_('select.option', NO_ARTICLE_SELECTED, '- Select arti
 
 if ($chartMode == CHART_MODE_ARTICLE) {	// optimization: only get the articles from db if in chart article mode !
 	$db	= JFactory::getDBO();
-	$query = "SELECT id, title, DATE_FORMAT(created,'%a %D, %M %Y') as creation_date FROM #__content WHERE sectionid = $categorySectionId ORDER BY title";
+	$query = DailyStatsDao::getArticleQuery($categorySectionId);
 	$db->setQuery($query);
 	$rows = $db->loadObjectList();
 	
@@ -309,7 +233,7 @@ if (($chartMode == CHART_MODE_ARTICLE	&&
 	$plot_info->plot_array[0]['colour'] = '7C78FF';
 	$plot_info->plot_array[0]['style'] = LINE_THICK_SOLID;
 	$plot_info->plot_array[0]['legend'] = 'Hits';
-	$plot_info->plot_array[0]['query'] = buildPlotDataQuery($articleId, $categorySectionId, "date_hits",$chartMode);
+	$plot_info->plot_array[0]['query'] = DailyStatsDao::buildPlotDataQuery($articleId, $categorySectionId, "date_hits",$chartMode);
 
 	// draw the chart
 
@@ -357,7 +281,7 @@ if (($chartMode == CHART_MODE_ARTICLE	&&
 	$plot_info->plot_array[0]['colour'] = 'FF0000';
 	$plot_info->plot_array[0]['style'] = LINE_THICK_SOLID;
 	$plot_info->plot_array[0]['legend'] = 'Downloads';
-	$plot_info->plot_array[0]['query'] = buildPlotDataQuery($articleId, $categorySectionId, "date_downloads",$chartMode);
+	$plot_info->plot_array[0]['query'] = DailyStatsDao::buildPlotDataQuery($articleId, $categorySectionId, "date_downloads",$chartMode);
 
 	// draw the chart
 

@@ -5,7 +5,7 @@
 	<creationDate>26 February 2013</creationDate>
 	<author>JP Schnyder</author>
 	<authorUrl>http://com.jps.dev</authorUrl>
-	<version>2.21</version>
+	<version>2.3</version>
 	<copyright>com.jps.dev 2013-2015</copyright>
 	<license>GNU General Public License</license>
 	<description>Component charting com_content daily historical data.
@@ -22,10 +22,12 @@
 
 		<files folder="admin">
 			<filename>dailystats.php</filename>
+			<filename>dailyStatsConstants.php</filename>
 			<filename>index.html</filename>
 			<folder>helpers</folder>
 			<folder>assets</folder>
 			<folder>js</folder>
+			<folder>dao</folder>
 		</files>
 	</administration>
 
