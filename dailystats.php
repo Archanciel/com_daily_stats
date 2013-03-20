@@ -40,8 +40,6 @@ if ($execEnv == CALLED_FROM_BACKEND) {
 	}
 }
 
-$mainframe = JFactory::getApplication();
-
 // get list of categories
 
 $db	= JFactory::getDBO();
@@ -58,20 +56,17 @@ $rows = $db->loadObjectList();
 // get the selected category from the select list (default it to zero)
 
 $categorySectionId = JRequest::getVar('select_category_section',0);
-$previouslySelectedCategorySectionId = $mainframe->getUserState( "option.previous_select_category_section", 0 );
+$previouslySelectedCategorySectionId = JRequest::getVar( 'previous_cat_sec_id', 0 );
 // echo 'Category: from request ' . $categorySectionId . ' previous from session ' . $previouslySelectedCategorySectionId , ' articleId ' . $articleId;
 
 if ($categorySectionId != $previouslySelectedCategorySectionId	&&
 		$categorySectionId != 0									&&
 		$previouslySelectedCategorySectionId != 0) {	// $categorySectionId == 0 and $previouslySelectedCategorySectionId ==0 when launching the Daily Stats component for the first time after login
 	// current category did change, so current article selection must be reset
-	$mainframe->setUserState( "option.previous_select_category_section",$categorySectionId);
 	$articleId = NO_ARTICLE_SELECTED;
 } else {
 	$articleId = JRequest::getVar('select_article',NO_ARTICLE_SELECTED);
 }
-
-// echo 'Category: from request ' . $categorySectionId . ' previous from session ' . $mainframe->getUserState( "option.previous_select_category_section", 0 ) , ' articleId ' . $articleId;
 
 if ($categorySectionId == 0) {
 	$chartMode = CHART_MODE_CATEGORY_ALL;
@@ -159,6 +154,7 @@ if ($execEnv == CALLED_FROM_BACKEND) {
 
 echo '<input type="hidden" name="option" value="com_dailystats" />';
 echo '<input type="hidden" name="draw_chart" value="no" />';
+echo '<input type="hidden" name="previous_cat_sec_id" value="'."<?php echo DailyStatsHelper::determinePreviousCatSecId($categorySectionId, $previouslySelectedCategorySectionId); ?>".'" />';
 
 // category / section -----------------------------
 
