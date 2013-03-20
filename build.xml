@@ -13,7 +13,7 @@
 	<property name="install.zip.file.dest"
 		value="C:\Development\WorkPHP\www\plusconscient15_int\attachments"
 		override="true" />
-	<property name="version">v2.3</property>
+	<property name="version">v2.4</property>
 
 	<target name="copy_to_front_dir" description="Copies files to front component src dir">
 		<delete dir="${front.src}" includeemptydirs="true" verbose="false" />

@@ -13,6 +13,8 @@ Based on   : SimplePlot from Les Arbres Design
 
 defined('_JEXEC') or die('Restricted Access');
 
+require_once JPATH_COMPONENT_ADMINISTRATOR.'/dailyStatsConstants.php';
+
 class DailyStatsHelper {
 	
 	/**
@@ -20,7 +22,18 @@ class DailyStatsHelper {
 	 * @return either CALLED_FROM_BACKEND or CALLED_FROM_FRONTEND
 	 */
 	public static function determineExecEnv($file) {
-		return (strpos($file, 'administrator') != FALSE) ? CALLED_FROM_BACKEND : CALLED_FROM_FRONTEND;
+		return (strpos($file, 'administrator')) ? CALLED_FROM_BACKEND : CALLED_FROM_FRONTEND;
+	}
+	
+	public static function determinePreviousCatSecId($categorySectionId, $previouslySelectedCategorySectionId) {
+		if ($categorySectionId != $previouslySelectedCategorySectionId	&&
+				$categorySectionId != 0									&&
+				$previouslySelectedCategorySectionId != 0) {	// $categorySectionId == 0 and $previouslySelectedCategorySectionId ==0 when launching the Daily Stats component for the first time after login
+			// current category did change, so current article selection must be reset
+			return $categorySectionId;
+		} else {
+			return 0;
+		}
 	}
 }
 ?>

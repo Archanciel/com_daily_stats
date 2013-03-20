@@ -24,7 +24,8 @@ require_once JPATH_COMPONENT_ADMINISTRATOR.'/helpers/dailyStatsHelper.php';
 $document = JFactory::getDocument();
 $document->addScript(JURI::root().'administrator/components/com_dailystats/js/dailystats.js');
 
-// perfcorms page initialisation differently according to where compponent is called from, front or backend
+// perfcorms page initialisation differently according to where compponent is called from,
+// either from front or from backend
 $execEnv = DailyStatsHelper::determineExecEnv(__FILE__);
 
 if ($execEnv == CALLED_FROM_BACKEND) {
@@ -42,16 +43,7 @@ if ($execEnv == CALLED_FROM_BACKEND) {
 
 // get list of categories
 
-$db	= JFactory::getDBO();
-
-if(version_compare(JVERSION,'1.6.0','ge')) {
-	$query = DailyStatsDao::getCategoryQuery();
-} else {	// Joomla 1.5
-	$query = DailyStatsDao::getSectionQuery();
-}
-
-$db->setQuery($query);
-$rows = $db->loadObjectList();
+$catSecRws = DailyStatsDao::getCategoriesOrSections();
 
 // get the selected category from the select list (default it to zero)
 
@@ -86,12 +78,12 @@ if ($categorySectionId == 0) {
 
 $category_array[] = JHTML::_('select.option', PHP_INT_MAX, 'All categories');
 
-foreach ($rows as $row) {
-	$category_array[] = JHTML::_('select.option', $row->id, $row->title);
+foreach ($catSecRws as $catSecRow) {
+	$category_array[] = JHTML::_('select.option', $catSecRow->id, $catSecRow->title);
 	
 	// store selected category title
-	if ($row->id == $categorySectionId) {
-		$displayDataTitle = $row->title;
+	if ($catSecRow->id == $categorySectionId) {
+		$displayDataTitle = $catSecRow->title;
 	}
 }
 
@@ -109,17 +101,14 @@ $article_array[] = JHTML::_('select.option', NO_ARTICLE_SELECTED, '- Select arti
 // get list of articles
 
 if ($chartMode == CHART_MODE_ARTICLE) {	// optimization: only get the articles from db if in chart article mode !
-	$db	= JFactory::getDBO();
-	$query = DailyStatsDao::getArticleQuery($categorySectionId);
-	$db->setQuery($query);
-	$rows = $db->loadObjectList();
+	$articleRows = DailyStatsDao::getArticlesForCatSec($categorySectionId);
 	
-	foreach ($rows as $row) {
-		$article_array[] = JHTML::_('select.option', $row->id, $row->title);
+	foreach ($articleRows as $articleRow) {
+		$article_array[] = JHTML::_('select.option', $articleRow->id, $articleRow->title);
 			
 		// store selected article title
-		if ($row->id == $articleId) {
-			$displayDataTitle = $row->title . ' (created ' . $row->creation_date . ')';
+		if ($articleRow->id == $articleId) {
+			$displayDataTitle = $articleRow->title . ' (created ' . $articleRow->creation_date . ')';
 		}
 	}
 }
@@ -156,7 +145,7 @@ echo '<input type="hidden" name="option" value="com_dailystats" />';
 echo '<input type="hidden" name="draw_chart" value="no" />';
 echo '<input type="hidden" name="previous_cat_sec_id" value="'."<?php echo DailyStatsHelper::determinePreviousCatSecId($categorySectionId, $previouslySelectedCategorySectionId); ?>".'" />';
 
-// category / section -----------------------------
+// ---- category / section -----------------------------
 
 if(version_compare(JVERSION,'1.6.0','ge')) {
 	echo 'Select a category: ';
@@ -168,6 +157,7 @@ echo $select_category_section_list;
 
 echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Chart whole category: ';
 echo '<input type="checkbox" name="chart_whole_category" ';
+
 if ($chartMode == CHART_MODE_CATEGORY	||
 	$chartMode == CHART_MODE_CATEGORY_ALL) {
 	echo 'checked '; 
@@ -179,7 +169,8 @@ if ($chartMode == CHART_MODE_CATEGORY_ALL) {
 
 echo 'onclick="handleChartWholeCategory(this)" />';
 
-// article ----------------------------------------
+// ---- article ----------------------------------------
+
 echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Select an article: ';
 echo $select_article_list;
 

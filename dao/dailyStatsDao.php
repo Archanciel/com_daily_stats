@@ -13,6 +13,8 @@ Based on   : SimplePlot from Les Arbres Design
 
 defined('_JEXEC') or die('Restricted Access');
 
+require_once JPATH_COMPONENT_ADMINISTRATOR.'/dailyStatsConstants.php';
+
 class DailyStatsDao {
 	/**
 	 *
@@ -70,11 +72,29 @@ class DailyStatsDao {
 	}
 	
 	/**
+	 * Returns the list of top level content categories (Joonla 1.6 +) 
+	 * or sections (Joomla 1.5)
+	 */
+	public static function getCategoriesOrSections() {
+		$db	= JFactory::getDBO();
+		
+		if(version_compare(JVERSION,'1.6.0','ge')) {
+			$query = self::getCategoryQuery();
+		} else {	// Joomla 1.5
+			$query = self::getSectionQuery();
+		}
+		
+		$db->setQuery($query);
+		
+		return $db->loadObjectList();
+	}
+	
+	/**
 	 * Adapted to Joomla 1.6 +
 	 * 
 	 * @return string
 	 */
-	public static function getCategoryQuery() {
+	private static function getCategoryQuery() {
 		return "SELECT id,title FROM #__categories WHERE extension LIKE 'com_content' AND level = " . J16_SECTION_LEVEL . " AND id NOT IN (" . EXCLUDED_J16_CATEGORIES_SET . ") ORDER BY title";
 	}
 	
@@ -83,16 +103,26 @@ class DailyStatsDao {
 	 * 
 	 * @return string
 	 */
-	public static function getSectionQuery() {
+	private static function getSectionQuery() {
 		return "SELECT id,title FROM #__sections WHERE scope LIKE 'content' AND id NOT IN (" . EXCLUDED_J15_SECTIONS_SET . ") ORDER BY title";
 	}
 
+	/**
+	 * Returns the list of articles for the passed cat/section)
+	 */
+	public static function getArticlesForCatSec($categorySectionId) {
+		$db	= JFactory::getDBO();
+		$query = self::getArticleQuery($categorySectionId);
+		$db->setQuery($query);
+		return $db->loadObjectList();
+	}
+	
 	/**
 	 * 
 	 * @param int $categorySectionId
 	 * @return string
 	 */
-	public static function getArticleQuery($categorySectionId) {
+	private static function getArticleQuery($categorySectionId) {
 		return "SELECT id, title, DATE_FORMAT(created,'%a %D, %M %Y') as creation_date FROM #__content WHERE sectionid = $categorySectionId ORDER BY title";
 	}
 }
