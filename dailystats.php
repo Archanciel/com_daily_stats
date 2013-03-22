@@ -84,12 +84,17 @@ foreach ($catSecRws as $catSecRow) {
 	// store selected category title
 	if ($catSecRow->id == $categorySectionId) {
 		$displayDataTitle = $catSecRow->title;
+		$lastAndTotalHitsArr = DailyStatsDao::getLastAndTotalHitsArr($chartMode,$categorySectionId);
 	}
 }
 
 if ($chartMode == CHART_MODE_CATEGORY_ALL) {
 	$displayDataTitle = 'All categories';
+	$lastAndTotalHitsArr = DailyStatsDao::getLastAndTotalHitsArr($chartMode);
 }
+
+$lastAndTotalHitsTitle = ". Last ({$lastAndTotalHitsArr[DATE_IDX]}): {$lastAndTotalHitsArr[LAST_HITS_IDX]}. Total: {$lastAndTotalHitsArr[TOTAL_HITS_IDX]}.";
+$lastAndTotalDownloadsTitle = ". Last ({$lastAndTotalHitsArr[DATE_IDX]}): {$lastAndTotalHitsArr[LAST_DOWNLOADS_IDX]}. Total: {$lastAndTotalHitsArr[TOTAL_DOWNLOADS_IDX]}.";
 
 $select_category_section_list = JHTML::_('select.genericlist', $category_array, 'select_category_section',
 		'class="inputbox" size="1" onchange="handleSelectCategory();"', 'value', 'text', $categorySectionId);
@@ -109,6 +114,9 @@ if ($chartMode == CHART_MODE_ARTICLE) {	// optimization: only get the articles f
 		// store selected article title
 		if ($articleRow->id == $articleId) {
 			$displayDataTitle = $articleRow->title . ' (created ' . $articleRow->creation_date . ')';
+			$lastAndTotalHitsArr = DailyStatsDao::getLastAndTotalHitsArr($chartMode,$articleId);
+			$lastAndTotalHitsTitle = ". Last ({$lastAndTotalHitsArr[DATE_IDX]}): {$lastAndTotalHitsArr[LAST_HITS_IDX]}. Total: {$lastAndTotalHitsArr[TOTAL_HITS_IDX]}.";
+			$lastAndTotalDownloadsTitle = ". Last ({$lastAndTotalHitsArr[DATE_IDX]}): {$lastAndTotalHitsArr[LAST_DOWNLOADS_IDX]}. Total: {$lastAndTotalHitsArr[TOTAL_DOWNLOADS_IDX]}.";
 		}
 	}
 }
@@ -119,6 +127,8 @@ switch ($chartMode) {
 			// is the case if the user refreshes the page right after having changed the category
 			$articleId = NO_ARTICLE_SELECTED;
 			$displayDataTitle = '';
+			$lastAndTotalHitsTitle = '';
+			$lastAndTotalDownloadsTitle = '';
 		}
 		break;
 	default:
@@ -194,7 +204,7 @@ if (($chartMode == CHART_MODE_ARTICLE	&&
 
 	$plot_info = new stdclass();
 	$plot_info->id = 1;		// the id must match the html element that the chart will be drawn in
-	$plot_info->chart_title = "Hits: " . $displayDataTitle;
+	$plot_info->chart_title = "Hits: " . $displayDataTitle . $lastAndTotalHitsTitle;
 	$plot_info->chart_type = CHART_TYPE_BAR_V_GROUP;
 	$plot_info->x_size = CHART_X_SIZE;
 	$plot_info->y_size = 280;
@@ -242,7 +252,7 @@ if (($chartMode == CHART_MODE_ARTICLE	&&
 
 	$plot_info = new stdclass();
 	$plot_info->id = 2;						// the id must match the html element that the chart will be drawn in
-	$plot_info->chart_title = "Downloads: " . $displayDataTitle;
+	$plot_info->chart_title = "Downloads: " . $displayDataTitle . $lastAndTotalDownloadsTitle;
 	$plot_info->chart_type = CHART_TYPE_BAR_V_GROUP;
 	$plot_info->x_size = CHART_X_SIZE;
 	$plot_info->y_size = 180;

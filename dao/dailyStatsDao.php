@@ -125,6 +125,16 @@ class DailyStatsDao {
 	private static function getArticleQuery($categorySectionId) {
 		return "SELECT id, title, DATE_FORMAT(created,'%a %D, %M %Y') as creation_date FROM #__content WHERE sectionid = $categorySectionId ORDER BY title";
 	}
+	
+	public static function getLastAndTotalHitsArr($chartMode,$categorySectionId = NULL) {
+		$ret[DATE_IDX] = '21-3';
+		$ret[LAST_HITS_IDX] = 45;
+		$ret[TOTAL_HITS_IDX] = 985;
+		$ret[LAST_DOWNLOADS_IDX] = 5;
+		$ret[TOTAL_DOWNLOADS_IDX] = 85;
+		
+		return $ret;
+	}
 }
 
 ?>
