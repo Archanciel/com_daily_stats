@@ -76,14 +76,17 @@ class DailyStatsDao {
 	 * or sections (Joomla 1.5)
 	 */
 	public static function getCategoriesOrSections() {
-		$db	= JFactory::getDBO();
-		
 		if(version_compare(JVERSION,'1.6.0','ge')) {
 			$query = self::getCategoryQuery();
 		} else {	// Joomla 1.5
 			$query = self::getSectionQuery();
 		}
 		
+		return self::executeQuery($query);
+	}
+	
+	private static function executeQuery($query) {
+		$db	= JFactory::getDBO();
 		$db->setQuery($query);
 		
 		return $db->loadObjectList();
@@ -111,10 +114,9 @@ class DailyStatsDao {
 	 * Returns the list of articles for the passed cat/section)
 	 */
 	public static function getArticlesForCatSec($categorySectionId) {
-		$db	= JFactory::getDBO();
 		$query = self::getArticleQuery($categorySectionId);
-		$db->setQuery($query);
-		return $db->loadObjectList();
+
+		return self::executeQuery($query);
 	}
 	
 	/**
@@ -126,14 +128,39 @@ class DailyStatsDao {
 		return "SELECT id, title, DATE_FORMAT(created,'%a %D, %M %Y') as creation_date FROM #__content WHERE sectionid = $categorySectionId ORDER BY title";
 	}
 	
-	public static function getLastAndTotalHitsArr($chartMode,$categorySectionId = NULL) {
-		$ret[DATE_IDX] = '21-3';
-		$ret[LAST_HITS_IDX] = 45;
-		$ret[TOTAL_HITS_IDX] = 985;
-		$ret[LAST_DOWNLOADS_IDX] = 5;
-		$ret[TOTAL_DOWNLOADS_IDX] = 85;
-		
+	public static function getLastAndTotalHitsArr($chartMode, $id = NULL) {
+		switch ($chartMode) {
+			case CHART_MODE_ARTICLE:
+				$qu = self::getLastAndTotalHitsForArticleQuery($id);
+				$rows = self::executeQuery($qu);
+				
+				$ret[DATE_IDX] = $rows[0]->displ_date;
+				$ret[LAST_HITS_IDX] = $rows[0]->date_hits;
+				$ret[TOTAL_HITS_IDX] = $rows[0]->total_hits_to_date;
+				$ret[LAST_DOWNLOADS_IDX] = $rows[0]->date_downloads;
+				$ret[TOTAL_DOWNLOADS_IDX] = $rows[0]->total_downloads_to_date;
+				break;
+			default:
+				$ret[DATE_IDX] = '21-3';
+				$ret[LAST_HITS_IDX] = 45;
+				$ret[TOTAL_HITS_IDX] = 985;
+				$ret[LAST_DOWNLOADS_IDX] = 5;
+				$ret[TOTAL_DOWNLOADS_IDX] = 85;
+				break;
+		}
+
 		return $ret;
+	}
+	
+	public static function getLastAndTotalHitsForArticleQuery($articleId) {
+		$qu = 	"SELECT DATE_FORMAT(date,'%d-%m') as displ_date, date_hits, total_hits_to_date, date_downloads, total_downloads_to_date 
+				FROM #__daily_stats 
+				WHERE article_id = $articleId 
+				AND date = (
+				SELECT MAX(date) 
+				FROM #__daily_stats t 
+				WHERE article_id = t.article_id)";
+		return $qu;
 	}
 }
 
