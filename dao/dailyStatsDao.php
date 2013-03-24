@@ -20,7 +20,7 @@ class DailyStatsDao {
 	 *
 	 * @param unknown_type $articleId
 	 * @param unknown_type $categoryId
-	 * @param unknown_type $yValName
+	 * @param unknown_type $yValName	either date_hits or date_downloads
 	 * @param unknown_type $chartMode
 	 * @return string
 	 */
@@ -52,12 +52,19 @@ class DailyStatsDao {
 				return $qu;
 				break;
 			case CHART_MODE_CATEGORY_ALL:
+				if(version_compare(JVERSION,'1.6.0','ge')) {
+					$excludedCategories = EXCLUDED_J16_CATEGORIES_SET;
+				} else {
+					$excludedCategories = EXCLUDED_J15_SECTIONS_SET;
+				}
+
 				// plotting total site (all categries activity
 				$qu =	"SELECT DATE_FORMAT(T1.date,'%d-%m-%Y'), T1.sum AS {$yValName}
 				FROM (
 				SELECT s.date, SUM(s.{$yValName}) AS sum
 				FROM #__daily_stats AS s, #__content as c
-				WHERE s.article_id = c.id
+				WHERE s.article_id = c.id 
+				AND c.sectionid NOT IN ($excludedCategories)
 				GROUP BY s.date
 				ORDER BY s.date DESC
 				LIMIT " . MAX_PLOT_POINTS . "
@@ -140,26 +147,69 @@ class DailyStatsDao {
 				$ret[LAST_DOWNLOADS_IDX] = $rows[0]->date_downloads;
 				$ret[TOTAL_DOWNLOADS_IDX] = $rows[0]->total_downloads_to_date;
 				break;
+			case CHART_MODE_CATEGORY:
+				$qu = self::getLastAndTotalHitsForCategoryQuery($id);
+				$rows = self::executeQuery($qu);
+				
+				$ret[DATE_IDX] = $rows[0]->displ_date;
+				$ret[LAST_HITS_IDX] = $rows[0]->date_hits;
+				$ret[TOTAL_HITS_IDX] = $rows[0]->total_hits_to_date;
+				$ret[LAST_DOWNLOADS_IDX] = $rows[0]->date_downloads;
+				$ret[TOTAL_DOWNLOADS_IDX] = $rows[0]->total_downloads_to_date;
+				break;
+			case CHART_MODE_CATEGORY_ALL:
+				if(version_compare(JVERSION,'1.6.0','ge')) {
+					$excludedCategories = EXCLUDED_J16_CATEGORIES_SET;
+				} else {
+					$excludedCategories = EXCLUDED_J15_SECTIONS_SET;
+				}
+				
+				$qu = self::getLastAndTotalHitsForAllCategoriesQuery($excludedCategories);
+				$rows = self::executeQuery($qu);
+				
+				$ret[DATE_IDX] = $rows[0]->displ_date;
+				$ret[LAST_HITS_IDX] = $rows[0]->date_hits;
+				$ret[TOTAL_HITS_IDX] = $rows[0]->total_hits_to_date;
+				$ret[LAST_DOWNLOADS_IDX] = $rows[0]->date_downloads;
+				$ret[TOTAL_DOWNLOADS_IDX] = $rows[0]->total_downloads_to_date;
+				break;
 			default:
-				$ret[DATE_IDX] = '21-3';
-				$ret[LAST_HITS_IDX] = 45;
-				$ret[TOTAL_HITS_IDX] = 985;
-				$ret[LAST_DOWNLOADS_IDX] = 5;
-				$ret[TOTAL_DOWNLOADS_IDX] = 85;
 				break;
 		}
 
 		return $ret;
 	}
 	
-	public static function getLastAndTotalHitsForArticleQuery($articleId) {
-		$qu = 	"SELECT DATE_FORMAT(date,'%d-%m') as displ_date, date_hits, total_hits_to_date, date_downloads, total_downloads_to_date 
-				FROM #__daily_stats 
-				WHERE article_id = $articleId 
-				AND date = (
-				SELECT MAX(date) 
-				FROM #__daily_stats t 
-				WHERE article_id = t.article_id)";
+	private static function getLastAndTotalHitsForArticleQuery($articleId) {
+		$qu = 	"SELECT DATE_FORMAT(date,'%d-%m') as displ_date, date_hits, total_hits_to_date, date_downloads, total_downloads_to_date
+		FROM #__daily_stats
+		WHERE article_id = $articleId
+		AND date = (
+		SELECT MAX(date)
+		FROM #__daily_stats t
+		WHERE article_id = t.article_id)";
+		return $qu;
+	}
+	
+	private static function getLastAndTotalHitsForCategoryQuery($categoryId) {
+		$qu = 	"SELECT DATE_FORMAT(s.date,'%d-%m') as displ_date, SUM(s.date_hits) date_hits, SUM(s.total_hits_to_date) total_hits_to_date, SUM(s.date_downloads) date_downloads, SUM(s.total_downloads_to_date) total_downloads_to_date
+		FROM #__daily_stats AS s, #__content as c
+		WHERE s.article_id = c.id
+		AND c.sectionid = $categoryId
+		AND s.date = (
+		SELECT MAX(date)
+		FROM #__daily_stats)";
+		return $qu;
+	}
+	
+	private static function getLastAndTotalHitsForAllCategoriesQuery($excludedCategories) {
+		$qu = 	"SELECT DATE_FORMAT(s.date,'%d-%m') as displ_date, SUM(s.date_hits) date_hits, SUM(s.total_hits_to_date) total_hits_to_date, SUM(s.date_downloads) date_downloads, SUM(s.total_downloads_to_date) total_downloads_to_date
+		FROM #__daily_stats AS s, #__content as c
+		WHERE s.article_id = c.id
+		AND c.sectionid NOT IN ($excludedCategories)
+		AND s.date = (
+		SELECT MAX(date)
+		FROM #__daily_stats)";
 		return $qu;
 	}
 }
