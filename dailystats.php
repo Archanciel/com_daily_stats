@@ -107,7 +107,11 @@ $article_array[] = JHTML::_('select.option', NO_ARTICLE_SELECTED, '- Select arti
 
 if ($chartMode == CHART_MODE_ARTICLE) {	// optimization: only get the articles from db if in chart article mode !
 	$articleRows = DailyStatsDao::getArticlesForCatSec($categorySectionId);
-	
+} else if ($chartMode == CHART_MODE_CATEGORY_ALL) {	// optimization: only get the articles from db if in chart article mode !
+	$articleRows = DailyStatsDao::getMostRecentArticles(10);
+}
+
+if (!empty($articleRows)) {	
 	foreach ($articleRows as $articleRow) {
 		$article_array[] = JHTML::_('select.option', $articleRow->id, $articleRow->title);
 			
@@ -136,8 +140,7 @@ switch ($chartMode) {
 		break;
 }
 
-
-$disabled = ($chartMode == CHART_MODE_ARTICLE) ? '' : 'disabled="true"';	// disabled="false" not working: simply drop the attribute !
+//$disabled = ($chartMode == CHART_MODE_ARTICLE) ? '' : 'disabled="true"';	// disabled="false" not working: simply drop the attribute !
 $select_article_list = JHTML::_('select.genericlist', $article_array, 'select_article',
 		'class="inputbox" ' . $disabled . '" size="1" onchange="handleSelectArticle();"', 'value', 'text', $articleId);
 
@@ -168,14 +171,14 @@ echo $select_category_section_list;
 echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Chart whole category: ';
 echo '<input type="checkbox" name="chart_whole_category" ';
 
-if ($chartMode == CHART_MODE_CATEGORY	||
-	$chartMode == CHART_MODE_CATEGORY_ALL) {
-	echo 'checked '; 
-}
+// if ($chartMode == CHART_MODE_CATEGORY	||
+// 	$chartMode == CHART_MODE_CATEGORY_ALL) {
+// 	echo 'checked '; 
+// }
 
-if ($chartMode == CHART_MODE_CATEGORY_ALL) {
-	echo 'disabled="disabled"';
-} 
+// if ($chartMode == CHART_MODE_CATEGORY_ALL) {
+// 	echo 'disabled="disabled"';
+// } 
 
 echo 'onclick="handleChartWholeCategory(this)" />';
 
