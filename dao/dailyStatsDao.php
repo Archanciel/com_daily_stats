@@ -116,23 +116,55 @@ class DailyStatsDao {
 	private static function getSectionQuery() {
 		return "SELECT id,title FROM #__sections WHERE scope LIKE 'content' AND id NOT IN (" . EXCLUDED_J15_SECTIONS_SET . ") ORDER BY title";
 	}
-
+	
 	/**
 	 * Returns the list of articles for the passed cat/section)
 	 */
 	public static function getArticlesForCatSec($categorySectionId) {
 		$query = self::getArticleQuery($categorySectionId);
-
+	
 		return self::executeQuery($query);
 	}
 	
 	/**
-	 * 
+	 *
 	 * @param int $categorySectionId
 	 * @return string
 	 */
 	private static function getArticleQuery($categorySectionId) {
-		return "SELECT id, title, DATE_FORMAT(created,'%a %D, %M %Y') as creation_date FROM #__content WHERE sectionid = $categorySectionId ORDER BY title";
+		return "SELECT id, title, DATE_FORMAT(created,'%a %D, %M %Y') as creation_date
+		FROM #__content WHERE sectionid = $categorySectionId
+		ORDER BY title";
+	}
+	
+	/**
+	 * Returns the list of articles for the passed cat/section)
+	 */
+	public static function getMostRecentArticles($articleNumber) {
+		$query = self::getMostRecentArticlesQuery($articleNumber);
+	
+		return self::executeQuery($query);
+	}
+	
+	/**
+	 *
+	 * @param int $articleNumber
+	 * @return string
+	 */
+	private static function getMostRecentArticlesQuery($articleNumber) {
+		if(version_compare(JVERSION,'1.6.0','ge')) {
+			$excludedCategories = EXCLUDED_J16_CATEGORIES_SET;
+		} else {
+			$excludedCategories = EXCLUDED_J15_SECTIONS_SET;
+		}
+
+		$qu = "SELECT id, title, DATE_FORMAT(created,'%a %D, %M %Y') as creation_date
+		FROM #__content
+		WHERE sectionid NOT IN ($excludedCategories)
+		ORDER BY created DESC
+		LIMIT $articleNumber";
+		
+		return $qu;
 	}
 	
 	public static function getLastAndTotalHitsArr($chartMode, $id = NULL) {
