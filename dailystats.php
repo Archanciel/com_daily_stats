@@ -52,7 +52,7 @@ $previouslySelectedCategorySectionId = JRequest::getVar( 'previous_cat_sec_id', 
 // echo 'Category: from request ' . $categorySectionId . ' previous from session ' . $previouslySelectedCategorySectionId , ' articleId ' . $articleId;
 
 if ($categorySectionId != $previouslySelectedCategorySectionId	&&
-		$categorySectionId != 0									&&
+//		$categorySectionId != 0									&&
 		$previouslySelectedCategorySectionId != 0) {	// $categorySectionId == 0 and $previouslySelectedCategorySectionId ==0 when launching the Daily Stats component for the first time after login
 	// current category did change, so current article selection must be reset
 	$articleId = NO_ARTICLE_SELECTED;
@@ -105,10 +105,10 @@ $article_array[] = JHTML::_('select.option', NO_ARTICLE_SELECTED, '- Select arti
 
 // get list of articles
 
-if ($chartMode == CHART_MODE_ARTICLE) {	// optimization: only get the articles from db if in chart article mode !
-	$articleRows = DailyStatsDao::getArticlesForCatSec($categorySectionId);
-} else if ($chartMode == CHART_MODE_CATEGORY_ALL) {	// optimization: only get the articles from db if in chart article mode !
+if ($chartMode == CHART_MODE_CATEGORY_ALL) {
 	$articleRows = DailyStatsDao::getMostRecentArticles(10);
+} else {
+	$articleRows = DailyStatsDao::getArticlesForCatSec($categorySectionId);	
 }
 
 if (!empty($articleRows)) {	

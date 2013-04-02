@@ -158,12 +158,13 @@ class DailyStatsDao {
 			$excludedCategories = EXCLUDED_J15_SECTIONS_SET;
 		}
 
-		$qu = "SELECT id, title, DATE_FORMAT(created,'%a %D, %M %Y') as creation_date
-		FROM #__content
-		WHERE sectionid NOT IN ($excludedCategories)
-		ORDER BY created DESC
+		$qu = "SELECT DISTINCT c.id, c.title, DATE_FORMAT(c.created,'%a %D, %M %Y') as creation_date
+		FROM #__daily_stats AS s, #__content as c
+		WHERE s.article_id = c.id
+		AND c.sectionid NOT IN ($excludedCategories)		
+		ORDER BY c.created DESC
 		LIMIT $articleNumber";
-		
+
 		return $qu;
 	}
 	
