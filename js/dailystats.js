@@ -14,12 +14,12 @@ Based on   : SimplePlot from Les Arbres Design
  * Called when a category is selected in the category combo
  */
 function handleSelectCategory() {
-	var selectBox = document.forms['dailyStatsForm'].select_category_section;
-
-	if (selectBox.options[0].selected) {
-		// 'All categories' was selected
-		document.forms['dailyStatsForm'].chart_whole_category.checked = true;
-	}
+//	var selectBox = document.forms['dailyStatsForm'].select_category_section;
+//
+//	if (selectBox.options[0].selected) {
+//		// 'All categories' was selected
+//		document.forms['dailyStatsForm'].chart_whole_category.checked = true;
+//	}
 
 	document.dailyStatsForm.submit();
 }
@@ -32,15 +32,9 @@ function handleSelectArticle() {
 }
 
 /**
- * Called when the chart whole category checkbox is checked/unchecked
+ * Called when the chart whole category button is pressed
  */
-function handleChartWholeCategory(checkbox) {
-	if (checkbox.checked) {
-		document.getElementById('select_article').disabled=true;
-	} else {
-		document.getElementById('select_article').disabled=false;
-	}
-	
+function handleChartWholeCategoryButtonPressed(button) {
 	drawChart();
 }
 

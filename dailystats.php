@@ -43,7 +43,7 @@ if ($execEnv == CALLED_FROM_BACKEND) {
 
 // get list of categories
 
-$catSecRws = DailyStatsDao::getCategoriesOrSections();
+$catSecRows = DailyStatsDao::getCategoriesOrSections();
 
 // get the selected category from the select list (default it to zero)
 
@@ -52,8 +52,7 @@ $previouslySelectedCategorySectionId = JRequest::getVar( 'previous_cat_sec_id', 
 // echo 'Category: from request ' . $categorySectionId . ' previous from session ' . $previouslySelectedCategorySectionId , ' articleId ' . $articleId;
 
 if ($categorySectionId != $previouslySelectedCategorySectionId	&&
-//		$categorySectionId != 0									&&
-		$previouslySelectedCategorySectionId != 0) {	// $categorySectionId == 0 and $previouslySelectedCategorySectionId ==0 when launching the Daily Stats component for the first time after login
+	$previouslySelectedCategorySectionId != 0) {	// $categorySectionId == 0 and $previouslySelectedCategorySectionId ==0 when launching the Daily Stats component for the first time after login
 	// current category did change, so current article selection must be reset
 	$articleId = NO_ARTICLE_SELECTED;
 } else {
@@ -61,14 +60,31 @@ if ($categorySectionId != $previouslySelectedCategorySectionId	&&
 }
 
 if ($categorySectionId == 0) {
+	// here, DAILY STATS has just be launched
 	$chartMode = CHART_MODE_CATEGORY_ALL;
 	$categorySectionId = PHP_INT_MAX;
 } else if ($categorySectionId == PHP_INT_MAX) {
-	$chartMode = CHART_MODE_CATEGORY_ALL;
+	// here, All categories is selected in the category drop-down list
+	$chartWholeCategoryButtonPressed = (JRequest::getVar('chart_whole_category_button',NULL));
+	
+	if (isset($chartWholeCategoryButtonPressed)) {
+		// Chart whole category button waa pressed
+		$chartMode = CHART_MODE_CATEGORY_ALL;
+		$articleId = NO_ARTICLE_SELECTED;
+	} else {
+		if (isset($articleId)	&&
+			$articleId != NO_ARTICLE_SELECTED) {
+			// one of the most recent article was selected
+			$chartMode = CHART_MODE_ARTICLE;
+		} else {
+			$chartMode = CHART_MODE_CATEGORY_ALL;
+			$articleId = NO_ARTICLE_SELECTED;
+		}
+	}
 } else {
 	// get chart mode, either chart an individual article hisctrory or a category summary history
-	$chartWholeCategory = (JRequest::getVar('chart_whole_category',""));
-	$chartMode = (strcmp($chartWholeCategory,"on") == 0) ? CHART_MODE_CATEGORY : CHART_MODE_ARTICLE;
+	$chartWholeCategoryButtonPressed = (JRequest::getVar('chart_whole_category_button',NULL));
+	$chartMode = (isset($chartWholeCategoryButtonPressed)) ? CHART_MODE_CATEGORY : CHART_MODE_ARTICLE;
 }
 
 
@@ -78,7 +94,7 @@ if ($categorySectionId == 0) {
 
 $category_array[] = JHTML::_('select.option', PHP_INT_MAX, 'All categories');
 
-foreach ($catSecRws as $catSecRow) {
+foreach ($catSecRows as $catSecRow) {
 	$category_array[] = JHTML::_('select.option', $catSecRow->id, $catSecRow->title);
 	
 	// store selected category title
@@ -105,9 +121,14 @@ $article_array[] = JHTML::_('select.option', NO_ARTICLE_SELECTED, '- Select arti
 
 // get list of articles
 
-if ($chartMode == CHART_MODE_CATEGORY_ALL) {
-	$articleRows = DailyStatsDao::getMostRecentArticles(10);
+if ($chartMode == CHART_MODE_CATEGORY_ALL	||
+	$categorySectionId == PHP_INT_MAX) {
+	$articleRows = DailyStatsDao::getMostRecentArticles(MOST_RECENT_ARTICLE_NUMBER);
 } else {
+	if ($chartMode == CHART_MODE_CATEGORY) {
+		$articleId = 0;
+	}
+	
 	$articleRows = DailyStatsDao::getArticlesForCatSec($categorySectionId);	
 }
 
@@ -140,9 +161,8 @@ switch ($chartMode) {
 		break;
 }
 
-//$disabled = ($chartMode == CHART_MODE_ARTICLE) ? '' : 'disabled="true"';	// disabled="false" not working: simply drop the attribute !
 $select_article_list = JHTML::_('select.genericlist', $article_array, 'select_article',
-		'class="inputbox" ' . $disabled . '" size="1" onchange="handleSelectArticle();"', 'value', 'text', $articleId);
+		'class="inputbox" size="1" onchange="handleSelectArticle();"', 'value', 'text', $articleId);
 
 
 // draw the form with the select lists
@@ -168,19 +188,8 @@ if(version_compare(JVERSION,'1.6.0','ge')) {
 
 echo $select_category_section_list;
 
-echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Chart whole category: ';
-echo '<input type="checkbox" name="chart_whole_category" ';
-
-// if ($chartMode == CHART_MODE_CATEGORY	||
-// 	$chartMode == CHART_MODE_CATEGORY_ALL) {
-// 	echo 'checked '; 
-// }
-
-// if ($chartMode == CHART_MODE_CATEGORY_ALL) {
-// 	echo 'disabled="disabled"';
-// } 
-
-echo 'onclick="handleChartWholeCategory(this)" />';
+echo '<input type="submit" name="chart_whole_category_button" value="Chart whole category"';
+echo 'onclick="handleChartWholeCategoryButtonPressed(this)" />';
 
 // ---- article ----------------------------------------
 
@@ -190,13 +199,17 @@ echo $select_article_list;
 echo '</form>';
 
 $drawChart = (strcmp(JRequest::getVar('draw_chart','no'),'no') != 0);
-
+// echo '$drawChart ' . $drawChart;
+// echo ' $chartMode ' . $chartMode;
+// echo ' $categorySectionId ' . $categorySectionId;
+// echo ' $articleId ' . $articleId;
 if (($chartMode == CHART_MODE_ARTICLE	&&
 	$drawChart							&&
 	$articleId != NO_ARTICLE_SELECTED)		||
 	$chartMode == CHART_MODE_CATEGORY		||
 	$chartMode == CHART_MODE_CATEGORY_ALL) {
 // 	echo 'draw';
+
 	// pull in the Plotalot helper file from the backend helpers directory
 
 	require_once JPATH_COMPONENT_ADMINISTRATOR.'/helpers/plotalot.php';
