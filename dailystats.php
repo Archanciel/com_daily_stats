@@ -188,7 +188,7 @@ if(version_compare(JVERSION,'1.6.0','ge')) {
 
 echo $select_category_section_list;
 
-echo '<input type="submit" name="chart_whole_category_button" value="Chart whole category"';
+echo '<input type="submit" class="button" name="chart_whole_category_button" value="Chart whole category"';
 echo 'onclick="handleChartWholeCategoryButtonPressed(this)" />';
 
 // ---- article ----------------------------------------
