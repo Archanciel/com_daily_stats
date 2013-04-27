@@ -17,7 +17,27 @@ require_once JPATH_COMPONENT_ADMINISTRATOR.'/dailyStatsConstants.php';
 
 class DailyStatsDao {
 	/**
-	 *
+	 * Explaining the MAX($yValName) in the CHART_MODE_ARTICLE query below:
+	 * 
+	 * Without it, for an article with more than one attachments, the query returns
+	 * 
+	 * 	     downl hits 
+	 * 23-04-2013 	0 	0
+	 * 24-04-2013 	1 	33
+	 * 24-04-2013 	0 	0
+	 * 24-04-2013 	0 	0
+	 * 25-04-2013 	11 	36
+	 * 25-04-2013 	0 	36
+	 * 25-04-2013 	0 	36
+	 * 
+	 * which results in ploting a 0 instead of a 33 value for 24-04-2013 !
+	 * 
+	 * with the MAX($yValName) and GRUUP BY date addition, the result is
+	 * 
+	 * 23-04-2013 	0 	0
+	 * 24-04-2013 	1 	33
+	 * 25-04-2013 	11 	36
+	 * 
 	 * @param unknown_type $articleId
 	 * @param unknown_type $categoryId
 	 * @param unknown_type $yValName	either date_hits or date_downloads
@@ -29,11 +49,12 @@ class DailyStatsDao {
 			case CHART_MODE_ARTICLE:
 				$qu =  "SELECT DATE_FORMAT(T1.date,'%d-%m-%Y'), T1.{$yValName}
 				FROM (
-				SELECT date, $yValName
-				FROM #__daily_stats
-				WHERE article_id = $articleId
-				ORDER BY date DESC
-				LIMIT " . MAX_PLOT_POINTS . "
+					SELECT date, MAX($yValName) as $yValName
+					FROM #__daily_stats
+					WHERE article_id = $articleId
+					GROUP BY date
+					ORDER BY date DESC
+					LIMIT " . MAX_PLOT_POINTS . "
 				) T1
 				ORDER BY T1.date";
 				return $qu;
@@ -41,12 +62,12 @@ class DailyStatsDao {
 			case CHART_MODE_CATEGORY:
 				$qu =	"SELECT DATE_FORMAT(T1.date,'%d-%m-%Y'), T1.sum AS {$yValName}
 				FROM (
-				SELECT s.date, SUM(s.{$yValName}) AS sum
-				FROM #__daily_stats AS s, #__content as c
-				WHERE s.article_id = c.id AND c.sectionid = $categoryId
-				GROUP BY s.date
-				ORDER BY s.date DESC
-				LIMIT " . MAX_PLOT_POINTS . "
+					SELECT s.date, SUM(s.{$yValName}) AS sum
+					FROM #__daily_stats AS s, #__content as c
+					WHERE s.article_id = c.id AND c.sectionid = $categoryId
+					GROUP BY s.date
+					ORDER BY s.date DESC
+					LIMIT " . MAX_PLOT_POINTS . "
 				) T1
 				ORDER BY T1.date";
 				return $qu;
@@ -61,13 +82,13 @@ class DailyStatsDao {
 				// plotting total site (all categries activity
 				$qu =	"SELECT DATE_FORMAT(T1.date,'%d-%m-%Y'), T1.sum AS {$yValName}
 				FROM (
-				SELECT s.date, SUM(s.{$yValName}) AS sum
-				FROM #__daily_stats AS s, #__content as c
-				WHERE s.article_id = c.id 
-				AND c.sectionid NOT IN ($excludedCategories)
-				GROUP BY s.date
-				ORDER BY s.date DESC
-				LIMIT " . MAX_PLOT_POINTS . "
+					SELECT s.date, SUM(s.{$yValName}) AS sum
+					FROM #__daily_stats AS s, #__content as c
+					WHERE s.article_id = c.id 
+					AND c.sectionid NOT IN ($excludedCategories)
+					GROUP BY s.date
+					ORDER BY s.date DESC
+					LIMIT " . MAX_PLOT_POINTS . "
 				) T1
 				ORDER BY T1.date";
 				return $qu;
