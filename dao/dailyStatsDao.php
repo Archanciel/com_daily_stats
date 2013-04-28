@@ -189,10 +189,10 @@ class DailyStatsDao {
 		return $qu;
 	}
 	
-	public static function getLastAndTotalHitsArr($chartMode, $id = NULL) {
+	public static function getLastAndTotalHitsAndDownloadsArr($chartMode, $id = NULL) {
 		switch ($chartMode) {
 			case CHART_MODE_ARTICLE:
-				$qu = self::getLastAndTotalHitsForArticleQuery($id);
+				$qu = self::getLastAndTotalHitsAndDownloadsForArticleQuery($id);
 				$rows = self::executeQuery($qu);
 				
 				$ret[DATE_IDX] = $rows[0]->displ_date;
@@ -202,7 +202,7 @@ class DailyStatsDao {
 				$ret[TOTAL_DOWNLOADS_IDX] = $rows[0]->total_downloads_to_date;
 				break;
 			case CHART_MODE_CATEGORY:
-				$qu = self::getLastAndTotalHitsForCategoryQuery($id);
+				$qu = self::getLastAndTotalHitsAndDownloadsForCategoryQuery($id);
 				$rows = self::executeQuery($qu);
 				
 				$ret[DATE_IDX] = $rows[0]->displ_date;
@@ -218,7 +218,7 @@ class DailyStatsDao {
 					$excludedCategories = EXCLUDED_J15_SECTIONS_SET;
 				}
 				
-				$qu = self::getLastAndTotalHitsForAllCategoriesQuery($excludedCategories);
+				$qu = self::getLastAndTotalHitsAndDownloadsForAllCategoriesQuery($excludedCategories);
 				$rows = self::executeQuery($qu);
 				
 				$ret[DATE_IDX] = $rows[0]->displ_date;
@@ -234,7 +234,7 @@ class DailyStatsDao {
 		return $ret;
 	}
 	
-	private static function getLastAndTotalHitsForArticleQuery($articleId) {
+	private static function getLastAndTotalHitsAndDownloadsForArticleQuery($articleId) {
 		$qu = 	"SELECT DATE_FORMAT(date,'%d-%m') as displ_date, date_hits, total_hits_to_date, date_downloads, total_downloads_to_date
 		FROM #__daily_stats
 		WHERE article_id = $articleId
@@ -245,7 +245,7 @@ class DailyStatsDao {
 		return $qu;
 	}
 	
-	private static function getLastAndTotalHitsForCategoryQuery($categoryId) {
+	private static function getLastAndTotalHitsAndDownloadsForCategoryQuery($categoryId) {
 		$qu = 	"SELECT DATE_FORMAT(s.date,'%d-%m') as displ_date, SUM(s.date_hits) date_hits, SUM(s.total_hits_to_date) total_hits_to_date, SUM(s.date_downloads) date_downloads, SUM(s.total_downloads_to_date) total_downloads_to_date
 		FROM #__daily_stats AS s, #__content as c
 		WHERE s.article_id = c.id
@@ -256,7 +256,7 @@ class DailyStatsDao {
 		return $qu;
 	}
 	
-	private static function getLastAndTotalHitsForAllCategoriesQuery($excludedCategories) {
+	private static function getLastAndTotalHitsAndDownloadsForAllCategoriesQuery($excludedCategories) {
 		$qu = 	"SELECT DATE_FORMAT(s.date,'%d-%m') as displ_date, SUM(s.date_hits) date_hits, SUM(s.total_hits_to_date) total_hits_to_date, SUM(s.date_downloads) date_downloads, SUM(s.total_downloads_to_date) total_downloads_to_date
 		FROM #__daily_stats AS s, #__content as c
 		WHERE s.article_id = c.id

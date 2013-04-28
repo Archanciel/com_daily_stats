@@ -100,13 +100,13 @@ foreach ($catSecRows as $catSecRow) {
 	// store selected category title
 	if ($catSecRow->id == $categorySectionId) {
 		$displayDataTitle = $catSecRow->title;
-		$lastAndTotalHitsArr = DailyStatsDao::getLastAndTotalHitsArr($chartMode,$categorySectionId);
+		$lastAndTotalHitsArr = DailyStatsDao::getLastAndTotalHitsAndDownloadsArr($chartMode,$categorySectionId);
 	}
 }
 
 if ($chartMode == CHART_MODE_CATEGORY_ALL) {
 	$displayDataTitle = 'All categories';
-	$lastAndTotalHitsArr = DailyStatsDao::getLastAndTotalHitsArr($chartMode);
+	$lastAndTotalHitsArr = DailyStatsDao::getLastAndTotalHitsAndDownloadsArr($chartMode);
 }
 
 $lastAndTotalHitsTitle = ". Last ({$lastAndTotalHitsArr[DATE_IDX]}): {$lastAndTotalHitsArr[LAST_HITS_IDX]}. Total: {$lastAndTotalHitsArr[TOTAL_HITS_IDX]}.";
@@ -139,7 +139,7 @@ if (!empty($articleRows)) {
 		// store selected article title
 		if ($articleRow->id == $articleId) {
 			$displayDataTitle = $articleRow->title . ' (created ' . $articleRow->creation_date . ')';
-			$lastAndTotalHitsArr = DailyStatsDao::getLastAndTotalHitsArr($chartMode,$articleId);
+			$lastAndTotalHitsArr = DailyStatsDao::getLastAndTotalHitsAndDownloadsArr($chartMode,$articleId);
 			$lastAndTotalHitsTitle = ". Last ({$lastAndTotalHitsArr[DATE_IDX]}): {$lastAndTotalHitsArr[LAST_HITS_IDX]}. Total: {$lastAndTotalHitsArr[TOTAL_HITS_IDX]}.";
 			$lastAndTotalDownloadsTitle = ". Last ({$lastAndTotalHitsArr[DATE_IDX]}): {$lastAndTotalHitsArr[LAST_DOWNLOADS_IDX]}. Total: {$lastAndTotalHitsArr[TOTAL_DOWNLOADS_IDX]}.";
 		}
