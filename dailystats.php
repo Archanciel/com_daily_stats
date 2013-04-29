@@ -220,7 +220,7 @@ if (($chartMode == CHART_MODE_ARTICLE	&&
 
 	$plot_info = new stdclass();
 	$plot_info->id = 1;		// the id must match the html element that the chart will be drawn in
-	$plot_info->chart_title = "Hits: " . $displayDataTitle . $lastAndTotalHitsTitle;
+ 	$plot_info->chart_title = "Hits: " . $displayDataTitle . $lastAndTotalHitsTitle;
 	$plot_info->chart_type = CHART_TYPE_BAR_V_GROUP;
 	$plot_info->x_size = CHART_X_SIZE;
 	$plot_info->y_size = 280;
@@ -271,7 +271,7 @@ if (($chartMode == CHART_MODE_ARTICLE	&&
 	$plot_info->chart_title = "Downloads: " . $displayDataTitle . $lastAndTotalDownloadsTitle;
 	$plot_info->chart_type = CHART_TYPE_BAR_V_GROUP;
 	$plot_info->x_size = CHART_X_SIZE;
-	$plot_info->y_size = 180;
+	$plot_info->y_size = 200;
 	$plot_info->x_title = "Date";
 	$plot_info->x_labels = 10;
 	$plot_info->x_format = FORMAT_DATE_DMY;
