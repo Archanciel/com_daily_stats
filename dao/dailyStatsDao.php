@@ -153,7 +153,7 @@ class DailyStatsDao {
 	 * @return string
 	 */
 	private static function getArticleQuery($categorySectionId) {
-		return "SELECT id, title, DATE_FORMAT(created,'%a %D, %M %Y') as creation_date
+		return "SELECT id, title, DATE_FORMAT(created,'%a %D, %M %y') as creation_date
 				FROM #__content WHERE sectionid = $categorySectionId
 				ORDER BY title";
 	}
@@ -234,14 +234,59 @@ class DailyStatsDao {
 		return $ret;
 	}
 	
+	/*
+	 * Initial query:
+	 * 
+	 * SELECT DATE_FORMAT(date,'%d-%m') as displ_date, date_hits, total_hits_to_date, date_downloads, total_downloads_to_date
+	 * 		FROM jos_daily_stats
+	 * 		WHERE article_id = 502
+	 * 		AND date = (
+	 * 				SELECT MAX(date)
+	 * 				FROM jos_daily_stats t
+	 * 				WHERE article_id = t.article_id
+	 * 			)
+	 * 
+	 * Res:
+	 * 		
+	 * date 		d_hits 	tot_hits_td d_downl  tot_downl_td
+	 * 26-04 		  37		106 	0 			1
+	 * 26-04 		  37 		106 	0 			1
+	 * 26-04 		  37 		106 	5 			17		
+	 * 
+	 * 
+	 * Fixed query:
+	 * 		
+	 * SELECT T1.date, T1.date_hits, T1.total_hits_to_date, T1.date_downloads, T1.total_downloads_to_date FROM (
+	 * 	SELECT date, date_hits, total_hits_to_date, date_downloads, total_downloads_to_date
+	 * 			FROM jos_daily_stats
+	 * 			WHERE article_id = 502
+	 * 			AND date = (
+	 * 					SELECT MAX(date)
+	 * 					FROM jos_daily_stats t
+	 * 					WHERE article_id = t.article_id
+	 * 				)
+	 * ) T1
+	 * ORDER BY T1.total_downloads_to_date DESC
+	 * LIMIT 1
+	 * 
+	 * Res:
+	 * 
+	 * date 		d_hits 	tot_hits_td d_downl  tot_downl_td
+	 * 2013-04-26 	  37 	   106 		   5			17
+	 */
 	private static function getLastAndTotalHitsAndDownloadsForArticleQuery($articleId) {
-		$qu =  "SELECT DATE_FORMAT(date,'%d-%m') as displ_date, date_hits, total_hits_to_date, date_downloads, total_downloads_to_date
-				FROM #__daily_stats
-				WHERE article_id = $articleId
-				AND date = (
-					SELECT MAX(date)
-					FROM #__daily_stats t
-					WHERE article_id = t.article_id)";
+		$qu =  "SELECT DATE_FORMAT(T1.date,'%d-%m') as displ_date, T1.date_hits, T1.total_hits_to_date, T1.date_downloads, T1.total_downloads_to_date FROM (
+					SELECT date, date_hits, total_hits_to_date, date_downloads, total_downloads_to_date
+						FROM #__daily_stats
+						WHERE article_id = $articleId
+						AND date = (
+							SELECT MAX(date)
+							FROM #__daily_stats t
+							WHERE article_id = t.article_id
+						)
+				) T1
+				ORDER BY T1.total_downloads_to_date DESC
+				LIMIT 1";
 		return $qu;
 	}
 	
