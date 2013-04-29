@@ -154,8 +154,8 @@ class DailyStatsDao {
 	 */
 	private static function getArticleQuery($categorySectionId) {
 		return "SELECT id, title, DATE_FORMAT(created,'%a %D, %M %Y') as creation_date
-		FROM #__content WHERE sectionid = $categorySectionId
-		ORDER BY title";
+				FROM #__content WHERE sectionid = $categorySectionId
+				ORDER BY title";
 	}
 	
 	/**
@@ -179,12 +179,12 @@ class DailyStatsDao {
 			$excludedCategories = EXCLUDED_J15_SECTIONS_SET;
 		}
 
-		$qu = "SELECT DISTINCT c.id, c.title, DATE_FORMAT(c.created,'%a %D, %M %Y') as creation_date
-		FROM #__daily_stats AS s, #__content as c
-		WHERE s.article_id = c.id
-		AND c.sectionid NOT IN ($excludedCategories)		
-		ORDER BY c.created DESC
-		LIMIT $articleNumber";
+		$qu =  "SELECT DISTINCT c.id, c.title, DATE_FORMAT(c.created,'%a %D, %M %Y') as creation_date
+				FROM #__daily_stats AS s, #__content as c
+				WHERE s.article_id = c.id
+				AND c.sectionid NOT IN ($excludedCategories)		
+				ORDER BY c.created DESC
+				LIMIT $articleNumber";
 
 		return $qu;
 	}
@@ -235,35 +235,35 @@ class DailyStatsDao {
 	}
 	
 	private static function getLastAndTotalHitsAndDownloadsForArticleQuery($articleId) {
-		$qu = 	"SELECT DATE_FORMAT(date,'%d-%m') as displ_date, date_hits, total_hits_to_date, date_downloads, total_downloads_to_date
-		FROM #__daily_stats
-		WHERE article_id = $articleId
-		AND date = (
-		SELECT MAX(date)
-		FROM #__daily_stats t
-		WHERE article_id = t.article_id)";
+		$qu =  "SELECT DATE_FORMAT(date,'%d-%m') as displ_date, date_hits, total_hits_to_date, date_downloads, total_downloads_to_date
+				FROM #__daily_stats
+				WHERE article_id = $articleId
+				AND date = (
+					SELECT MAX(date)
+					FROM #__daily_stats t
+					WHERE article_id = t.article_id)";
 		return $qu;
 	}
 	
 	private static function getLastAndTotalHitsAndDownloadsForCategoryQuery($categoryId) {
-		$qu = 	"SELECT DATE_FORMAT(s.date,'%d-%m') as displ_date, SUM(s.date_hits) date_hits, SUM(s.total_hits_to_date) total_hits_to_date, SUM(s.date_downloads) date_downloads, SUM(s.total_downloads_to_date) total_downloads_to_date
-		FROM #__daily_stats AS s, #__content as c
-		WHERE s.article_id = c.id
-		AND c.sectionid = $categoryId
-		AND s.date = (
-		SELECT MAX(date)
-		FROM #__daily_stats)";
+		$qu =  "SELECT DATE_FORMAT(s.date,'%d-%m') as displ_date, SUM(s.date_hits) date_hits, SUM(s.total_hits_to_date) total_hits_to_date, SUM(s.date_downloads) date_downloads, SUM(s.total_downloads_to_date) total_downloads_to_date
+				FROM #__daily_stats AS s, #__content as c
+				WHERE s.article_id = c.id
+				AND c.sectionid = $categoryId
+				AND s.date = (
+					SELECT MAX(date)
+					FROM #__daily_stats)";
 		return $qu;
 	}
 	
 	private static function getLastAndTotalHitsAndDownloadsForAllCategoriesQuery($excludedCategories) {
-		$qu = 	"SELECT DATE_FORMAT(s.date,'%d-%m') as displ_date, SUM(s.date_hits) date_hits, SUM(s.total_hits_to_date) total_hits_to_date, SUM(s.date_downloads) date_downloads, SUM(s.total_downloads_to_date) total_downloads_to_date
-		FROM #__daily_stats AS s, #__content as c
-		WHERE s.article_id = c.id
-		AND c.sectionid NOT IN ($excludedCategories)
-		AND s.date = (
-		SELECT MAX(date)
-		FROM #__daily_stats)";
+		$qu =  "SELECT DATE_FORMAT(s.date,'%d-%m') as displ_date, SUM(s.date_hits) date_hits, SUM(s.total_hits_to_date) total_hits_to_date, SUM(s.date_downloads) date_downloads, SUM(s.total_downloads_to_date) total_downloads_to_date
+				FROM #__daily_stats AS s, #__content as c
+				WHERE s.article_id = c.id
+				AND c.sectionid NOT IN ($excludedCategories)
+				AND s.date = (
+					SELECT MAX(date)
+					FROM #__daily_stats)";
 		return $qu;
 	}
 }
