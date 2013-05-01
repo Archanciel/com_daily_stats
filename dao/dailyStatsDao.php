@@ -153,7 +153,7 @@ class DailyStatsDao {
 	 * @return string
 	 */
 	private static function getArticleQuery($categorySectionId) {
-		return "SELECT id, title, DATE_FORMAT(created,'%a %D, %M %y') as creation_date
+		return "SELECT id, title, DATE_FORMAT(created,'%a %D, %M %Y') as creation_date
 				FROM #__content WHERE sectionid = $categorySectionId
 				ORDER BY title";
 	}
