@@ -1,0 +1,101 @@
+<!DOCTYPE dataset SYSTEM "dataset.dtd">
+<dataset>
+	<table name="jos_content">
+		<column>id</column>
+		<column>title</column>
+		<column>alias</column>
+		<column>title_alias</column>
+		<column>introtext</column>
+		<column>fulltext</column>
+		<column>state</column>
+		<column>sectionid</column>
+		<column>mask</column>
+		<column>catid</column>
+		<column>created</column>
+		<column>created_by</column>
+		<column>created_by_alias</column>
+		<column>modified</column>
+		<column>modified_by</column>
+		<column>checked_out</column>
+		<column>checked_out_time</column>
+		<column>publish_up</column>
+		<column>publish_down</column>
+		<column>images</column>
+		<column>urls</column>
+		<column>attribs</column>
+		<column>version</column>
+		<column>parentid</column>
+		<column>ordering</column>
+		<column>metakey</column>
+		<column>metadesc</column>
+		<column>access</column>
+		<column>hits</column>
+		<column>metadata</column>
+		<row>
+			<value>1</value>
+			<value>Great Barrier Reef</value>
+			<value>great-barrier-reef</value>
+			<value></value>
+			<value><p>The Great Barrier Reef is the largest coral reef system composed of over 2,900 individual reefs[3] and 900 islands stretching for over 3,000 kilometres (1,600 mi) over an area of approximately 344,400 square kilometres (133,000 sq mi). The reef is located in the Coral Sea, off the coast of Queensland in northeast Australia.</p>\r\n<p>http://en.wikipedia.org/wiki/Great_Barrier_Reef</p></value>
+			<value><p>The Great Barrier Reef can be seen from outer space and is the world''s biggest single structure made by living organisms. This reef structure is composed of and built by billions of tiny organisms, known as coral polyps. The Great Barrier Reef supports a wide diversity of life, and was selected as a World Heritage Site in 1981.CNN has labelled it one of the 7 natural wonders of the world. The Queensland National Trust has named it a state icon of Queensland.</p>\r\n<p>A large part of the reef is protected by the Great Barrier Reef Marine Park, which helps to limit the impact of human use, such as overfishing and tourism. Other environmental pressures to the reef and its ecosystem include water quality from runoff, climate change accompanied by mass coral bleaching, and cyclic outbreaks of the crown-of-thorns starfish.</p>\r\n<p>The Great Barrier Reef has long been known to and utilised by the Aboriginal Australian and Torres Strait Islander peoples, and is an important part of local groups'' cultures and spirituality. The reef is a very popular destination for tourists, especially in the Whitsundays and Cairns regions. Tourism is also an important economic activity for the region. Fishing also occurs in the region, generating AU$ 1 billion per year.</p></value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value>24</value>
+			<value>2009-06-22 11:07:08</value>
+			<value>42</value>
+			<value></value>
+			<value>2009-06-22 11:14:50</value>
+			<value>42</value>
+			<value>0</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value></value>
+			<value></value>
+			<value>{"show_title":"","link_titles":"","show_intro":"","show_category":"","link_category":"","article-allow_ratings":"","article-allow_comments":"","show_author":"","show_create_date":"","show_modify_date":"","show_print_icon":"","show_email_icon":"","readmore":"","page_title":"","layout":""}</value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value></value>
+			<value></value>
+			<value>1</value>
+			<value>0</value>
+			<value>{"robots":"","author":""}</value>
+		</row>
+		<row>
+			<value>2</value>
+			<value>Cradle Mountain-Lake St Clair National Park</value>
+			<value>cradle-mountain-lake-st-clair-national-park</value>
+			<value></value>
+			<value><p>Cradle Mountain-Lake St Clair National Park is located in the Central Highlands area of Tasmania (Australia), 165 km northwest of Hobart. The park contains many walking trails, and is where hikes along the well-known Overland Track usually begins. Major features are Cradle Mountain and Barn Bluff in the northern end, Mount Pelion East, Mount Pelion West, Mount Oakleigh and Mount Ossa in the middle and Lake St Clair in the southern end of the park. The park is part of the Tasmanian Wilderness World Heritage Area.</p>\r\n<p>http://en.wikipedia.org/wiki/Cradle_Mountain-Lake_St_Clair_National_Park</p></value>
+			<value><h3>Access and usage fee</h3>\r\n<p>Access from the south (Lake St. Clair) is usually from Derwent Bridge on the Lyell Highway. Northern access (Cradle Valley) is usually via Sheffield, Wilmot or Mole Creek. A less frequently used entrance is via the Arm River Track, from the east.</p>\r\n<p>In 2005, the Tasmanian Parks &amp; Wildlife Service introduced a booking system &amp; fee for use of the Overland Track over peak periods. Initially the fee was 100 Australian dollars, but this was raised to 150 Australian dollars in 2007. The money that is collected is used to finance the park ranger organisation, track maintenance, building of new facilities and rental of helicopter transport to remove waste from the toilets at the huts in the park.</p></value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value>25</value>
+			<value>2009-06-22 11:17:24</value>
+			<value>42</value>
+			<value></value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value></value>
+			<value></value>
+			<value>{"show_title":"","link_titles":"","show_intro":"","show_category":"","link_category":"","article-allow_ratings":"","article-allow_comments":"","show_author":"","show_create_date":"","show_modify_date":"","show_print_icon":"","show_email_icon":"","readmore":"","page_title":"","layout":""}</value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value></value>
+			<value></value>
+			<value>1</value>
+			<value>0</value>
+			<value>{"robots":"","author":""}</value>
+		</row>
+
+	</table>
+	
+</dataset>

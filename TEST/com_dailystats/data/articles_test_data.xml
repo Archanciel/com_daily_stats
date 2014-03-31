@@ -1,0 +1,502 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE dataset SYSTEM "dataset.dtd">
+<dataset>
+	<table name="jos_content">
+		<column>id</column>
+		<column>title</column>
+		<column>alias</column>
+		<column>title_alias</column>
+		<column>introtext</column>
+		<column>fulltext</column>
+		<column>state</column>
+		<column>sectionid</column>
+		<column>mask</column>
+		<column>catid</column>
+		<column>created</column>
+		<column>created_by</column>
+		<column>created_by_alias</column>
+		<column>modified</column>
+		<column>modified_by</column>
+		<column>checked_out</column>
+		<column>checked_out_time</column>
+		<column>publish_up</column>
+		<column>publish_down</column>
+		<column>images</column>
+		<column>urls</column>
+		<column>attribs</column>
+		<column>version</column>
+		<column>parentid</column>
+		<column>ordering</column>
+		<column>metakey</column>
+		<column>metadesc</column>
+		<column>access</column>
+		<column>hits</column>
+		<column>metadata</column>
+		<row>
+			<value>1</value>
+			<value>A</value>
+			<value>a</value>
+			<value></value>
+			<value>&lt;p&gt;Année: 2006&lt;/p&gt;
+&lt;p&gt;Durée: 40&apos; 57&apos;&apos;&lt;/p&gt;
+&lt;p&gt;Article A.&lt;/p&gt;
+&lt;p&gt;Source: &lt;a href=&quot;http://histoirevivante.rsr.ch/index.html?siteSect=1005&amp;amp;sid=10381313&amp;amp;cKey=1236843106000&quot; target=&quot;_blank&quot;&gt;RSR - Histoire Vivante: Paroles de démographes &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;{audio}/attachments/XXX{/audio}&lt;/p&gt;
+&lt;div style=&quot;visibility: hidden; height: 0px;&quot;&gt;{enclose XXX}&lt;/div&gt;
+&lt;p&gt;Ecouter également &lt;a class=&quot;ULK&quot; href=&quot;index.php?option=com_content&amp;amp;view=article&amp;amp;catid=103:francais&amp;amp;id=11:k&quot;&gt;K&lt;/a&gt;, &lt;a class=&quot;LK&quot; href=&quot;index.php?option=com_content&amp;amp;view=article&amp;amp;catid=103:francais&amp;amp;id=10:j&quot;&gt;J&lt;/a&gt;, &lt;a href=&quot;index.php?option=com_content&amp;amp;view=article&amp;amp;catid=103:francais&amp;amp;id=12:l&quot;&gt;L&lt;/a&gt;, &lt;a class=&quot;ULK&quot; href=&quot;index.php?option=com_content&amp;amp;view=article&amp;amp;catid=103:francais&amp;amp;id=9:i&quot;&gt;I&lt;/a&gt;, &lt;a class=&quot;LK&quot; href=&quot;index.php?option=com_content&amp;amp;view=article&amp;amp;catid=103:francais&amp;amp;id=8:h&quot;&gt;H&lt;/a&gt;, &lt;a class=&quot;ULK&quot; href=&quot;index.php?option=com_content&amp;amp;view=article&amp;amp;catid=103:francais&amp;amp;id=7:g&quot;&gt;G&lt;/a&gt;, &lt;a class=&quot;ULK&quot; href=&quot;index.php?option=com_content&amp;amp;view=article&amp;amp;catid=103:francais&amp;amp;id=6:f&quot;&gt;F&lt;/a&gt;, &lt;a class=&quot;ULK&quot; href=&quot;index.php?option=com_content&amp;amp;view=article&amp;amp;catid=103:francais&amp;amp;id=5:e&quot;&gt;E&lt;/a&gt;, &lt;a class=&quot;LK&quot; href=&quot;index.php?option=com_content&amp;amp;view=article&amp;amp;catid=103:francais&amp;amp;id=4:d&quot;&gt;D&lt;/a&gt;, &lt;a class=&quot;LK&quot; href=&quot;index.php?option=com_content&amp;amp;view=article&amp;amp;catid=103:francais&amp;amp;id=3:c&quot;&gt;C&lt;/a&gt;,  &lt;a class=&quot;LK&quot; href=&quot;index.php?option=com_content&amp;amp;view=article&amp;amp;catid=103:francais&amp;amp;id=2:b&quot;&gt;B&lt;/a&gt;, a class=&quot;LK&quot; href=&quot;index.php?option=com_content&amp;amp;view=article&amp;amp;catid=103:francais&amp;amp;id=13:m&quot;&gt;M&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;A voir&lt;/p&gt;</value>
+			<value><h3>Access and usage fee</h3>\r\n<p>Access from the south (Lake St. Clair) is usually from Derwent Bridge on the Lyell Highway. Northern access (Cradle Valley) is usually via Sheffield, Wilmot or Mole Creek. A less frequently used entrance is via the Arm River Track, from the east.</p>\r\n<p>In 2005, the Tasmanian Parks &amp; Wildlife Service introduced a booking system &amp; fee for use of the Overland Track over peak periods. Initially the fee was 100 Australian dollars, but this was raised to 150 Australian dollars in 2007. The money that is collected is used to finance the park ranger organisation, track maintenance, building of new facilities and rental of helicopter transport to remove waste from the toilets at the huts in the park.</p></value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value>103</value>
+			<value>2009-06-22 11:17:24</value>
+			<value>42</value>
+			<value></value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value></value>
+			<value></value>
+			<value>{"show_title":"","link_titles":"","show_intro":"","show_category":"","link_category":"","article-allow_ratings":"","article-allow_comments":"","show_author":"","show_create_date":"","show_modify_date":"","show_print_icon":"","show_email_icon":"","readmore":"","page_title":"","layout":""}</value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value></value>
+			<value></value>
+			<value>1</value>
+			<value>0</value>
+			<value>{"robots":"","author":""}</value>
+		</row>
+		<row>
+			<value>2</value>
+			<value>B</value>
+			<value>b</value>
+			<value></value>
+			<value>&lt;p&gt;Année: 2006&lt;/p&gt;
+&lt;p&gt;Durée: 40&apos; 57&apos;&apos;&lt;/p&gt;
+&lt;p&gt;Article B.&lt;/p&gt;
+&lt;p&gt;Source: &lt;a href=&quot;http://histoirevivante.rsr.ch/index.html?siteSect=1005&amp;amp;sid=10381313&amp;amp;cKey=1236843106000&quot; target=&quot;_blank&quot;&gt;RSR - Histoire Vivante: Paroles de démographes &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;{audio}/attachments/XXX{/audio}&lt;/p&gt;
+&lt;div style=&quot;visibility: hidden; height: 0px;&quot;&gt;{enclose XXX}&lt;/div&gt;
+&lt;p&gt;Ecouter également&lt;/p&gt;
+&lt;p&gt;A voir&lt;/p&gt;</value>
+			<value><h3>Access and usage fee</h3>\r\n<p>Access from the south (Lake St. Clair) is usually from Derwent Bridge on the Lyell Highway. Northern access (Cradle Valley) is usually via Sheffield, Wilmot or Mole Creek. A less frequently used entrance is via the Arm River Track, from the east.</p>\r\n<p>In 2005, the Tasmanian Parks &amp; Wildlife Service introduced a booking system &amp; fee for use of the Overland Track over peak periods. Initially the fee was 100 Australian dollars, but this was raised to 150 Australian dollars in 2007. The money that is collected is used to finance the park ranger organisation, track maintenance, building of new facilities and rental of helicopter transport to remove waste from the toilets at the huts in the park.</p></value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value>25</value>
+			<value>2009-06-22 11:17:24</value>
+			<value>42</value>
+			<value></value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value></value>
+			<value></value>
+			<value>{"show_title":"","link_titles":"","show_intro":"","show_category":"","link_category":"","article-allow_ratings":"","article-allow_comments":"","show_author":"","show_create_date":"","show_modify_date":"","show_print_icon":"","show_email_icon":"","readmore":"","page_title":"","layout":""}</value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value></value>
+			<value></value>
+			<value>1</value>
+			<value>0</value>
+			<value>{"robots":"","author":""}</value>
+		</row>
+		<row>
+			<value>3</value>
+			<value>C</value>
+			<value>c</value>
+			<value></value>
+			<value>&lt;p&gt;Année: 2006&lt;/p&gt;
+&lt;p&gt;Durée: 40&apos; 57&apos;&apos;&lt;/p&gt;
+&lt;p&gt;Article C.&lt;/p&gt;
+&lt;p&gt;Source: &lt;a href=&quot;http://histoirevivante.rsr.ch/index.html?siteSect=1005&amp;amp;sid=10381313&amp;amp;cKey=1236843106000&quot; target=&quot;_blank&quot;&gt;RSR - Histoire Vivante: Paroles de démographes &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;{audio}/attachments/XXX{/audio}&lt;/p&gt;
+&lt;div style=&quot;visibility: hidden; height: 0px;&quot;&gt;{enclose XXX}&lt;/div&gt;
+&lt;p&gt;Ecouter également &lt;a class=&quot;LK&quot; href=&quot;index.php?option=com_content&amp;amp;view=article&amp;amp;catid=103:francais&amp;amp;id=2:b&quot;&gt;B&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;A voir&lt;/p&gt;</value>
+			<value><h3>Access and usage fee</h3>\r\n<p>Access from the south (Lake St. Clair) is usually from Derwent Bridge on the Lyell Highway. Northern access (Cradle Valley) is usually via Sheffield, Wilmot or Mole Creek. A less frequently used entrance is via the Arm River Track, from the east.</p>\r\n<p>In 2005, the Tasmanian Parks &amp; Wildlife Service introduced a booking system &amp; fee for use of the Overland Track over peak periods. Initially the fee was 100 Australian dollars, but this was raised to 150 Australian dollars in 2007. The money that is collected is used to finance the park ranger organisation, track maintenance, building of new facilities and rental of helicopter transport to remove waste from the toilets at the huts in the park.</p></value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value>25</value>
+			<value>2009-06-22 11:17:24</value>
+			<value>42</value>
+			<value></value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value></value>
+			<value></value>
+			<value>{"show_title":"","link_titles":"","show_intro":"","show_category":"","link_category":"","article-allow_ratings":"","article-allow_comments":"","show_author":"","show_create_date":"","show_modify_date":"","show_print_icon":"","show_email_icon":"","readmore":"","page_title":"","layout":""}</value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value></value>
+			<value></value>
+			<value>1</value>
+			<value>0</value>
+			<value>{"robots":"","author":""}</value>
+		</row>
+		<row>
+			<value>4</value>
+			<value>D</value>
+			<value>d</value>
+			<value></value>
+			<value>&lt;p&gt;Année: 2006&lt;/p&gt;
+&lt;p&gt;Durée: 40&apos; 57&apos;&apos;&lt;/p&gt;
+&lt;p&gt;Article D.&lt;/p&gt;
+&lt;p&gt;Source: &lt;a href=&quot;http://histoirevivante.rsr.ch/index.html?siteSect=1005&amp;amp;sid=10381313&amp;amp;cKey=1236843106000&quot; target=&quot;_blank&quot;&gt;RSR - Histoire Vivante: Paroles de démographes &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;{audio}/attachments/XXX{/audio}&lt;/p&gt;
+&lt;div style=&quot;visibility: hidden; height: 0px;&quot;&gt;{enclose XXX}&lt;/div&gt;
+&lt;p&gt;Ecouter également &lt;a class=&quot;LK&quot; href=&quot;index.php?option=com_content&amp;amp;view=article&amp;amp;catid=103:francais&amp;amp;id=3:c&quot;&gt;C&lt;/a&gt;, &lt;a class=&quot;LK&quot; href=&quot;index.php?option=com_content&amp;amp;view=article&amp;amp;catid=103:francais&amp;amp;id=2:b&quot;&gt;B&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;A voir&lt;/p&gt;</value>
+			<value><h3>Access and usage fee</h3>\r\n<p>Access from the south (Lake St. Clair) is usually from Derwent Bridge on the Lyell Highway. Northern access (Cradle Valley) is usually via Sheffield, Wilmot or Mole Creek. A less frequently used entrance is via the Arm River Track, from the east.</p>\r\n<p>In 2005, the Tasmanian Parks &amp; Wildlife Service introduced a booking system &amp; fee for use of the Overland Track over peak periods. Initially the fee was 100 Australian dollars, but this was raised to 150 Australian dollars in 2007. The money that is collected is used to finance the park ranger organisation, track maintenance, building of new facilities and rental of helicopter transport to remove waste from the toilets at the huts in the park.</p></value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value>25</value>
+			<value>2009-06-22 11:17:24</value>
+			<value>42</value>
+			<value></value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value></value>
+			<value></value>
+			<value>{"show_title":"","link_titles":"","show_intro":"","show_category":"","link_category":"","article-allow_ratings":"","article-allow_comments":"","show_author":"","show_create_date":"","show_modify_date":"","show_print_icon":"","show_email_icon":"","readmore":"","page_title":"","layout":""}</value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value></value>
+			<value></value>
+			<value>1</value>
+			<value>0</value>
+			<value>{"robots":"","author":""}</value>
+		</row>
+		<row>
+			<value>5</value>
+			<value>E</value>
+			<value>e</value>
+			<value></value>
+			<value>&lt;p&gt;Année: 2006&lt;/p&gt;
+&lt;p&gt;Durée: 40&apos; 57&apos;&apos;&lt;/p&gt;
+&lt;p&gt;Article E. Xlink to A to remove, but already removed&lt;/p&gt;
+&lt;p&gt;Source: &lt;a href=&quot;http://histoirevivante.rsr.ch/index.html?siteSect=1005&amp;amp;sid=10381313&amp;amp;cKey=1236843106000&quot; target=&quot;_blank&quot;&gt;RSR - Histoire Vivante: Paroles de démographes &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;{audio}/attachments/XXX{/audio}&lt;/p&gt;
+&lt;div style=&quot;visibility: hidden; height: 0px;&quot;&gt;{enclose XXX}&lt;/div&gt;
+&lt;p&gt;Ecouter également&lt;/p&gt;
+&lt;p&gt;A voir&lt;/p&gt;</value>
+			<value><h3>Access and usage fee</h3>\r\n<p>Access from the south (Lake St. Clair) is usually from Derwent Bridge on the Lyell Highway. Northern access (Cradle Valley) is usually via Sheffield, Wilmot or Mole Creek. A less frequently used entrance is via the Arm River Track, from the east.</p>\r\n<p>In 2005, the Tasmanian Parks &amp; Wildlife Service introduced a booking system &amp; fee for use of the Overland Track over peak periods. Initially the fee was 100 Australian dollars, but this was raised to 150 Australian dollars in 2007. The money that is collected is used to finance the park ranger organisation, track maintenance, building of new facilities and rental of helicopter transport to remove waste from the toilets at the huts in the park.</p></value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value>25</value>
+			<value>2009-06-22 11:17:24</value>
+			<value>42</value>
+			<value></value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value></value>
+			<value></value>
+			<value>{"show_title":"","link_titles":"","show_intro":"","show_category":"","link_category":"","article-allow_ratings":"","article-allow_comments":"","show_author":"","show_create_date":"","show_modify_date":"","show_print_icon":"","show_email_icon":"","readmore":"","page_title":"","layout":""}</value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value></value>
+			<value></value>
+			<value>1</value>
+			<value>0</value>
+			<value>{"robots":"","author":""}</value>
+		</row>
+		<row>
+			<value>6</value>
+			<value>F</value>
+			<value>f</value>
+			<value></value>
+			<value>&lt;p&gt;Année: 2006&lt;/p&gt;
+&lt;p&gt;Durée: 40&apos; 57&apos;&apos;&lt;/p&gt;
+&lt;p&gt;Article F. Xlink to A placed right to remove&lt;/p&gt;
+&lt;p&gt;Source: &lt;a href=&quot;http://histoirevivante.rsr.ch/index.html?siteSect=1005&amp;amp;sid=10381313&amp;amp;cKey=1236843106000&quot; target=&quot;_blank&quot;&gt;RSR - Histoire Vivante: Paroles de démographes &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;{audio}/attachments/XXX{/audio}&lt;/p&gt;
+&lt;div style=&quot;visibility: hidden; height: 0px;&quot;&gt;{enclose XXX}&lt;/div&gt;
+&lt;p&gt;Ecouter également &lt;a href=&quot;index.php?option=com_content&amp;amp;view=article&amp;amp;catid=103:francais&amp;amp;id=3:c&quot;&gt;C&lt;/a&gt;, &lt;a href=&quot;index.php?option=com_content&amp;amp;view=article&amp;amp;catid=103:francais&amp;amp;id=1:a&quot;&gt;A&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;A voir&lt;/p&gt;</value>
+			<value><h3>Access and usage fee</h3>\r\n<p>Access from the south (Lake St. Clair) is usually from Derwent Bridge on the Lyell Highway. Northern access (Cradle Valley) is usually via Sheffield, Wilmot or Mole Creek. A less frequently used entrance is via the Arm River Track, from the east.</p>\r\n<p>In 2005, the Tasmanian Parks &amp; Wildlife Service introduced a booking system &amp; fee for use of the Overland Track over peak periods. Initially the fee was 100 Australian dollars, but this was raised to 150 Australian dollars in 2007. The money that is collected is used to finance the park ranger organisation, track maintenance, building of new facilities and rental of helicopter transport to remove waste from the toilets at the huts in the park.</p></value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value>25</value>
+			<value>2009-06-22 11:17:24</value>
+			<value>42</value>
+			<value></value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value></value>
+			<value></value>
+			<value>{"show_title":"","link_titles":"","show_intro":"","show_category":"","link_category":"","article-allow_ratings":"","article-allow_comments":"","show_author":"","show_create_date":"","show_modify_date":"","show_print_icon":"","show_email_icon":"","readmore":"","page_title":"","layout":""}</value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value></value>
+			<value></value>
+			<value>1</value>
+			<value>0</value>
+			<value>{"robots":"","author":""}</value>
+		</row>
+		<row>
+			<value>7</value>
+			<value>G</value>
+			<value>g</value>
+			<value></value>
+			<value>&lt;p&gt;Année: 2006&lt;/p&gt;
+&lt;p&gt;Durée: 40&apos; 57&apos;&apos;&lt;/p&gt;
+&lt;p&gt;Article G. Xlink to A placed left to remove&lt;/p&gt;
+&lt;p&gt;Source: &lt;a href=&quot;http://histoirevivante.rsr.ch/index.html?siteSect=1005&amp;amp;sid=10381313&amp;amp;cKey=1236843106000&quot; target=&quot;_blank&quot;&gt;RSR - Histoire Vivante: Paroles de démographes &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;{audio}/attachments/XXX{/audio}&lt;/p&gt;
+&lt;div style=&quot;visibility: hidden; height: 0px;&quot;&gt;{enclose XXX}&lt;/div&gt;
+&lt;p&gt;Ecouter également &lt;a class=&quot;LK&quot; href=&quot;index.php?option=com_content&amp;amp;view=article&amp;amp;catid=103:francais&amp;amp;id=1:a&quot;&gt;A&lt;/a&gt;, &lt;a href=&quot;index.php?option=com_content&amp;amp;view=article&amp;amp;catid=103:francais&amp;amp;id=2:b&quot;&gt;B&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;A voir&lt;/p&gt;</value>
+			<value><h3>Access and usage fee</h3>\r\n<p>Access from the south (Lake St. Clair) is usually from Derwent Bridge on the Lyell Highway. Northern access (Cradle Valley) is usually via Sheffield, Wilmot or Mole Creek. A less frequently used entrance is via the Arm River Track, from the east.</p>\r\n<p>In 2005, the Tasmanian Parks &amp; Wildlife Service introduced a booking system &amp; fee for use of the Overland Track over peak periods. Initially the fee was 100 Australian dollars, but this was raised to 150 Australian dollars in 2007. The money that is collected is used to finance the park ranger organisation, track maintenance, building of new facilities and rental of helicopter transport to remove waste from the toilets at the huts in the park.</p></value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value>25</value>
+			<value>2009-06-22 11:17:24</value>
+			<value>42</value>
+			<value></value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value></value>
+			<value></value>
+			<value>{"show_title":"","link_titles":"","show_intro":"","show_category":"","link_category":"","article-allow_ratings":"","article-allow_comments":"","show_author":"","show_create_date":"","show_modify_date":"","show_print_icon":"","show_email_icon":"","readmore":"","page_title":"","layout":""}</value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value></value>
+			<value></value>
+			<value>1</value>
+			<value>0</value>
+			<value>{"robots":"","author":""}</value>
+		</row>
+		<row>
+			<value>8</value>
+			<value>H</value>
+			<value>h</value>
+			<value></value>
+			<value>&lt;p&gt;Année: 2006&lt;/p&gt;
+&lt;p&gt;Durée: 40&apos; 57&apos;&apos;&lt;/p&gt;
+&lt;p&gt;Article H.&lt;/p&gt;
+&lt;p&gt;Source: &lt;a href=&quot;http://histoirevivante.rsr.ch/index.html?siteSect=1005&amp;amp;sid=10381313&amp;amp;cKey=1236843106000&quot; target=&quot;_blank&quot;&gt;RSR - Histoire Vivante: Paroles de démographes &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;{audio}/attachments/XXX{/audio}&lt;/p&gt;
+&lt;div style=&quot;visibility: hidden; height: 0px;&quot;&gt;{enclose XXX}&lt;/div&gt;
+&lt;p&gt;A voir&lt;/p&gt;</value>
+			<value><h3>Access and usage fee</h3>\r\n<p>Access from the south (Lake St. Clair) is usually from Derwent Bridge on the Lyell Highway. Northern access (Cradle Valley) is usually via Sheffield, Wilmot or Mole Creek. A less frequently used entrance is via the Arm River Track, from the east.</p>\r\n<p>In 2005, the Tasmanian Parks &amp; Wildlife Service introduced a booking system &amp; fee for use of the Overland Track over peak periods. Initially the fee was 100 Australian dollars, but this was raised to 150 Australian dollars in 2007. The money that is collected is used to finance the park ranger organisation, track maintenance, building of new facilities and rental of helicopter transport to remove waste from the toilets at the huts in the park.</p></value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value>25</value>
+			<value>2009-06-22 11:17:24</value>
+			<value>42</value>
+			<value></value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value></value>
+			<value></value>
+			<value>{"show_title":"","link_titles":"","show_intro":"","show_category":"","link_category":"","article-allow_ratings":"","article-allow_comments":"","show_author":"","show_create_date":"","show_modify_date":"","show_print_icon":"","show_email_icon":"","readmore":"","page_title":"","layout":""}</value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value></value>
+			<value></value>
+			<value>1</value>
+			<value>0</value>
+			<value>{"robots":"","author":""}</value>
+		</row>
+		<row>
+			<value>9</value>
+			<value>I</value>
+			<value>i</value>
+			<value></value>
+			<value>&lt;p&gt;Année: 2006&lt;/p&gt;
+&lt;p&gt;Durée: 40&apos; 57&apos;&apos;&lt;/p&gt;
+&lt;p&gt;Article I.&lt;/p&gt;
+&lt;p&gt;Source: &lt;a href=&quot;http://histoirevivante.rsr.ch/index.html?siteSect=1005&amp;amp;sid=10381313&amp;amp;cKey=1236843106000&quot; target=&quot;_blank&quot;&gt;RSR - Histoire Vivante: Paroles de démographes &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;{audio}/attachments/XXX{/audio}&lt;/p&gt;
+&lt;div style=&quot;visibility: hidden; height: 0px;&quot;&gt;{enclose XXX}&lt;/div&gt;
+&lt;p&gt;A voir&lt;/p&gt;</value>
+			<value><h3>Access and usage fee</h3>\r\n<p>Access from the south (Lake St. Clair) is usually from Derwent Bridge on the Lyell Highway. Northern access (Cradle Valley) is usually via Sheffield, Wilmot or Mole Creek. A less frequently used entrance is via the Arm River Track, from the east.</p>\r\n<p>In 2005, the Tasmanian Parks &amp; Wildlife Service introduced a booking system &amp; fee for use of the Overland Track over peak periods. Initially the fee was 100 Australian dollars, but this was raised to 150 Australian dollars in 2007. The money that is collected is used to finance the park ranger organisation, track maintenance, building of new facilities and rental of helicopter transport to remove waste from the toilets at the huts in the park.</p></value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value>25</value>
+			<value>2009-06-22 11:17:24</value>
+			<value>42</value>
+			<value></value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value></value>
+			<value></value>
+			<value>{"show_title":"","link_titles":"","show_intro":"","show_category":"","link_category":"","article-allow_ratings":"","article-allow_comments":"","show_author":"","show_create_date":"","show_modify_date":"","show_print_icon":"","show_email_icon":"","readmore":"","page_title":"","layout":""}</value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value></value>
+			<value></value>
+			<value>1</value>
+			<value>0</value>
+			<value>{"robots":"","author":""}</value>
+		</row>
+		<row>
+			<value>10</value>
+			<value>J</value>
+			<value>j</value>
+			<value></value>
+			<value>&lt;p&gt;Année: 2006&lt;/p&gt;
+&lt;p&gt;Durée: 40&apos; 57&apos;&apos;&lt;/p&gt;
+&lt;p&gt;Article J.&lt;/p&gt;
+&lt;p&gt;Source: &lt;a href=&quot;http://histoirevivante.rsr.ch/index.html?siteSect=1005&amp;amp;sid=10381313&amp;amp;cKey=1236843106000&quot; target=&quot;_blank&quot;&gt;RSR - Histoire Vivante: Paroles de démographes &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;{audio}/attachments/XXX{/audio}&lt;/p&gt;
+&lt;div style=&quot;visibility: hidden; height: 0px;&quot;&gt;{enclose XXX}&lt;/div&gt;
+&lt;p&gt;Ecouter également &lt;a class=&quot;LK&quot; href=&quot;index.php?option=com_content&amp;amp;view=article&amp;amp;catid=103:francais&amp;amp;id=1:a&quot;&gt;A&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;A voir&lt;/p&gt;</value>
+			<value><h3>Access and usage fee</h3>\r\n<p>Access from the south (Lake St. Clair) is usually from Derwent Bridge on the Lyell Highway. Northern access (Cradle Valley) is usually via Sheffield, Wilmot or Mole Creek. A less frequently used entrance is via the Arm River Track, from the east.</p>\r\n<p>In 2005, the Tasmanian Parks &amp; Wildlife Service introduced a booking system &amp; fee for use of the Overland Track over peak periods. Initially the fee was 100 Australian dollars, but this was raised to 150 Australian dollars in 2007. The money that is collected is used to finance the park ranger organisation, track maintenance, building of new facilities and rental of helicopter transport to remove waste from the toilets at the huts in the park.</p></value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value>25</value>
+			<value>2009-06-22 11:17:24</value>
+			<value>42</value>
+			<value></value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value></value>
+			<value></value>
+			<value>{"show_title":"","link_titles":"","show_intro":"","show_category":"","link_category":"","article-allow_ratings":"","article-allow_comments":"","show_author":"","show_create_date":"","show_modify_date":"","show_print_icon":"","show_email_icon":"","readmore":"","page_title":"","layout":""}</value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value></value>
+			<value></value>
+			<value>1</value>
+			<value>0</value>
+			<value>{"robots":"","author":""}</value>
+		</row>
+		<row>
+			<value>11</value>
+			<value>K</value>
+			<value>k</value>
+			<value></value>
+			<value>&lt;p&gt;Année: 2006&lt;/p&gt;
+&lt;p&gt;Durée: 40&apos; 57&apos;&apos;&lt;/p&gt;
+&lt;p&gt;Article K. Xlink to A no comma to remove&lt;/p&gt;
+&lt;p&gt;Source: &lt;a href=&quot;http://histoirevivante.rsr.ch/index.html?siteSect=1005&amp;amp;sid=10381313&amp;amp;cKey=1236843106000&quot; target=&quot;_blank&quot;&gt;RSR - Histoire Vivante: Paroles de démographes &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;{audio}/attachments/XXX{/audio}&lt;/p&gt;
+&lt;div style=&quot;visibility: hidden; height: 0px;&quot;&gt;{enclose XXX}&lt;/div&gt;
+&lt;p&gt;Ecouter également &lt;a class=&quot;ULK&quot; href=&quot;index.php?option=com_content&amp;amp;view=article&amp;amp;catid=103:francais&amp;amp;id=1:a&quot;&gt;A&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;A voir&lt;/p&gt;</value>
+			<value><h3>Access and usage fee</h3>\r\n<p>Access from the south (Lake St. Clair) is usually from Derwent Bridge on the Lyell Highway. Northern access (Cradle Valley) is usually via Sheffield, Wilmot or Mole Creek. A less frequently used entrance is via the Arm River Track, from the east.</p>\r\n<p>In 2005, the Tasmanian Parks &amp; Wildlife Service introduced a booking system &amp; fee for use of the Overland Track over peak periods. Initially the fee was 100 Australian dollars, but this was raised to 150 Australian dollars in 2007. The money that is collected is used to finance the park ranger organisation, track maintenance, building of new facilities and rental of helicopter transport to remove waste from the toilets at the huts in the park.</p></value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value>25</value>
+			<value>2009-06-22 11:17:24</value>
+			<value>42</value>
+			<value></value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value></value>
+			<value></value>
+			<value>{"show_title":"","link_titles":"","show_intro":"","show_category":"","link_category":"","article-allow_ratings":"","article-allow_comments":"","show_author":"","show_create_date":"","show_modify_date":"","show_print_icon":"","show_email_icon":"","readmore":"","page_title":"","layout":""}</value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value></value>
+			<value></value>
+			<value>1</value>
+			<value>0</value>
+			<value>{"robots":"","author":""}</value>
+		</row>
+		<row>
+			<value>12</value>
+			<value>L</value>
+			<value>l</value>
+			<value></value>
+			<value>&lt;p&gt;Année: 2006&lt;/p&gt;
+&lt;p&gt;Durée: 40&apos; 57&apos;&apos;&lt;/p&gt;
+&lt;p&gt;Article L.&lt;/p&gt;
+&lt;p&gt;Source: &lt;a href=&quot;http://histoirevivante.rsr.ch/index.html?siteSect=1005&amp;amp;sid=10381313&amp;amp;cKey=1236843106000&quot; target=&quot;_blank&quot;&gt;RSR - Histoire Vivante: Paroles de démographes &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;{audio}/attachments/XXX{/audio}&lt;/p&gt;
+&lt;div style=&quot;visibility: hidden; height: 0px;&quot;&gt;{enclose XXX}&lt;/div&gt;
+&lt;p&gt;Ecouter également &lt;a href=&quot;index.php?option=com_content&amp;amp;view=article&amp;amp;catid=103:francais&amp;amp;id=1:a&quot;&gt;A&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;A voir&lt;/p&gt;</value>
+			<value><h3>Access and usage fee</h3>\r\n<p>Access from the south (Lake St. Clair) is usually from Derwent Bridge on the Lyell Highway. Northern access (Cradle Valley) is usually via Sheffield, Wilmot or Mole Creek. A less frequently used entrance is via the Arm River Track, from the east.</p>\r\n<p>In 2005, the Tasmanian Parks &amp; Wildlife Service introduced a booking system &amp; fee for use of the Overland Track over peak periods. Initially the fee was 100 Australian dollars, but this was raised to 150 Australian dollars in 2007. The money that is collected is used to finance the park ranger organisation, track maintenance, building of new facilities and rental of helicopter transport to remove waste from the toilets at the huts in the park.</p></value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value>25</value>
+			<value>2009-06-22 11:17:24</value>
+			<value>42</value>
+			<value></value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value>0000-00-00 00:00:00</value>
+			<value></value>
+			<value></value>
+			<value>{"show_title":"","link_titles":"","show_intro":"","show_category":"","link_category":"","article-allow_ratings":"","article-allow_comments":"","show_author":"","show_create_date":"","show_modify_date":"","show_print_icon":"","show_email_icon":"","readmore":"","page_title":"","layout":""}</value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value></value>
+			<value></value>
+			<value>1</value>
+			<value>0</value>
+			<value>{"robots":"","author":""}</value>
+		</row>
+	</table>
+</dataset>
