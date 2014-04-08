@@ -2,7 +2,8 @@
 
 require_once dirname ( __FILE__ ) . '\..\lib\TestCase.php';
 
-define('PLG_XLINK_ARTICLES_PATH', JPATH_BASE . '\plugins\content\plg_xlink_articles');
+define('JPATH_COMPONENT_ADMINISTRATOR', JPATH_BASE . '\administrator\components\com_dailystats');
+define('COM_DAILYSTATS_PATH', JPATH_COMPONENT_ADMINISTRATOR);
 
 /**
  *  Defining class as abstract is sementically correct and prevents MakeGood from executing
