@@ -280,7 +280,7 @@ class DailyStatsDao {
 						FROM #__daily_stats
 						WHERE article_id = $articleId
 						AND date = (
-							SELECT MAX(date)
+							SELECT MAX(t.date)
 							FROM #__daily_stats t
 							WHERE article_id = t.article_id
 						)

@@ -10,16 +10,16 @@ class DailyStatsDaoTest extends DailyStatsTestBase {
 		parent::setUp ();
 	}
 	
-	public function testGetLinkedArticlesIdsMultipleLinksAllKinds() {
+	public function testGetLastAndTotalHitsAndDownloadsArr() {
 		$res = DailyStatsDao::getLastAndTotalHitsAndDownloadsArr(CHART_MODE_ARTICLE,1);
 		
 		$this->assertEquals(5, count($res),'count($res)');
 		
-		$this->assertEquals('01-01',$ret[DATE_IDX],'date');
-		$this->assertEquals(15,$ret[LAST_HITS_IDX],'date hits');
-		$this->assertEquals(150,$ret[TOTAL_HITS_IDX],'total hits');
-		$this->assertEquals(10,$ret[LAST_DOWNLOADS_IDX],'date downloads');
-		$this->assertEquals(100,$ret[TOTAL_DOWNLOADS_IDX],'total downloads');
+		$this->assertEquals('20-10',$res[DATE_IDX],'date');
+		$this->assertEquals(15,$res[LAST_HITS_IDX],'date hits');
+		$this->assertEquals(150,$res[TOTAL_HITS_IDX],'total hits');
+		$this->assertEquals(10,$res[LAST_DOWNLOADS_IDX],'date downloads');
+		$this->assertEquals(100,$res[TOTAL_DOWNLOADS_IDX],'total downloads');
 	}
 	
 	/**
