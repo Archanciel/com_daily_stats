@@ -277,12 +277,12 @@ class DailyStatsDao {
 	private static function getLastAndTotalHitsAndDownloadsForArticleQuery($articleId) {
 		$qu =  "SELECT DATE_FORMAT(T1.date,'%d-%m') as displ_date, T1.date_hits, T1.total_hits_to_date, T1.date_downloads, T1.total_downloads_to_date FROM (
 					SELECT date, date_hits, total_hits_to_date, date_downloads, total_downloads_to_date
-						FROM #__daily_stats
-						WHERE article_id = $articleId
+						FROM #__daily_stats ds1
+						WHERE ds1.article_id = $articleId
 						AND date = (
-							SELECT MAX(t.date)
-							FROM #__daily_stats t
-							WHERE article_id = t.article_id
+							SELECT MAX(ds2.date)
+							FROM #__daily_stats ds2
+							WHERE ds1.article_id = ds2.article_id
 						)
 				) T1
 				ORDER BY T1.total_downloads_to_date DESC
