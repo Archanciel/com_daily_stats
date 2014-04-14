@@ -11,15 +11,20 @@ class DailyStatsDaoTest extends DailyStatsTestBase {
 	}
 	
 	/**
-	 * Tests 1 article with only 1 daily stats rec
+	 * Tests last date hits and downloads and total hits and downloads obtention
+	 * for one article, one category and all categories
 	 */
 	public function testGetLastAndTotalHitsAndDownloadsArr() {
-		$this->getLastAndTotalHitsAndDownloadsArr_1_dailyStats();
-		$this->getLastAndTotalHitsAndDownloadsArr_2_dailyStats();
-		$this->getLastAndTotalHitsAndDownloadsArr_no_dailyStats();
+		// for one article
+		$this->getLastAndTotalHitsAndDownloadsArrForOneArtticle_1_dailyStats();
+		$this->getLastAndTotalHitsAndDownloadsArrForOneArtticle_2_dailyStats();
+		$this->getLastAndTotalHitsAndDownloadsArrForOneArtticle_no_dailyStats();
 	}
 	
-	private function getLastAndTotalHitsAndDownloadsArr_1_dailyStats() {
+	/**
+	 * Tests 1 article with only 1 daily stats recs
+	 */
+	private function getLastAndTotalHitsAndDownloadsArrForOneArtticle_1_dailyStats() {
 		$res = DailyStatsDao::getLastAndTotalHitsAndDownloadsArr(CHART_MODE_ARTICLE,1);
 		
 		$this->assertEquals(5, count($res),'count($res)');
@@ -32,9 +37,9 @@ class DailyStatsDaoTest extends DailyStatsTestBase {
 	}
 	
 	/**
-	 * Tests 1 article with only 2 daily stats recs
+	 * Tests 1 article with 2 daily stats recs
 	 */
-	private function getLastAndTotalHitsAndDownloadsArr_2_dailyStats() {
+	private function getLastAndTotalHitsAndDownloadsArrForOneArtticle_2_dailyStats() {
 		$res = DailyStatsDao::getLastAndTotalHitsAndDownloadsArr(CHART_MODE_ARTICLE,2);
 	
 		$this->assertEquals(5, count($res),'count($res)');
@@ -49,7 +54,7 @@ class DailyStatsDaoTest extends DailyStatsTestBase {
 	/**
 	 * Tests 1 article with no daily stats rec
 	 */
-	private function getLastAndTotalHitsAndDownloadsArr_no_dailyStats() {
+	private function getLastAndTotalHitsAndDownloadsArrForOneArtticle_no_dailyStats() {
 		$res = DailyStatsDao::getLastAndTotalHitsAndDownloadsArr(CHART_MODE_ARTICLE,3);
 		
 		$this->assertEquals(5, count($res),'count($res)');
