@@ -43,7 +43,7 @@
 			<value>1</value> <!-- state -->
 			<value>0</value> <!-- sectionid -->
 			<value>0</value> <!-- mask -->
-			<value>103</value> <!-- catid -->
+			<value>0</value> <!-- catid -->
 			<value>2009-06-22 11:17:24</value> <!-- created -->
 			<value>42</value> <!-- created_by -->
 			<value></value> <!-- created_by_alias -->
@@ -74,9 +74,9 @@
 			<value>Introtext</value> <!-- introtext -->
 			<value>Fulltext</value> <!-- fulltext -->
 			<value>1</value> <!-- state -->
-			<value>0</value> <!-- sectionid -->
+			<value>1005</value> <!-- sectionid -->
 			<value>0</value> <!-- mask -->
-			<value>103</value> <!-- catid -->
+			<value>0</value> <!-- catid -->
 			<value>2009-06-22 11:17:24</value> <!-- created -->
 			<value>42</value> <!-- created_by -->
 			<value></value> <!-- created_by_alias -->
@@ -107,9 +107,108 @@
 			<value>Introtext</value> <!-- introtext -->
 			<value>Fulltext</value> <!-- fulltext -->
 			<value>1</value> <!-- state -->
-			<value>0</value> <!-- sectionid -->
+			<value>1003</value> <!-- sectionid -->
 			<value>0</value> <!-- mask -->
-			<value>103</value> <!-- catid -->
+			<value>0</value> <!-- catid -->
+			<value>2009-06-22 11:17:24</value> <!-- created -->
+			<value>42</value> <!-- created_by -->
+			<value></value> <!-- created_by_alias -->
+			<value>0000-00-00 00:00:00</value> <!-- modified -->
+			<value>0</value> <!-- modified_by -->
+			<value>0</value> <!-- checked_out -->
+			<value>0000-00-00 00:00:00</value> <!-- checked_out_time -->
+			<value>0000-00-00 00:00:00</value> <!-- publish_up -->
+			<value>0000-00-00 00:00:00</value> <!-- publish_down -->
+			<value></value> <!-- images -->
+			<value></value> <!-- urls -->
+			<value>{"show_title":"","link_titles":"","show_intro":"","show_category":"","link_category":"","article-allow_ratings":"","article-allow_comments":"","show_author":"","show_create_date":"","show_modify_date":"","show_print_icon":"","show_email_icon":"","readmore":"","page_title":"","layout":""}</value> <!-- attribs -->
+			<value>1</value> <!-- version -->
+			<value>0</value> <!-- parentid -->
+			<value>0</value> <!-- ordering -->
+			<value></value> <!-- metakey -->
+			<value></value> <!-- metadesc -->
+			<value>1</value> <!-- access -->
+			<value>0</value> <!-- hits -->
+			<value>{"robots":"","author":""}</value> <!-- metadata -->
+		</row>
+		<row>
+			<!--  Article with 1 attached file and 1 daily stats rec  for testing category/section 1004 -->
+			<value>4</value> <!-- id -->
+			<value>D</value> <!-- title -->
+			<value>d</value> <!-- alias -->
+			<value></value> <!-- title_alias -->
+			<value>Introtext</value> <!-- introtext -->
+			<value>Fulltext</value> <!-- fulltext -->
+			<value>1</value> <!-- state -->
+			<value>1004</value> <!-- sectionid -->
+			<value>0</value> <!-- mask -->
+			<value>0</value> <!-- catid -->
+			<value>2009-06-22 11:17:24</value> <!-- created -->
+			<value>42</value> <!-- created_by -->
+			<value></value> <!-- created_by_alias -->
+			<value>0000-00-00 00:00:00</value> <!-- modified -->
+			<value>0</value> <!-- modified_by -->
+			<value>0</value> <!-- checked_out -->
+			<value>0000-00-00 00:00:00</value> <!-- checked_out_time -->
+			<value>0000-00-00 00:00:00</value> <!-- publish_up -->
+			<value>0000-00-00 00:00:00</value> <!-- publish_down -->
+			<value></value> <!-- images -->
+			<value></value> <!-- urls -->
+			<value>{"show_title":"","link_titles":"","show_intro":"","show_category":"","link_category":"","article-allow_ratings":"","article-allow_comments":"","show_author":"","show_create_date":"","show_modify_date":"","show_print_icon":"","show_email_icon":"","readmore":"","page_title":"","layout":""}</value> <!-- attribs -->
+			<value>1</value> <!-- version -->
+			<value>0</value> <!-- parentid -->
+			<value>0</value> <!-- ordering -->
+			<value></value> <!-- metakey -->
+			<value></value> <!-- metadesc -->
+			<value>1</value> <!-- access -->
+			<value>0</value> <!-- hits -->
+			<value>{"robots":"","author":""}</value> <!-- metadata -->
+		</row>
+		<row>
+			<!--  Article with 1 attached file and 2 daily stats rec for testing category/section 1006 -->
+			<value>5</value> <!-- id -->
+			<value>E</value> <!-- title -->
+			<value>e</value> <!-- alias -->
+			<value></value> <!-- title_alias -->
+			<value>Introtext</value> <!-- introtext -->
+			<value>Fulltext</value> <!-- fulltext -->
+			<value>1</value> <!-- state -->
+			<value>1006</value> <!-- sectionid -->
+			<value>0</value> <!-- mask -->
+			<value>0</value> <!-- catid -->
+			<value>2009-06-22 11:17:24</value> <!-- created -->
+			<value>42</value> <!-- created_by -->
+			<value></value> <!-- created_by_alias -->
+			<value>0000-00-00 00:00:00</value> <!-- modified -->
+			<value>0</value> <!-- modified_by -->
+			<value>0</value> <!-- checked_out -->
+			<value>0000-00-00 00:00:00</value> <!-- checked_out_time -->
+			<value>0000-00-00 00:00:00</value> <!-- publish_up -->
+			<value>0000-00-00 00:00:00</value> <!-- publish_down -->
+			<value></value> <!-- images -->
+			<value></value> <!-- urls -->
+			<value>{"show_title":"","link_titles":"","show_intro":"","show_category":"","link_category":"","article-allow_ratings":"","article-allow_comments":"","show_author":"","show_create_date":"","show_modify_date":"","show_print_icon":"","show_email_icon":"","readmore":"","page_title":"","layout":""}</value> <!-- attribs -->
+			<value>1</value> <!-- version -->
+			<value>0</value> <!-- parentid -->
+			<value>0</value> <!-- ordering -->
+			<value></value> <!-- metakey -->
+			<value></value> <!-- metadesc -->
+			<value>1</value> <!-- access -->
+			<value>0</value> <!-- hits -->
+			<value>{"robots":"","author":""}</value> <!-- metadata -->
+		</row>
+		<row>
+			<!--  Article with 1 attached file and 2 daily stats rec for testing category/section 1006 -->
+			<value>6</value> <!-- id -->
+			<value>F</value> <!-- title -->
+			<value>f</value> <!-- alias -->
+			<value></value> <!-- title_alias -->
+			<value>Introtext</value> <!-- introtext -->
+			<value>Fulltext</value> <!-- fulltext -->
+			<value>1</value> <!-- state -->
+			<value>1006</value> <!-- sectionid -->
+			<value>0</value> <!-- mask -->
+			<value>0</value> <!-- catid -->
 			<value>2009-06-22 11:17:24</value> <!-- created -->
 			<value>42</value> <!-- created_by -->
 			<value></value> <!-- created_by_alias -->
@@ -214,6 +313,69 @@
 			<value>2009-07-23 20:49:28</value> <!-- modification_date -->
 			<value>0</value> <!-- download_count -->
 		</row>
+		<row>
+			<!-- Attachment for article 4 -->
+			<value>10004</value> <!-- id -->
+			<value></value> <!-- filename -->
+			<value></value> <!-- filename_sys -->
+			<value></value> <!-- file_type -->
+			<value>20000000</value> <!-- file_size -->
+			<value></value> <!-- icon_filename -->
+			<value></value> <!-- display_filename -->
+			<value></value> <!-- description -->
+			<value></value> <!-- url -->
+			<value>0</value> <!-- uploader_id -->
+			<value>4</value> <!-- article_id -->
+			<value>1</value> <!-- published -->
+			<value></value> <!-- user_field_1 -->
+			<value></value> <!-- user_field_2 -->
+			<value></value> <!-- user_field_3 -->
+			<value>2009-07-23 20:49:28</value> <!-- create_date -->
+			<value>2009-07-23 20:49:28</value> <!-- modification_date -->
+			<value>0</value> <!-- download_count -->
+		</row>
+		<row>
+			<!-- Attachment for article 5 -->
+			<value>10005</value> <!-- id -->
+			<value></value> <!-- filename -->
+			<value></value> <!-- filename_sys -->
+			<value></value> <!-- file_type -->
+			<value>20000000</value> <!-- file_size -->
+			<value></value> <!-- icon_filename -->
+			<value></value> <!-- display_filename -->
+			<value></value> <!-- description -->
+			<value></value> <!-- url -->
+			<value>0</value> <!-- uploader_id -->
+			<value>5</value> <!-- article_id -->
+			<value>1</value> <!-- published -->
+			<value></value> <!-- user_field_1 -->
+			<value></value> <!-- user_field_2 -->
+			<value></value> <!-- user_field_3 -->
+			<value>2009-07-23 20:49:28</value> <!-- create_date -->
+			<value>2009-07-23 20:49:28</value> <!-- modification_date -->
+			<value>0</value> <!-- download_count -->
+		</row>
+		<row>
+			<!-- Attachment for article 6 -->
+			<value>10006</value> <!-- id -->
+			<value></value> <!-- filename -->
+			<value></value> <!-- filename_sys -->
+			<value></value> <!-- file_type -->
+			<value>20000000</value> <!-- file_size -->
+			<value></value> <!-- icon_filename -->
+			<value></value> <!-- display_filename -->
+			<value></value> <!-- description -->
+			<value></value> <!-- url -->
+			<value>0</value> <!-- uploader_id -->
+			<value>6</value> <!-- article_id -->
+			<value>1</value> <!-- published -->
+			<value></value> <!-- user_field_1 -->
+			<value></value> <!-- user_field_2 -->
+			<value></value> <!-- user_field_3 -->
+			<value>2009-07-23 20:49:28</value> <!-- create_date -->
+			<value>2009-07-23 20:49:28</value> <!-- modification_date -->
+			<value>0</value> <!-- download_count -->
+		</row>
 	</table>
 	<table name="jos_daily_stats">
 		<column>id</column>
@@ -251,10 +413,65 @@
 			<value>2</value> <!-- article_id -->
 			<value>10002</value> <!-- attachment_id -->
 			<value>2014-11-21</value> <!-- date -->
+			<value>165</value> <!-- total_hits_to_date -->
+			<value>150</value> <!-- date_hits -->
+			<value>200</value> <!-- total_downloads_to_date -->
+			<value>100</value> <!-- date_downloads -->
+		</row>
+		<!-- Daily stats for article 4 -->
+		<row>
+			<value>10000004</value> <!-- id -->
+			<value>4</value> <!-- article_id -->
+			<value>10004</value> <!-- attachment_id -->
+			<value>2013-10-20</value> <!-- date -->
 			<value>1500</value> <!-- total_hits_to_date -->
 			<value>150</value> <!-- date_hits -->
 			<value>1000</value> <!-- total_downloads_to_date -->
 			<value>100</value> <!-- date_downloads -->
+		</row>
+		<!-- Daily stats for article 5 -->
+		<row>
+			<value>10000005</value> <!-- id -->
+			<value>5</value> <!-- article_id -->
+			<value>10005</value> <!-- attachment_id -->
+			<value>2013-10-20</value> <!-- date -->
+			<value>1500</value> <!-- total_hits_to_date -->
+			<value>150</value> <!-- date_hits -->
+			<value>1000</value> <!-- total_downloads_to_date -->
+			<value>100</value> <!-- date_downloads -->
+		</row>
+		<!-- Daily stats for article 5 -->
+		<row>
+			<value>10000006</value> <!-- id -->
+			<value>5</value> <!-- article_id -->
+			<value>10005</value> <!-- attachment_id -->
+			<value>2014-11-22</value> <!-- date -->
+			<value>1655</value> <!-- total_hits_to_date -->
+			<value>155</value> <!-- date_hits -->
+			<value>1155</value> <!-- total_downloads_to_date -->
+			<value>155</value> <!-- date_downloads -->
+		</row>
+		<!-- Daily stats for article 6 -->
+		<row>
+			<value>10000007</value> <!-- id -->
+			<value>6</value> <!-- article_id -->
+			<value>10006</value> <!-- attachment_id -->
+			<value>2013-10-20</value> <!-- date -->
+			<value>1500</value> <!-- total_hits_to_date -->
+			<value>150</value> <!-- date_hits -->
+			<value>1000</value> <!-- total_downloads_to_date -->
+			<value>100</value> <!-- date_downloads -->
+		</row>
+		<!-- Daily stats for article 6 -->
+		<row>
+			<value>10000008</value> <!-- id -->
+			<value>6</value> <!-- article_id -->
+			<value>10006</value> <!-- attachment_id -->
+			<value>2014-11-22</value> <!-- date -->
+			<value>1515</value> <!-- total_hits_to_date -->
+			<value>15</value> <!-- date_hits -->
+			<value>1150</value> <!-- total_downloads_to_date -->
+			<value>150</value> <!-- date_downloads -->
 		</row>
 	</table>
 </dataset>

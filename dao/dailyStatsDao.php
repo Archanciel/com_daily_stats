@@ -291,13 +291,15 @@ class DailyStatsDao {
 	}
 	
 	private static function getLastAndTotalHitsAndDownloadsForCategoryQuery($categoryId) {
-		$qu =  "SELECT DATE_FORMAT(s.date,'%d-%m') as displ_date, SUM(s.date_hits) date_hits, SUM(s.total_hits_to_date) total_hits_to_date, SUM(s.date_downloads) date_downloads, SUM(s.total_downloads_to_date) total_downloads_to_date
-				FROM #__daily_stats AS s, #__content as c
-				WHERE s.article_id = c.id
+		$qu =  "SELECT DATE_FORMAT(ds1.date,'%d-%m') as displ_date, SUM(ds1.date_hits) date_hits, SUM(ds1.total_hits_to_date) total_hits_to_date, SUM(ds1.date_downloads) date_downloads, SUM(ds1.total_downloads_to_date) total_downloads_to_date
+				FROM #__daily_stats ds1, #__content c
+				WHERE ds1.article_id = c.id
 				AND c.sectionid = $categoryId
-				AND s.date = (
-					SELECT MAX(date)
-					FROM #__daily_stats)";
+				AND ds1.date = (
+					SELECT MAX(ds2.date)
+					FROM #__daily_stats ds2, #__content c2
+					WHERE ds2.article_id = c2.id
+					AND c2.sectionid = $categoryId)";	
 		return $qu;
 	}
 	
