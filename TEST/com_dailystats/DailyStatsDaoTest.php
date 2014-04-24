@@ -25,7 +25,8 @@ class DailyStatsDaoTest extends DailyStatsTestBase {
 		$this->getLastAndTotalHitsAndDownloadsArrForOneCategory_one_article_no_dailyStats();
 		$this->getLastAndTotalHitsAndDownloadsArrForOneCategory_one_article_one_dailyStats();
 		$this->getLastAndTotalHitsAndDownloadsArrForOneCategory_one_article_two_dailyStats();
-		$this->getLastAndTotalHitsAndDownloadsArrForOneCategory_two_articles_two_dailyStats();
+		$this->getLastAndTotalHitsAndDownloadsArrForOneCategory_two_articles_two_dailyStats_same_max_dates();
+		$this->getLastAndTotalHitsAndDownloadsArrForOneCategory_two_articles_two_dailyStats_diff_max_dates();
 		
 	}
 	
@@ -123,18 +124,33 @@ class DailyStatsDaoTest extends DailyStatsTestBase {
 	}
 	
 	/**
-	 * Tests 1 category with 2 articles with 2 daily stats each
+	 * Tests 1 category with 2 articles with 2 daily stats each for same dates
 	 */
-	private function getLastAndTotalHitsAndDownloadsArrForOneCategory_two_articles_two_dailyStats() {
+	private function getLastAndTotalHitsAndDownloadsArrForOneCategory_two_articles_two_dailyStats_same_max_dates() {
 		$res = DailyStatsDao::getLastAndTotalHitsAndDownloadsArr(CHART_MODE_CATEGORY,1006);
 	
 		$this->assertEquals(5, count($res),'count($res)');
 	
-		$this->assertEquals('22-11',$res[DATE_IDX],'date');
+		$this->assertEquals('21-11',$res[DATE_IDX],'date');
 		$this->assertEquals(170,$res[LAST_HITS_IDX],'date hits');
 		$this->assertEquals(3170,$res[TOTAL_HITS_IDX],'total hits');
 		$this->assertEquals(305,$res[LAST_DOWNLOADS_IDX],'date downloads');
 		$this->assertEquals(2305,$res[TOTAL_DOWNLOADS_IDX],'total downloads');
+	}
+	
+	/**
+	 * @todo Tests 1 category with 2 articles with 2 daily stats each, but for different dates
+	 */
+	private function getLastAndTotalHitsAndDownloadsArrForOneCategory_two_articles_two_dailyStats_diff_max_dates() {
+		$res = DailyStatsDao::getLastAndTotalHitsAndDownloadsArr(CHART_MODE_CATEGORY,1007);
+	
+		$this->assertEquals(5, count($res),'count($res)');
+	
+		$this->assertEquals('22-11',$res[DATE_IDX],'date');
+		$this->assertEquals(15,$res[LAST_HITS_IDX],'date hits');
+		$this->assertEquals(1515,$res[TOTAL_HITS_IDX],'total hits');
+		$this->assertEquals(150,$res[LAST_DOWNLOADS_IDX],'date downloads');
+		$this->assertEquals(1150,$res[TOTAL_DOWNLOADS_IDX],'total downloads');
 	}
 	
 	/**
