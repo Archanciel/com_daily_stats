@@ -282,7 +282,7 @@ class DailyStatsDao {
 						AND date = (
 							SELECT MAX(ds2.date)
 							FROM #__daily_stats ds2
-							WHERE ds1.article_id = ds2.article_id
+							WHERE ds2.article_id = $articleId
 						)
 				) T1
 				ORDER BY T1.total_downloads_to_date DESC
