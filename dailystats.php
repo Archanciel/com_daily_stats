@@ -23,10 +23,7 @@ require_once JPATH_COMPONENT_ADMINISTRATOR.'/helpers/dailyStatsHelper.php';
 $cron = JRequest::getVar ( 'cron' , 'no' );
 
 if (strcmp($cron,'yes') == 0) {
-	jimport('joomla.error.log');
-	$log = JLog::getInstance("mod_attachmentstats_log.php");
-	$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "CRON FIRED SUCCESSFULLY !" );
-	$log->addEntry($entry);
+    DailyStatsDao::execDailyStatsCron();
 	return;
 }
 

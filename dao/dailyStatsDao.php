@@ -16,6 +16,113 @@ defined('_JEXEC') or die('Restricted Access');
 require_once JPATH_COMPONENT_ADMINISTRATOR.'/dailyStatsConstants.php';
 
 class DailyStatsDao {
+     
+     /**
+      * This method is called when the following request is made on plusconscient:
+      * http://localhost/plusconscient15_dev/index.php?option=com_dailystats&cron=yes. 
+      * The request is performed daily by a cron job.
+      * 
+      * The method inserts daily stats in the jox_daily_stats table.
+      */
+     public static function execDailyStatsCron() {
+		jimport('joomla.error.log');
+     	
+     	/* @var $db JDatabase */
+    	$db = JFactory::getDBO();
+    	$log = JLog::getInstance("com_dailystats_log.php");
+		$query = "SELECT COUNT(id) 
+				  FROM #__daily_stats;";
+    	
+    	$count = self::loadResult($db, $query);
+    	
+    	if ($count > 0) {
+    		// daily_stats table not empty
+    		$query = "SELECT DATE_FORMAT(MAX(date),'%Y-%m-%d') 
+    				  FROM #__daily_stats;";
+    		$maxDate = self::loadResult($db, $query);
+    		$today = date("Y-m-d");
+    		
+    		if (strcmp($maxDate,$today) == 0) {
+    			// protecting for duplicate insertion of daily stats data
+				$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "Stats for today already exist in daily_stats table. No data inserted." );
+				$log->addEntry($entry);
+    			return;
+    		}
+    		
+    		// inserting daily_stats for neew attachments
+    		
+    		$query = "INSERT INTO #__daily_stats 
+    					(article_id, attachment_id, date, total_hits_to_date, date_hits, total_downloads_to_date, date_downloads)
+						SELECT T1.article_id, T1.id, CURRENT_DATE, T2.hits, T2.hits, T1.download_count, T1.download_count
+						FROM #__attachments T1, #__content T2
+						WHERE T1.article_id = T2.id AND T2.state = 1 AND T1.id IN (
+							SELECT T1.id
+							FROM #__attachments T1 LEFT JOIN #__daily_stats ON T1.id = #__daily_stats.attachment_id
+							WHERE #__daily_stats.attachment_id IS NULL);";
+    		$rowsNumberForNewAttachments = self::executeInsertQuery($db, $query);
+    		
+    		// inserting daily_stats for existing attachments
+    		
+    		$gap = 0;	// used to handle the case where cron execution was skipped the day(S) before 
+    		$rowsNumberForExistingAttachments = 0;
+    		
+    		while ( $rowsNumberForExistingAttachments == 0	&&
+    				$gap < 20) {
+		    	$gap++;
+    			$dailyStatsQuery = "INSERT INTO #__daily_stats 
+      									(article_id, attachment_id, date, total_hits_to_date, date_hits, total_downloads_to_date, date_downloads) 
+									SELECT T2.id AS article_id, T1.id as attachment_id, CURRENT_DATE, T2.hits, T2.hits - T3.total_hits_to_date, T1.download_count,  T1.download_count - T3.total_downloads_to_date
+									FROM #__attachments T1, #__content T2, #__daily_stats T3
+									WHERE T1.article_id = T2.id AND T2.id = T3.article_id AND T1.id = T3.attachment_id AND DATE_SUB(CURRENT_DATE,INTERVAL $gap DAY) = T3.date;";
+	    		
+		    	$rowsNumberForExistingAttachments = self::executeInsertQuery($db, $dailyStatsQuery );
+    		}
+	    	
+			$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "Stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments (gap filled: $gap day(s)). " );
+			$log->addEntry($entry);
+    	} else {
+       		// daily_stats table is empty and must be bootstraped
+       		$query= "INSERT INTO #__daily_stats 
+         				(article_id, attachment_id, date, total_hits_to_date, total_downloads_to_date)
+					SELECT T1.article_id, T1.id, CURRENT_DATE, T2.hits, T1.download_count
+					FROM #__attachments T1, #__content T2
+					WHERE T1.article_id = T2.id AND T2.state = 1;";
+	    	$rowsNumber = self::executeInsertQuery($db, $query);
+//    		self::executeQuery ( $db, "UPDATE #__daily_stats SET date=DATE_SUB(date,INTERVAL 1 DAY);" ); only for creating test data !!
+	    	
+			$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "daily_stats table successfully bootstraped. $rowsNumber rows inserted");
+			$log->addEntry($entry);
+    	}
+     }
+	
+	 private static function executeInsertQuery(JDatabase $db, $query) {
+		$db->setQuery ( $query );
+		$db->query ();
+		
+		if ($db->getErrorNum ()) {
+			$query = $db->getErrorMsg ();
+			//print_r( $e );
+			JError::raiseError ( 500, $query );
+			return;
+		}
+		
+		return $db->getAffectedRows();
+	 }
+
+     private static function loadResult(JDatabase $db, $query) {
+    	$db->setQuery($query);
+    	$res = $db->loadResult();
+    	
+    	if( $db->getErrorNum () ) {
+			$e = $db->getErrorMsg();
+			//print_r( $e );
+			JError::raiseError( 500, $e );
+			return null;
+    	}
+     	
+    	return $res;
+     }
+	
 	/**
 	 * Explaining the MAX($yValName) in the CHART_MODE_ARTICLE query below:
 	 * 
