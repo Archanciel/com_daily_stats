@@ -23,22 +23,33 @@ class DailyStatsDao {
       * The request is performed daily by a cron job.
       * 
       * The method inserts daily stats in the jox_daily_stats table.
-      */
-     public static function execDailyStatsCron() {
+	  * 
+	  * @param String $dailyStatsTableName. Only supplied when unit testing the method since
+	  *                                     we need to test it against an empty daily_stats table !
+	  * @param unknown_type $attachmentsTableName. Only supplied when unit testing.
+	  * @param unknown_type $contentTableName. Only supplied when unit testing.
+	  */
+     public static function execDailyStatsCron($dailyStatsTableName,$attachmentsTableName,$contentTableName) {
 		jimport('joomla.error.log');
+		
+		if (!isset($dailyStatsTableName)) {
+			$dailyStatsTableName = "#__daily_stats";
+			$attachmentsTableName = "#__attachments";
+			$contentTableName = "#__content";
+		}
      	
      	/* @var $db JDatabase */
     	$db = JFactory::getDBO();
     	$log = JLog::getInstance("com_dailystats_log.php");
 		$query = "SELECT COUNT(id) 
-				  FROM #__daily_stats;";
+				  FROM $dailyStatsTableName;";
     	
     	$count = self::loadResult($db, $query);
     	
     	if ($count > 0) {
     		// daily_stats table not empty
     		$query = "SELECT DATE_FORMAT(MAX(date),'%Y-%m-%d') 
-    				  FROM #__daily_stats;";
+    				  FROM $dailyStatsTableName;";
     		$maxDate = self::loadResult($db, $query);
     		$today = date("Y-m-d");
     		
@@ -49,16 +60,16 @@ class DailyStatsDao {
     			return;
     		}
     		
-    		// inserting daily_stats for neew attachments
+    		// inserting daily_stats for new attachments
     		
-    		$query = "INSERT INTO #__daily_stats 
+    		$query = "INSERT INTO $dailyStatsTableName 
     					(article_id, attachment_id, date, total_hits_to_date, date_hits, total_downloads_to_date, date_downloads)
 						SELECT T1.article_id, T1.id, CURRENT_DATE, T2.hits, T2.hits, T1.download_count, T1.download_count
-						FROM #__attachments T1, #__content T2
+						FROM $attachmentsTableName T1, $contentTableName T2
 						WHERE T1.article_id = T2.id AND T2.state = 1 AND T1.id IN (
 							SELECT T1.id
-							FROM #__attachments T1 LEFT JOIN #__daily_stats ON T1.id = #__daily_stats.attachment_id
-							WHERE #__daily_stats.attachment_id IS NULL);";
+							FROM $attachmentsTableName T1 LEFT JOIN $dailyStatsTableName ON T1.id = #__daily_stats.attachment_id
+							WHERE $dailyStatsTableName.attachment_id IS NULL);";
     		$rowsNumberForNewAttachments = self::executeInsertQuery($db, $query);
     		
     		// inserting daily_stats for existing attachments
@@ -69,10 +80,10 @@ class DailyStatsDao {
     		while ( $rowsNumberForExistingAttachments == 0	&&
     				$gap < 20) {
 		    	$gap++;
-    			$dailyStatsQuery = "INSERT INTO #__daily_stats 
+    			$dailyStatsQuery = "INSERT INTO $dailyStatsTableName 
       									(article_id, attachment_id, date, total_hits_to_date, date_hits, total_downloads_to_date, date_downloads) 
 									SELECT T2.id AS article_id, T1.id as attachment_id, CURRENT_DATE, T2.hits, T2.hits - T3.total_hits_to_date, T1.download_count,  T1.download_count - T3.total_downloads_to_date
-									FROM #__attachments T1, #__content T2, #__daily_stats T3
+									FROM $attachmentsTableName T1, $contentTableName T2, $dailyStatsTableName T3
 									WHERE T1.article_id = T2.id AND T2.id = T3.article_id AND T1.id = T3.attachment_id AND DATE_SUB(CURRENT_DATE,INTERVAL $gap DAY) = T3.date;";
 	    		
 		    	$rowsNumberForExistingAttachments = self::executeInsertQuery($db, $dailyStatsQuery );
@@ -82,13 +93,13 @@ class DailyStatsDao {
 			$log->addEntry($entry);
     	} else {
        		// daily_stats table is empty and must be bootstraped
-       		$query= "INSERT INTO #__daily_stats 
+       		$query= "INSERT INTO $dailyStatsTableName 
          				(article_id, attachment_id, date, total_hits_to_date, total_downloads_to_date)
 					SELECT T1.article_id, T1.id, CURRENT_DATE, T2.hits, T1.download_count
-					FROM #__attachments T1, #__content T2
+					FROM $attachmentsTableName T1, $contentTableName T2
 					WHERE T1.article_id = T2.id AND T2.state = 1;";
 	    	$rowsNumber = self::executeInsertQuery($db, $query);
-//    		self::executeQuery ( $db, "UPDATE #__daily_stats SET date=DATE_SUB(date,INTERVAL 1 DAY);" ); only for creating test data !!
+//    		self::executeQuery ( $db, "UPDATE $dailyStatsTableName SET date=DATE_SUB(date,INTERVAL 1 DAY);" ); only for creating test data !!
 	    	
 			$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "daily_stats table successfully bootstraped. $rowsNumber rows inserted");
 			$log->addEntry($entry);
