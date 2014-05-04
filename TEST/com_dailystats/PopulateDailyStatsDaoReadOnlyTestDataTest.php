@@ -18,7 +18,7 @@ class PopulateDailyStatsDaoReadOnlyTestDataTest extends DailyStatsTestBase {
 	}
 	
 	/**
-	 * Uncomment out the body when you want regenarate the read only test data !
+	 * Uncomment out the body when you want regenerate the read only test data !
 	 */
 	public function tearDown() {
 // 		parent::tearDown();
