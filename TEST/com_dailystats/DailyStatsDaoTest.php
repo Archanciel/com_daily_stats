@@ -4,36 +4,19 @@ require_once dirname ( __FILE__ ) . '\DailyStatsTestBase.php';
 require_once COM_DAILYSTATS_PATH . '\dao\dailyStatsDao.php';
 require_once COM_DAILYSTATS_PATH . '\dailyStatsConstants.php';
 
+/**
+ * This test class uses the read only test data populated in the database by the dummy
+ * PopulateDailyStatsDaoReadOnlyTestDataTest test class.
+ * 
+ * @author Jean-Pierre
+ *
+ */
 class DailyStatsDaoTest extends DailyStatsTestBase {
-	
-	public function setUp() {
-		parent::setUp ();
-	}
-	
-	/**
-	 * Tests last date hits and downloads and total hits and downloads obtention
-	 * for one article, one category and all categories
-	 */
-	public function testGetLastAndTotalHitsAndDownloadsArr() {
-		// for one article
-		$this->getLastAndTotalHitsAndDownloadsArrForOneArtticle_1_dailyStats();
-		$this->getLastAndTotalHitsAndDownloadsArrForOneArtticle_2_dailyStats();
-		$this->getLastAndTotalHitsAndDownloadsArrForOneArtticle_no_dailyStats();
-		
-		// for one category
-		$this->getLastAndTotalHitsAndDownloadsArrForOneCategory_no_article();
-		$this->getLastAndTotalHitsAndDownloadsArrForOneCategory_one_article_no_dailyStats();
-		$this->getLastAndTotalHitsAndDownloadsArrForOneCategory_one_article_one_dailyStats();
-		$this->getLastAndTotalHitsAndDownloadsArrForOneCategory_one_article_two_dailyStats();
-		$this->getLastAndTotalHitsAndDownloadsArrForOneCategory_two_articles_two_dailyStats_same_max_dates();
-		$this->getLastAndTotalHitsAndDownloadsArrForOneCategory_two_articles_two_dailyStats_diff_max_dates();
-		
-	}
 	
 	/**
 	 * Tests 1 article with only 1 daily stats recs
 	 */
-	private function getLastAndTotalHitsAndDownloadsArrForOneArtticle_1_dailyStats() {
+	public function testGetLastAndTotalHitsAndDownloadsArrForOneArtticle_1_dailyStats() {
 		$res = DailyStatsDao::getLastAndTotalHitsAndDownloadsArr(CHART_MODE_ARTICLE,1);
 		
 		$this->assertEquals(5, count($res),'count($res)');
@@ -48,7 +31,7 @@ class DailyStatsDaoTest extends DailyStatsTestBase {
 	/**
 	 * Tests 1 article with 2 daily stats recs
 	 */
-	private function getLastAndTotalHitsAndDownloadsArrForOneArtticle_2_dailyStats() {
+	public function testGetLastAndTotalHitsAndDownloadsArrForOneArtticle_2_dailyStats() {
 		$res = DailyStatsDao::getLastAndTotalHitsAndDownloadsArr(CHART_MODE_ARTICLE,2);
 	
 		$this->assertEquals(5, count($res),'count($res)');
@@ -63,7 +46,7 @@ class DailyStatsDaoTest extends DailyStatsTestBase {
 	/**
 	 * Tests 1 article with no daily stats rec
 	 */
-	private function getLastAndTotalHitsAndDownloadsArrForOneArtticle_no_dailyStats() {
+	public function testGetLastAndTotalHitsAndDownloadsArrForOneArtticle_no_dailyStats() {
 		$res = DailyStatsDao::getLastAndTotalHitsAndDownloadsArr(CHART_MODE_ARTICLE,3);
 		
 		$this->assertEquals(5, count($res),'count($res)');
@@ -74,7 +57,7 @@ class DailyStatsDaoTest extends DailyStatsTestBase {
 	/**
 	 * Tests 1 category with no article
 	 */
-	private function getLastAndTotalHitsAndDownloadsArrForOneCategory_no_article() {
+	public function testGetLastAndTotalHitsAndDownloadsArrForOneCategory_no_article() {
 		$res = DailyStatsDao::getLastAndTotalHitsAndDownloadsArr(CHART_MODE_CATEGORY,1002);
 		
 		$this->assertEquals(5, count($res),'count($res)');
@@ -85,7 +68,7 @@ class DailyStatsDaoTest extends DailyStatsTestBase {
 	/**
 	 * Tests 1 category with one article with no daily stats
 	 */
-	private function getLastAndTotalHitsAndDownloadsArrForOneCategory_one_article_no_dailyStats() {
+	public function testGetLastAndTotalHitsAndDownloadsArrForOneCategory_one_article_no_dailyStats() {
 		$res = DailyStatsDao::getLastAndTotalHitsAndDownloadsArr(CHART_MODE_CATEGORY,1003);
 	
 		$this->assertEquals(5, count($res),'count($res)');
@@ -96,7 +79,7 @@ class DailyStatsDaoTest extends DailyStatsTestBase {
 	/**
 	 * Tests 1 category with one article with one daily stats
 	 */
-	private function getLastAndTotalHitsAndDownloadsArrForOneCategory_one_article_one_dailyStats() {
+	public function testGetLastAndTotalHitsAndDownloadsArrForOneCategory_one_article_one_dailyStats() {
 		$res = DailyStatsDao::getLastAndTotalHitsAndDownloadsArr(CHART_MODE_CATEGORY,1004);
 	
 		$this->assertEquals(5, count($res),'count($res)');
@@ -111,7 +94,7 @@ class DailyStatsDaoTest extends DailyStatsTestBase {
 	/**
 	 * Tests 1 category with one article with 2 daily stats
 	 */
-	private function getLastAndTotalHitsAndDownloadsArrForOneCategory_one_article_two_dailyStats() {
+	public function testGetLastAndTotalHitsAndDownloadsArrForOneCategory_one_article_two_dailyStats() {
 		$res = DailyStatsDao::getLastAndTotalHitsAndDownloadsArr(CHART_MODE_CATEGORY,1005);
 	
 		$this->assertEquals(5, count($res),'count($res)');
@@ -126,7 +109,7 @@ class DailyStatsDaoTest extends DailyStatsTestBase {
 	/**
 	 * Tests 1 category with 2 articles with 2 daily stats each for same dates
 	 */
-	private function getLastAndTotalHitsAndDownloadsArrForOneCategory_two_articles_two_dailyStats_same_max_dates() {
+	public function testGetLastAndTotalHitsAndDownloadsArrForOneCategory_two_articles_two_dailyStats_same_max_dates() {
 		$res = DailyStatsDao::getLastAndTotalHitsAndDownloadsArr(CHART_MODE_CATEGORY,1006);
 	
 		$this->assertEquals(5, count($res),'count($res)');
@@ -141,7 +124,7 @@ class DailyStatsDaoTest extends DailyStatsTestBase {
 	/**
 	 * @todo Tests 1 category with 2 articles with 2 daily stats each, but for different dates
 	 */
-	private function getLastAndTotalHitsAndDownloadsArrForOneCategory_two_articles_two_dailyStats_diff_max_dates() {
+	public function testGetLastAndTotalHitsAndDownloadsArrForOneCategory_two_articles_two_dailyStats_diff_max_dates() {
 		$res = DailyStatsDao::getLastAndTotalHitsAndDownloadsArr(CHART_MODE_CATEGORY,1007);
 	
 		$this->assertEquals(5, count($res),'count($res)');
@@ -154,12 +137,31 @@ class DailyStatsDaoTest extends DailyStatsTestBase {
 	}
 	
 	/**
-	 * Gets the data set to be loaded into the database during setup
+	 * Body is commented out since the essentially read only test data are populated
+	 * by running the dummy test case PopulateDailyStatsDaoReadOnlyTestDataTest !
+	 */
+	public function setUp() {
+// 		parent::setUp ();
+	}
+	
+	/**
+	 * Body is commented out since the essentially read only test data are populated
+	 * by running the dummy test case PopulateDailyStatsDaoReadOnlyTestDataTest !
+	 */
+	public function tearDown() {
+		// 		parent::tearDown();
+	}
+	
+	/**
+	 * Gets the data set to be loaded into the database during setup.
 	 *
+	 * Body is commented out since the essentially read only test data are populated
+	 * by running the dummy test case PopulateDailyStatsDaoReadOnlyTestDataTest !
+	 * 
 	 * @return xml dataset
 	 */
 	protected function getDataSet() {
-		return $this->createXMLDataSet ( dirname ( __FILE__ ) . '\data\1_category_1_article_test_data.xml' );
+//		return $this->createXMLDataSet ( dirname ( __FILE__ ) . '\data\1_category_1_article_test_data.xml' );
 	}
 }
 
