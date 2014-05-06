@@ -5,6 +5,9 @@ require_once COM_DAILYSTATS_PATH . '\dao\dailyStatsDao.php';
 require_once COM_DAILYSTATS_PATH . '\dailyStatsConstants.php';
 
 /**
+ * This class tests running the daily stats cron on a DB containing one article with no
+ * attachent and one article with one attachment, but in an unpublished state. It ensures
+ * that no attachment stats are generated.
  * 
  * @author Jean-Pierre
  *
