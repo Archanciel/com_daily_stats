@@ -9,12 +9,13 @@ require_once COM_DAILYSTATS_PATH . '\dailyStatsConstants.php';
  * @author Jean-Pierre
  *
  */
-class DailyStatsDaoExecDailyStatsCronNoAttachmentsTest extends DailyStatsTestBase {
+class DailyStatsDaoExecDailyStatsCronNoDailystatsGeneratedTest extends DailyStatsTestBase {
 	
 	/**
-	 * Tests 1 article with only 1 daily stats recs
+	 * Tests daily stats cron against a DB containing 1 article with no attachment and
+	 * 1 unpublished article with 1 attachment.
 	 */
-	public function testExecDailyStatsCronForArticlesWithNoAttachments() {
+	public function testExecDailyStatsCronForArticleWithNoAttachmentOrUnpublishedArticle() {
 		DailyStatsDao::execDailyStatsCron("#__daily_stats_cron_test","#__attachments_cron_test","#__content_cron_test");
 
      	/* @var $db JDatabase */
@@ -22,15 +23,6 @@ class DailyStatsDaoExecDailyStatsCronNoAttachmentsTest extends DailyStatsTestBas
 		$query = "SELECT COUNT(id) FROM #__daily_stats_cron_test"; 
     	$db->setQuery($query);
     	$count = $db->loadResult();
-    			
-		$this->assertEquals(0,$count,'0 daily_stats records expected');
-// 		$this->assertEquals(5, count($res),'count($res)');
-		
-// 		$this->assertEquals('20-10',$res[DATE_IDX],'date');
-// 		$this->assertEquals(15,$res[LAST_HITS_IDX],'date hits');
-// 		$this->assertEquals(150,$res[TOTAL_HITS_IDX],'total hits');
-// 		$this->assertEquals(10,$res[LAST_DOWNLOADS_IDX],'date downloads');
-// 		$this->assertEquals(100,$res[TOTAL_DOWNLOADS_IDX],'total downloads');
 	}
 	
 	public function setUp() {
