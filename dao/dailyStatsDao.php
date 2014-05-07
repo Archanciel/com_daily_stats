@@ -94,8 +94,8 @@ class DailyStatsDao {
     	} else {
        		// daily_stats table is empty and must be bootstraped
        		$query= "INSERT INTO $dailyStatsTableName 
-         				(article_id, attachment_id, date, total_hits_to_date, total_downloads_to_date)
-					SELECT T1.article_id, T1.id, CURRENT_DATE, T2.hits, T1.download_count
+         				(article_id, attachment_id, date, total_hits_to_date, date_hits, total_downloads_to_date, date_downloads)
+					SELECT T1.article_id, T1.id, CURRENT_DATE, T2.hits, T2.hits, T1.download_count, T1.download_count
 					FROM $attachmentsTableName T1, $contentTableName T2
 					WHERE T1.article_id = T2.id AND T2.state = 1;";
 	    	$rowsNumber = self::executeInsertQuery($db, $query);
