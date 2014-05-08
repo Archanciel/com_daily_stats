@@ -9,13 +9,13 @@ require_once COM_DAILYSTATS_PATH . '\dailyStatsConstants.php';
  * @author Jean-Pierre
  *
  */
-class DailyStatsDaoExecDailyStatsCronEmptyDailyStatsTableOneArticleTest extends DailyStatsTestBase {
+class DailyStatsDaoExecDailyStatsCronEmptyDailyStatsTableTwoArticlesTest extends DailyStatsTestBase {
 	
 	/**
-	 * Tests daily stats rec generation for 1 article with 1 attachment in an empty daily stats 
-	 * table
+	 * Tests daily stats rec generation for 2 articles with 1 attachment each and 1 unpublished article
+	 * with 1 attachment in an empty daily stats table
 	 */
-	public function testExecDailyStatsCronEmptyDailyStatsTableOneArticle() {
+	public function testExecDailyStatsCronEmptyDailyStatsTableTwoArticles() {
 		DailyStatsDao::execDailyStatsCron("#__daily_stats_cron_test","#__attachments_cron_test","#__content_cron_test");
      	/* @var $db JDatabase */
     	$db = JFactory::getDBO();
@@ -23,18 +23,31 @@ class DailyStatsDaoExecDailyStatsCronEmptyDailyStatsTableOneArticleTest extends 
     	$db->setQuery($query);
     	$count = $db->loadResult();
 
-		$this->assertEquals(1,$count,'1 daily_stats records expected');
+		$this->assertEquals(2,$count,'2 daily_stats records expected');
 		
 		$today = date("Y-m-d");
-		$query = "SELECT * FROM #__daily_stats_cron_test WHERE article_id = 1"; 
-    	$db->setQuery($query);
-    	$res = $db->loadAssoc();
+		
+		// article 1
+		$query = "SELECT * FROM #__daily_stats_cron_test WHERE article_id = 1";
+		$db->setQuery($query);
+		$res = $db->loadAssoc();
 		
 		$this->assertEquals("$today",$res['date'],'date');
 		$this->assertEquals(111,$res['date_hits'],'date hits');
 		$this->assertEquals(111,$res['total_hits_to_date'],'total hits');
 		$this->assertEquals(11,$res['date_downloads'],'date downloads');
 		$this->assertEquals(11,$res['total_downloads_to_date'],'total downloads');
+		
+		// article 2
+		$query = "SELECT * FROM #__daily_stats_cron_test WHERE article_id = 2"; 
+    	$db->setQuery($query);
+    	$res = $db->loadAssoc();
+		
+		$this->assertEquals("$today",$res['date'],'date');
+		$this->assertEquals(112,$res['date_hits'],'date hits');
+		$this->assertEquals(112,$res['total_hits_to_date'],'total hits');
+		$this->assertEquals(12,$res['date_downloads'],'date downloads');
+		$this->assertEquals(12,$res['total_downloads_to_date'],'total downloads');
 	}
 	
 	public function setUp() {
@@ -57,7 +70,7 @@ class DailyStatsDaoExecDailyStatsCronEmptyDailyStatsTableOneArticleTest extends 
 	 * @return xml dataset
 	 */
 	protected function getDataSet() {
-		return $this->createXMLDataSet ( dirname ( __FILE__ ) . '\data\dailyStatsCron_empty_dstable_1_article_test_data.xml' );
+		return $this->createXMLDataSet ( dirname ( __FILE__ ) . '\data\dailyStatsCron_empty_dstable_2_articles_test_data.xml' );
 	}
 }
 
