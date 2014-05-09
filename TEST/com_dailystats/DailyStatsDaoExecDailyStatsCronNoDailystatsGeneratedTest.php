@@ -13,19 +13,22 @@ require_once COM_DAILYSTATS_PATH . '\dailyStatsConstants.php';
  *
  */
 class DailyStatsDaoExecDailyStatsCronNoDailystatsGeneratedTest extends DailyStatsTestBase {
+	private $daily_stats_table_name = "daily_stats_cron_test";
 	
 	/**
 	 * Tests daily stats cron against a DB containing 1 article with no attachment and
 	 * 1 unpublished article with 1 attachment.
 	 */
 	public function testExecDailyStatsCronForArticleWithNoAttachmentOrUnpublishedArticle() {
-		DailyStatsDao::execDailyStatsCron("#__daily_stats_cron_test","#__attachments_cron_test","#__content_cron_test");
+		DailyStatsDao::execDailyStatsCron("#__" . $this->daily_stats_table_name,"#__attachments_cron_test","#__content_cron_test");
 
      	/* @var $db JDatabase */
     	$db = JFactory::getDBO();
-		$query = "SELECT COUNT(id) FROM #__daily_stats_cron_test"; 
+		$query = "SELECT COUNT(id) FROM #__" . $this->daily_stats_table_name; 
     	$db->setQuery($query);
     	$count = $db->loadResult();
+		
+    	$this->assertEquals(0,$count,'0 daily_stats records expected');
 	}
 	
 	public function setUp() {
@@ -35,7 +38,7 @@ class DailyStatsDaoExecDailyStatsCronNoDailystatsGeneratedTest extends DailyStat
 	public function tearDown() {
      	/* @var $db JDatabase */
     	$db = JFactory::getDBO();
-		$query = "TRUNCATE TABLE #__daily_stats_cron_test"; 
+		$query = "TRUNCATE TABLE #__" . $this->daily_stats_table_name; 
     	$db->setQuery($query);
 		$db->query();
 		
