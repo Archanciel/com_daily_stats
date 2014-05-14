@@ -68,8 +68,8 @@ class DailyStatsDao {
 						FROM $attachmentsTableName T1, $contentTableName T2
 						WHERE T1.article_id = T2.id AND T2.state = 1 AND T1.id IN (
 							SELECT T1.id
-							FROM $attachmentsTableName T1 LEFT JOIN $dailyStatsTableName ON T1.id = #__daily_stats.attachment_id
-							WHERE $dailyStatsTableName.attachment_id IS NULL);";
+							FROM $attachmentsTableName T1 LEFT JOIN $dailyStatsTableName ON T1.id = $dailyStatsTableName" . ".attachment_id
+							WHERE $dailyStatsTableName" . ".attachment_id IS NULL);";
     		$rowsNumberForNewAttachments = self::executeInsertQuery($db, $query);
     		
     		// inserting daily_stats for existing attachments
