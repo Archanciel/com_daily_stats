@@ -1,0 +1,91 @@
+<?php
+
+require_once dirname ( __FILE__ ) . '\DailyStatsTestBase.php';
+require_once COM_DAILYSTATS_PATH . '\dao\dailyStatsDao.php';
+require_once COM_DAILYSTATS_PATH . '\dailyStatsConstants.php';
+
+/**
+ * 
+ * @author Jean-Pierre
+ *
+ */
+class DailyStatsDaoExecDailyStatsCronOneDailyStatsRecOneArticleTest extends DailyStatsTestBase {
+	private $daily_stats_table_name = "daily_stats_cron_test";
+	
+	/**
+	 * Tests daily stats rec generation for 1 article with 1 attachment in a daily stats table
+	 * with 1 daily stat rec dated 1 day before cron execution
+	 */
+	public function testExecDailyStatsCronOneDailyStatsRecOneArticle() {
+		// force existing daily stats rec date to yesterday
+		
+		$yesterday = date("Y-m-d",strtotime("-1 day"));
+  		$this->updateDailyStatRec($yesterday);
+		
+  		// execute cron
+  		
+ 		DailyStatsDao::execDailyStatsCron("#__" . $this->daily_stats_table_name,"#__attachments_cron_test","#__content_cron_test");
+		
+ 		// verify results
+ 		
+		/* @var $db JDatabase */
+    	$db = JFactory::getDBO();
+		$query = "SELECT COUNT(id) FROM #__" . $this->daily_stats_table_name; 
+    	$db->setQuery($query);
+    	$count = $db->loadResult();
+
+		$this->assertEquals(2,$count,'2 daily_stats records expected, one for yesterday and one for today');
+
+		$today = date("Y-m-d",strtotime("now"));
+		$query = "SELECT * FROM #__" . $this->daily_stats_table_name . " WHERE article_id = 1 AND date = '$today'"; 
+    	$db->setQuery($query);
+    	$res = $db->loadAssoc();
+		
+		$this->assertEquals(11,$res['date_hits'],'date hits');
+		$this->assertEquals(111,$res['total_hits_to_date'],'total hits');
+		$this->assertEquals(1,$res['date_downloads'],'date downloads');
+		$this->assertEquals(11,$res['total_downloads_to_date'],'total downloads');
+	}
+	
+	private function updateDailyStatRec($forDate) {
+		$query= "UPDATE jos_" . $this->daily_stats_table_name .
+				" SET date = '$forDate'
+				 WHERE id = 1";
+		
+		$con=mysqli_connect("localhost","root","","pluscon15_dev");
+
+		// Check connection
+		if (mysqli_connect_errno()) {
+			echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		}
+		
+		mysqli_query($con,$query);
+		
+		mysqli_close($con);
+	}
+	
+	public function setUp() {
+		parent::setUp ();
+	}
+	
+	public function tearDown() {
+     	/* @var $db JDatabase */
+    	$db = JFactory::getDBO();
+		$query = "TRUNCATE TABLE #__" . $this->daily_stats_table_name; 
+    	$db->setQuery($query);
+		$db->query();
+		
+		parent::tearDown();
+	}
+	
+	/**
+	 * Gets the data set to be loaded into the database during setup.
+	 * 
+	 * @return xml dataset
+	 */
+	protected function getDataSet() {
+		return $this->createXMLDataSet ( dirname ( __FILE__ ) . '\data\dailyStatsCron_1_daily_stat_1_article_test_data.xml' );
+	}
+}
+
+?>
