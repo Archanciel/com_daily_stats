@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname ( __FILE__ ) . '\..\lib\TestCase.php';
+require_once dirname ( __FILE__ ) . '\..\..\lib\TestCase.php';
 
 define('JPATH_COMPONENT_ADMINISTRATOR', JPATH_BASE . '\administrator\components\com_dailystats');
 define('COM_DAILYSTATS_PATH', JPATH_COMPONENT_ADMINISTRATOR);

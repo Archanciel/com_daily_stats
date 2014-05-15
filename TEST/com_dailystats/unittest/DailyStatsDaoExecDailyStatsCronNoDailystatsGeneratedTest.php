@@ -1,8 +1,8 @@
 <?php
 
-require_once dirname ( __FILE__ ) . '\DailyStatsTestBase.php';
-require_once COM_DAILYSTATS_PATH . '\dao\dailyStatsDao.php';
-require_once COM_DAILYSTATS_PATH . '\dailyStatsConstants.php';
+require_once dirname ( __FILE__ ) . '..\..\baseclass\DailyStatsTestBase.php';
+require_once COM_DAILYSTATS_PATH . '..\dao\dailyStatsDao.php';
+require_once COM_DAILYSTATS_PATH . '..\dailyStatsConstants.php';
 
 /**
  * This class tests running the daily stats cron on a DB containing one article with no
@@ -51,7 +51,7 @@ class DailyStatsDaoExecDailyStatsCronNoDailystatsGeneratedTest extends DailyStat
 	 * @return xml dataset
 	 */
 	protected function getDataSet() {
-		return $this->createXMLDataSet ( dirname ( __FILE__ ) . '\data\dailyStatsCron_test_data_noAttachments.xml' );
+		return $this->createXMLDataSet ( dirname ( __FILE__ ) . '\..\data\dailyStatsCron_test_data_noAttachments.xml' );
 	}
 }
 

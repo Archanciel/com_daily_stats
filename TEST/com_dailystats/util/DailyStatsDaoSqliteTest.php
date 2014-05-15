@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname ( __FILE__ ) . '\..\DailyStatsTestBase.php';
+require_once dirname ( __FILE__ ) . '\..\baseclass\DailyStatsTestBase.php';
 require_once COM_DAILYSTATS_PATH . '\dao\dailyStatsDao.php';
 require_once COM_DAILYSTATS_PATH . '\dailyStatsConstants.php';
 
