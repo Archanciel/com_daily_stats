@@ -5,6 +5,9 @@ require_once COM_DAILYSTATS_PATH . '..\dao\dailyStatsDao.php';
 require_once COM_DAILYSTATS_PATH . '..\dailyStatsConstants.php';
 
 /**
+ * This class nsures that when executing a daily stats cron on a db containing 2 published articles
+ * with one attachment each and one unpublished article with one attachment, in an empty daily stats 
+ * table, 2 daily stats rec are generated.
  * 
  * @author Jean-Pierre
  *
