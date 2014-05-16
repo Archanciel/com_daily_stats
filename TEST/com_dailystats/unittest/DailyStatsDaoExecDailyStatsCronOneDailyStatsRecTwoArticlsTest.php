@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname ( __FILE__ ) . '..\..\baseclass\DailyStatsTestBase.php';
+require_once dirname ( __FILE__ ) . '..\..\baseclass\DailyStatsCronTestBase.php';
 require_once COM_DAILYSTATS_PATH . '..\dao\dailyStatsDao.php';
 require_once COM_DAILYSTATS_PATH . '..\dailyStatsConstants.php';
 
@@ -12,7 +12,7 @@ require_once COM_DAILYSTATS_PATH . '..\dailyStatsConstants.php';
  * @author Jean-Pierre
  *
  */
-class DailyStatsDaoExecDailyStatsCronOneDailyStatsRecTwoArticlesTest extends DailyStatsTestBase {
+class DailyStatsDaoExecDailyStatsCronOneDailyStatsRecTwoArticlesTest extends DailyStatsCronTestBase {
 	private $daily_stats_table_name = "daily_stats_cron_test";
 	
 	/**
@@ -63,6 +63,8 @@ class DailyStatsDaoExecDailyStatsCronOneDailyStatsRecTwoArticlesTest extends Dai
 		$this->assertEquals(112,$res['total_hits_to_date'],'total hits');
 		$this->assertEquals(1,$res['date_downloads'],'date downloads');
 		$this->assertEquals(12,$res['total_downloads_to_date'],'total downloads');
+
+		$this->checkEntryExistInLog("Stats for $today added in DB. 0 rows inserted for new attachment\(s\). 2 rows inserted for existing attachments \(gap filled: 1 day\(s\)\).");
 	}
 	
 	/**
@@ -113,6 +115,8 @@ class DailyStatsDaoExecDailyStatsCronOneDailyStatsRecTwoArticlesTest extends Dai
 		$this->assertEquals(112,$res['total_hits_to_date'],'total hits');
 		$this->assertEquals(1,$res['date_downloads'],'date downloads');
 		$this->assertEquals(12,$res['total_downloads_to_date'],'total downloads');
+
+		$this->checkEntryExistInLog("Stats for $today added in DB. 0 rows inserted for new attachment\(s\). 2 rows inserted for existing attachments \(gap filled: 2 day\(s\)\).");
 	}
 	
 	private function updateAllDailyStatRec($forDate) {

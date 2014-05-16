@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname ( __FILE__ ) . '..\..\baseclass\DailyStatsTestBase.php';
+require_once dirname ( __FILE__ ) . '..\..\baseclass\DailyStatsCronTestBase.php';
 require_once COM_DAILYSTATS_PATH . '..\dao\dailyStatsDao.php';
 require_once COM_DAILYSTATS_PATH . '..\dailyStatsConstants.php';
 
@@ -12,7 +12,7 @@ require_once COM_DAILYSTATS_PATH . '..\dailyStatsConstants.php';
  * @author Jean-Pierre
  *
  */
-class DailyStatsDaoExecDailyStatsCronNoDailystatsGeneratedTest extends DailyStatsTestBase {
+class DailyStatsDaoExecDailyStatsCronNoDailystatsGeneratedTest extends DailyStatsCronTestBase {
 	private $daily_stats_table_name = "daily_stats_cron_test";
 	
 	/**
@@ -29,6 +29,8 @@ class DailyStatsDaoExecDailyStatsCronNoDailystatsGeneratedTest extends DailyStat
     	$count = $db->loadResult();
 		
     	$this->assertEquals(0,$count,'0 daily_stats records expected');
+		
+		$this->checkEntryExistInLog("daily_stats table successfully bootstraped. 0 rows inserted");
 	}
 	
 	public function setUp() {

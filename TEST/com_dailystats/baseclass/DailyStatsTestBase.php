@@ -6,8 +6,10 @@ define('JPATH_COMPONENT_ADMINISTRATOR', JPATH_BASE . '\administrator\components\
 define('COM_DAILYSTATS_PATH', JPATH_COMPONENT_ADMINISTRATOR);
 
 /**
- *  Defining class as abstract is sementically correct and prevents MakeGood from executing
- *  the test class !
+ * Base class for all the com_daily_stats test classes.
+ * 
+ * Defining class as abstract is sementically correct and prevents MakeGood from executing
+ * the test class !
  */
 abstract class DailyStatsTestBase extends PHPUnit_Extensions_Database_TestCase {
 

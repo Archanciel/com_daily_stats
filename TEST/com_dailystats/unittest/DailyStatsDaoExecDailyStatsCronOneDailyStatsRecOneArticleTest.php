@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname ( __FILE__ ) . '..\..\baseclass\DailyStatsTestBase.php';
+require_once dirname ( __FILE__ ) . '..\..\baseclass\DailyStatsCronTestBase.php';
 require_once COM_DAILYSTATS_PATH . '..\dao\dailyStatsDao.php';
 require_once COM_DAILYSTATS_PATH . '..\dailyStatsConstants.php';
 
@@ -12,7 +12,7 @@ require_once COM_DAILYSTATS_PATH . '..\dailyStatsConstants.php';
  * @author Jean-Pierre
  *
  */
-class DailyStatsDaoExecDailyStatsCronOneDailyStatsRecOneArticleTest extends DailyStatsTestBase {
+class DailyStatsDaoExecDailyStatsCronOneDailyStatsRecOneArticleTest extends DailyStatsCronTestBase {
 	private $daily_stats_table_name = "daily_stats_cron_test";
 	
 	/**
@@ -48,6 +48,8 @@ class DailyStatsDaoExecDailyStatsCronOneDailyStatsRecOneArticleTest extends Dail
 		$this->assertEquals(111,$res['total_hits_to_date'],'total hits');
 		$this->assertEquals(1,$res['date_downloads'],'date downloads');
 		$this->assertEquals(11,$res['total_downloads_to_date'],'total downloads');
+
+		$this->checkEntryExistInLog("Stats for $today added in DB. 0 rows inserted for new attachment\(s\). 1 rows inserted for existing attachments \(gap filled: 1 day\(s\)\).");
 	}
 	
 	/**
@@ -80,9 +82,11 @@ class DailyStatsDaoExecDailyStatsCronOneDailyStatsRecOneArticleTest extends Dail
 		$res = $db->loadAssoc();
 	
 		$this->assertEquals(11,$res['date_hits'],'date hits');
-				$this->assertEquals(111,$res['total_hits_to_date'],'total hits');
-						$this->assertEquals(1,$res['date_downloads'],'date downloads');
-					$this->assertEquals(11,$res['total_downloads_to_date'],'total downloads');
+		$this->assertEquals(111,$res['total_hits_to_date'],'total hits');
+		$this->assertEquals(1,$res['date_downloads'],'date downloads');
+		$this->assertEquals(11,$res['total_downloads_to_date'],'total downloads');
+
+		$this->checkEntryExistInLog("Stats for $today added in DB. 0 rows inserted for new attachment\(s\). 1 rows inserted for existing attachments \(gap filled: 2 day\(s\)\).");
 	}
 	
 	private function updateDailyStatRec($forDate) {
