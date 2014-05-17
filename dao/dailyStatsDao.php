@@ -31,6 +31,7 @@ class DailyStatsDao {
 	  */
      public static function execDailyStatsCron($dailyStatsTableName,$attachmentsTableName,$contentTableName) {
 		jimport('joomla.error.log');
+		define(MAX_DAY_INTERVAL, 20);
 		
 		if (!isset($dailyStatsTableName)) {
 			$dailyStatsTableName = "#__daily_stats";
@@ -74,12 +75,11 @@ class DailyStatsDao {
     		
     		// inserting daily_stats for existing attachments
     		
-    		$gap = 0;	// used to handle the case where cron execution was skipped the day(S) before 
+    		$gap = 1;	// used to handle the case where cron execution was skipped the day(S) before 
     		$rowsNumberForExistingAttachments = 0;
     		
     		while ( $rowsNumberForExistingAttachments == 0	&&
-    				$gap < 20) {
-		    	$gap++;
+    				$gap <= MAX_DAY_INTERVAL) {
     			$dailyStatsQuery = "INSERT INTO $dailyStatsTableName 
       									(article_id, attachment_id, date, total_hits_to_date, date_hits, total_downloads_to_date, date_downloads) 
 									SELECT T2.id AS article_id, T1.id as attachment_id, CURRENT_DATE, T2.hits, T2.hits - T3.total_hits_to_date, T1.download_count,  T1.download_count - T3.total_downloads_to_date
@@ -87,9 +87,18 @@ class DailyStatsDao {
 									WHERE T1.article_id = T2.id AND T2.id = T3.article_id AND T1.id = T3.attachment_id AND DATE_SUB(CURRENT_DATE,INTERVAL $gap DAY) = T3.date;";
 	    		
 		    	$rowsNumberForExistingAttachments = self::executeInsertQuery($db, $dailyStatsQuery );
+		    	
+		    	if ($rowsNumberForExistingAttachments == 0) {
+			    	$gap++;
+		    	}
     		}
 	    	
-			$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "Stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments (gap filled: $gap day(s)). " );
+    		if ($gap > MAX_DAY_INTERVAL) {
+    			$entry = array ('LEVEL' => '1', 'STATUS' => 'ERROR:', 'COMMENT' => "Stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments. GAP EXCEED MAX INTERVALL OF " . MAX_DAY_INTERVAL . " DAYS !" );
+       		} else {
+				$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "Stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments (gap filled: $gap day(s)). " );
+    		}
+    		
 			$log->addEntry($entry);
     	} else {
        		// daily_stats table is empty and must be bootstraped
