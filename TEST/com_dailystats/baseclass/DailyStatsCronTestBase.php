@@ -30,8 +30,9 @@ abstract class DailyStatsCronTestBase extends DailyStatsTestBase {
 	protected function checkEntryExistInLog($entry) {
 		$f = fopen(LOG_FILE_PATH,'r');
 		$content = fread($f, filesize(LOG_FILE_PATH));
+		fclose($f);	// must be performed befcore the assert
+		
 		$this->assertEquals(1, preg_match('/' . $entry . '/', $content));
-		fclose($f);
 	}
 }
 
