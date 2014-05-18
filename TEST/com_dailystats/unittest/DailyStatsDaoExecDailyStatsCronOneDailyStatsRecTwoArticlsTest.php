@@ -38,7 +38,7 @@ class DailyStatsDaoExecDailyStatsCronOneDailyStatsRecTwoArticlesTest extends Dai
     	$db->setQuery($query);
     	$count = $db->loadResult();
 
-		$this->assertEquals(4,$count,'2 daily_stats records expected, one for yesterday and one for today');
+		$this->assertEquals(4,$count,'4 daily_stats records expected, 2 for yesterday and 2 for today');
 
 		$today = date("Y-m-d",strtotime("now"));
 
@@ -90,7 +90,7 @@ class DailyStatsDaoExecDailyStatsCronOneDailyStatsRecTwoArticlesTest extends Dai
     	$db->setQuery($query);
     	$count = $db->loadResult();
 
-		$this->assertEquals(4,$count,'2 daily_stats records expected, one for yesterday and one for today');
+		$this->assertEquals(4,$count,'4 daily_stats records expected, 2 for yesterday and 2 for today');
 
 		$today = date("Y-m-d",strtotime("now"));
 
