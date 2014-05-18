@@ -152,7 +152,7 @@ class DailyStatsDaoExecDailyStatsCronOneDailyStatsRecOneArticleTest extends Dail
 	
 		$today = date("Y-m-d",strtotime("now"));
 		
-		$this->checkEntryExistInLog("Stats for $today added in DB. 0 rows inserted for new attachment\(s\). 0 rows inserted for existing attachments. GAP EXCEED MAX INTERVALL OF 20 DAYS !");
+		$this->checkEntryExistInLog("Stats for $today added in DB. 0 rows inserted for new attachment\(s\). 0 rows inserted for existing attachments. GAP EXCEEDS MAX INTERVAL OF 20 DAYS !");
 	}
 	
 	private function updateDailyStatRec($forDate) {

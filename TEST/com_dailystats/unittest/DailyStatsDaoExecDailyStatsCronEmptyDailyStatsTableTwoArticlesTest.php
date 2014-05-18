@@ -53,7 +53,7 @@ class DailyStatsDaoExecDailyStatsCronEmptyDailyStatsTableTwoArticlesTest extends
 		$this->assertEquals(12,$res['date_downloads'],'date downloads');
 		$this->assertEquals(12,$res['total_downloads_to_date'],'total downloads');
 		
-		$this->checkEntryExistInLog("daily_stats table successfully bootstraped. 2 rows inserted");
+		$this->checkEntryExistInLog("daily_stats table successfully bootstraped. 2 rows inserted.");
 	}
 	
 	public function setUp() {

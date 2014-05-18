@@ -94,7 +94,7 @@ class DailyStatsDao {
     		}
 	    	
     		if ($gap > MAX_DAY_INTERVAL) {
-    			$entry = array ('LEVEL' => '1', 'STATUS' => 'ERROR:', 'COMMENT' => "Stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments. GAP EXCEED MAX INTERVALL OF " . MAX_DAY_INTERVAL . " DAYS !" );
+    			$entry = array ('LEVEL' => '1', 'STATUS' => 'ERROR:', 'COMMENT' => "Stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments. GAP EXCEEDS MAX INTERVAL OF " . MAX_DAY_INTERVAL . " DAYS !" );
        		} else {
 				$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "Stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments (gap filled: $gap day(s)). " );
     		}
@@ -110,7 +110,7 @@ class DailyStatsDao {
 	    	$rowsNumber = self::executeInsertQuery($db, $query);
 //    		self::executeQuery ( $db, "UPDATE $dailyStatsTableName SET date=DATE_SUB(date,INTERVAL 1 DAY);" ); only for creating test data !!
 	    	
-			$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "daily_stats table successfully bootstraped. $rowsNumber rows inserted");
+			$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "daily_stats table successfully bootstraped. $rowsNumber rows inserted.");
 			$log->addEntry($entry);
     	}
      }
