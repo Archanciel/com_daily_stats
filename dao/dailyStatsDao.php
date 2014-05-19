@@ -61,18 +61,6 @@ class DailyStatsDao {
     			return;
     		}
     		
-    		// inserting daily_stats for new attachments
-    		
-    		$query = "INSERT INTO $dailyStatsTableName 
-    					(article_id, attachment_id, date, total_hits_to_date, date_hits, total_downloads_to_date, date_downloads)
-						SELECT T1.article_id, T1.id, CURRENT_DATE, T2.hits, T2.hits, T1.download_count, T1.download_count
-						FROM $attachmentsTableName T1, $contentTableName T2
-						WHERE T1.article_id = T2.id AND T2.state = 1 AND T1.id IN (
-							SELECT T1.id
-							FROM $attachmentsTableName T1 LEFT JOIN $dailyStatsTableName ON T1.id = $dailyStatsTableName" . ".attachment_id
-							WHERE $dailyStatsTableName" . ".attachment_id IS NULL);";
-    		$rowsNumberForNewAttachments = self::executeInsertQuery($db, $query);
-    		
     		// inserting daily_stats for existing attachments
     		
     		$gap = 1;	// used to handle the case where cron execution was skipped the day(S) before 
@@ -86,13 +74,25 @@ class DailyStatsDao {
 									FROM $attachmentsTableName T1, $contentTableName T2, $dailyStatsTableName T3
 									WHERE T1.article_id = T2.id AND T2.id = T3.article_id AND T1.id = T3.attachment_id AND DATE_SUB(CURRENT_DATE,INTERVAL $gap DAY) = T3.date;";
 	    		
-		    	$rowsNumberForExistingAttachments = self::executeInsertQuery($db, $dailyStatsQuery );
+		    	$rowsNumberForExistingAttachments = self::executeInsertQuery($db, $dailyStatsQuery, $log);
 		    	
 		    	if ($rowsNumberForExistingAttachments == 0) {
 			    	$gap++;
 		    	}
     		}
-	    	
+    		
+    		// inserting daily_stats for new attachments
+    		
+    		$query = "INSERT INTO $dailyStatsTableName
+			    		(article_id, attachment_id, date, total_hits_to_date, date_hits, total_downloads_to_date, date_downloads)
+				    		SELECT T1.article_id, T1.id, CURRENT_DATE, T2.hits, T2.hits, T1.download_count, T1.download_count
+				    		FROM $attachmentsTableName T1, $contentTableName T2
+				    		WHERE T1.article_id = T2.id AND T2.state = 1 AND T1.id IN (
+					    		SELECT T1.id
+					    		FROM $attachmentsTableName T1 LEFT JOIN $dailyStatsTableName ON T1.id = $dailyStatsTableName" . ".attachment_id
+					    		WHERE $dailyStatsTableName" . ".attachment_id IS NULL);";
+    		$rowsNumberForNewAttachments = self::executeInsertQuery($db, $query, $log);
+    		
     		if ($gap > MAX_DAY_INTERVAL) {
     			$entry = array ('LEVEL' => '1', 'STATUS' => 'ERROR:', 'COMMENT' => "Stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments. GAP EXCEEDS MAX INTERVAL OF " . MAX_DAY_INTERVAL . " DAYS !" );
        		} else {
@@ -107,7 +107,7 @@ class DailyStatsDao {
 					SELECT T1.article_id, T1.id, CURRENT_DATE, T2.hits, T2.hits, T1.download_count, T1.download_count
 					FROM $attachmentsTableName T1, $contentTableName T2
 					WHERE T1.article_id = T2.id AND T2.state = 1;";
-	    	$rowsNumber = self::executeInsertQuery($db, $query);
+	    	$rowsNumber = self::executeInsertQuery($db, $query, $log);
 //    		self::executeQuery ( $db, "UPDATE $dailyStatsTableName SET date=DATE_SUB(date,INTERVAL 1 DAY);" ); only for creating test data !!
 	    	
 			$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "daily_stats table successfully bootstraped. $rowsNumber rows inserted.");
@@ -115,14 +115,17 @@ class DailyStatsDao {
     	}
      }
 	
-	 private static function executeInsertQuery(JDatabase $db, $query) {
+	 private static function executeInsertQuery(JDatabase $db, $query, $log) {
 		$db->setQuery ( $query );
 		$db->query ();
 		
 		if ($db->getErrorNum ()) {
-			$query = $db->getErrorMsg ();
+			$errorMsg = $db->getErrorMsg ();
 			//print_r( $e );
-			JError::raiseError ( 500, $query );
+			$entry = array ('LEVEL' => '1', 'STATUS' => 'ERROR:', 'COMMENT' => "INVALID DAILY_STATS RECORD ENCOUNTERED. CRON JOB ABORTED. NO DATA INSERTED. NEEDS IMMEDIATE FIX !\r\n\r\nERROR MSG FOLLOWS:\r\n\r\n$errorMsg" );
+			$log->addEntry($entry);
+//			JError::raiseError ( 500, $errorMsg );
+			throw new Exception($errorMsg);
 			return;
 		}
 		
