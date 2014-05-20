@@ -140,7 +140,7 @@ class DailyStatsDaoExecDailyStatsCron2ExistingArt1NewlyPubArtTest extends DailyS
 		$this->assertEquals(3,$res['date_downloads'],'date downloads');
 		$this->assertEquals(3,$res['total_downloads_to_date'],'total downloads');
 
-		$this->checkEntryExistInLog("Stats for $today added in DB. 1 rows inserted for new attachment\(s\). 2 rows inserted for existing attachments \(gap filled: 2 day\(s\)\).");
+		$this->checkEntryExistInLog("Stats for $today added in DB. 1 rows inserted for new attachment\(s\). 2 rows inserted for existing attachments. GAP EXCEEDS 1 DAY \(gap filled: 2 day\(s\)\).");
 	}
 	
 	
@@ -205,7 +205,7 @@ class DailyStatsDaoExecDailyStatsCron2ExistingArt1NewlyPubArtTest extends DailyS
 		$this->assertEquals(3,$res['date_downloads'],'date downloads');
 		$this->assertEquals(3,$res['total_downloads_to_date'],'total downloads');
 		
-		$this->checkEntryExistInLog("Stats for $today added in DB. 1 rows inserted for new attachment\(s\). 2 rows inserted for existing attachments \(gap filled: 20 day\(s\)\).");
+		$this->checkEntryExistInLog("Stats for $today added in DB. 1 rows inserted for new attachment\(s\). 2 rows inserted for existing attachments. GAP EXCEEDS 1 DAY \(gap filled: 20 day\(s\)\).");
 	}
 	
 	/**
