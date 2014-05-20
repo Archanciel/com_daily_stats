@@ -5,6 +5,7 @@ require_once dirname ( __FILE__ ) . '\DailyStatsTestBase.php';
 define('JPATH_COMPONENT_ADMINISTRATOR', JPATH_BASE . '\administrator\components\com_dailystats');
 define('COM_DAILYSTATS_PATH', JPATH_COMPONENT_ADMINISTRATOR);
 define('LOG_FILE_PATH', JPATH_BASE . "\logs\com_dailystats_log.php");
+define('PHPUNIT_EXECUTION', 'PHPUNIT_MODE');
 
 /**
  * Base class for the com_daily_stats CRON operation test classes.
