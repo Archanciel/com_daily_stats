@@ -95,10 +95,14 @@ class DailyStatsDao {
     		
     		if ($gap > MAX_DAY_INTERVAL) {
     			$entry = array ('LEVEL' => '1', 'STATUS' => 'ERROR:', 'COMMENT' => "Stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments. GAP EXCEEDS MAX INTERVAL OF " . MAX_DAY_INTERVAL . " DAYS !" );
-       		} else {
-				$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "Stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments (gap filled: $gap day(s)). " );
+    			self::sendCronErrorMailToAdmin($entry);
+    		} else if ($gap > 1) {
+   				$entry = array ('LEVEL' => '1', 'STATUS' => 'ERROR:', 'COMMENT' => "Stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments. GAP EXCEEDS 1 DAY (gap filled: $gap day(s)). " );
+   				self::sendCronErrorMailToAdmin($entry);
+    		} else {
+    			$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "Stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments (gap filled: $gap day(s)). " );
     		}
-    		
+
 			$log->addEntry($entry);
     	} else {
        		// daily_stats table is empty and must be bootstraped
@@ -122,14 +126,38 @@ class DailyStatsDao {
 		if ($db->getErrorNum ()) {
 			$errorMsg = $db->getErrorMsg ();
 			//print_r( $e );
-			$entry = array ('LEVEL' => '1', 'STATUS' => 'ERROR:', 'COMMENT' => "INVALID DAILY_STATS RECORD ENCOUNTERED. CRON JOB ABORTED. NO DATA INSERTED. NEEDS IMMEDIATE FIX !\r\n\r\nERROR MSG FOLLOWS:\r\n\r\n$errorMsg" );
+			$entry = array ('LEVEL' => '1', 'STATUS' => 'ERROR:', 'COMMENT' => "INVALID DAILY_STATS RECORD ENCOUNTERED. CRON JOB ABORTED. NO DATA INSERTED. NEEDS IMMEDIATE FIX !\r\n\r\nERROR MSG FOLLOWS:\r\n\r\n$errorMsg\r\n\r\n" );
 			$log->addEntry($entry);
+			
+			self::sendCronErrorMailToAdmin($entry);
+			
+			// throwing an exception instead of using JError::raiseError() makes it possible to
+			// unit test the caae causing the exception. In the browser, this simply results in
+			// a regular PHP orange error page which displays much more useful infos than JError does !
+			// And anyway, we are in a CRON triggered action. No user would see such a page !
 //			JError::raiseError ( 500, $errorMsg );
+
 			throw new Exception($errorMsg);
 			return;
 		}
 		
 		return $db->getAffectedRows();
+	 }
+	 
+	 private static function sendCronErrorMailToAdmin($body) {
+	 	if (defined('PHPUNIT_EXECUTION')) {
+	 		return;
+	 	}
+	 	
+	 	$adminMail = 'webmaster@plusconscient.net';
+	 	
+	 	/* @var $mailThis JMail */
+	 	$mailThis = JFactory::getMailer();
+	 	$mailThis->setSender($adminMail);
+	 	$mailThis->addRecipient($adminMail); // you can repeat this command to add more recipient
+	 	$mailThis->setSubject('plusconscient.net - com_daily_stats CRON JOB ERROR');
+	 	$mailThis->setBody($body);
+	 	$mailThis->Send();
 	 }
 
      private static function loadResult(JDatabase $db, $query) {
