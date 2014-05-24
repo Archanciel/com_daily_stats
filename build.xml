@@ -13,7 +13,7 @@
 	<property name="install.zip.file.dest"
 		value="D:\Development\web\htdocs\plusconscient15_int\attachments"
 		override="true" />
-	<property name="version">v3.5</property>
+	<property name="version">v3.7</property>
 
 	<target name="copy_to_front_dir" description="Copies files to front component src dir">
 		<delete dir="${front.src}" includeemptydirs="true" verbose="false" />

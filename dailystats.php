@@ -27,6 +27,11 @@ if (strcmp($cron,'yes') == 0) {
 	return;
 }
 
+if (strcmp($cron,'mail') == 0) {
+    DailyStatsDao::testLogAndMail();
+	return;
+}
+
 // add form controls manipulation javascript
 $document = JFactory::getDocument();
 $document->addScript(JURI::root().'administrator/components/com_dailystats/js/dailystats.js');

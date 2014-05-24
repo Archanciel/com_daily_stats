@@ -56,7 +56,7 @@ class DailyStatsDao {
     		if (strcmp($maxDate,$today) == 0) {
     			// protecting for duplicate insertion of daily stats data
     			
-    			$mailSubject = 'plusconscient.net - com_daily_stats CRON JOB LAUNCHED AGAIN ON SOME DAY';
+    			$mailSubject = 'com_daily_stats CRON JOB LAUNCHED AGAIN ON SAME DAY';
 				$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "Stats for today already exist in daily_stats table. No data inserted." );
 				self::logAndMail($mailSubject, $entry);
     			return;
@@ -96,12 +96,12 @@ class DailyStatsDao {
     		
     		if ($gap > MAX_DAY_INTERVAL) {
     			$entry = array ('LEVEL' => '1', 'STATUS' => 'ERROR:', 'COMMENT' => "Stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments. GAP EXCEEDS MAX INTERVAL OF " . MAX_DAY_INTERVAL . " DAYS !" );
-    			$mailSubject = 'plusconscient.net - com_daily_stats CRON JOB ERROR';
+    			$mailSubject = 'com_daily_stats CRON JOB ERROR';
     		} else if ($gap > 1) {
    				$entry = array ('LEVEL' => '1', 'STATUS' => 'ERROR:', 'COMMENT' => "Stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments. GAP EXCEEDS 1 DAY (gap filled: $gap day(s)). " );
-   				$mailSubject = 'plusconscient.net - com_daily_stats CRON JOB ERROR';
+   				$mailSubject = 'com_daily_stats CRON JOB ERROR';
     		} else {
-    			$mailSubject = 'plusconscient.net - com_daily_stats CRON JOB COMPLETION REPORT';
+    			$mailSubject = 'com_daily_stats CRON JOB COMPLETION REPORT';
     			$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "Stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments (gap filled: $gap day(s)). " );
     		}
     	} else {
@@ -114,7 +114,7 @@ class DailyStatsDao {
 	    	$rowsNumber = self::executeInsertQuery($db, $query, $log);
 //    		self::executeQuery ( $db, "UPDATE $dailyStatsTableName SET date=DATE_SUB(date,INTERVAL 1 DAY);" ); only for creating test data !!
 	    	
-    		$mailSubject = 'plusconscient.net - com_daily_stats CRON JOB COMPLETION REPORT';
+    		$mailSubject = 'com_daily_stats CRON JOB COMPLETION REPORT';
 			$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "daily_stats table successfully bootstraped. $rowsNumber rows inserted.");
     	}
     	
@@ -129,7 +129,7 @@ class DailyStatsDao {
 			$errorMsg = $db->getErrorMsg ();
 			//print_r( $e );
 			$entry = array ('LEVEL' => '1', 'STATUS' => 'ERROR:', 'COMMENT' => "INVALID DAILY_STATS RECORD ENCOUNTERED. CRON JOB ABORTED. NO DATA INSERTED. NEEDS IMMEDIATE FIX !\r\n\r\nERROR MSG FOLLOWS:\r\n\r\n$errorMsg\r\n\r\n" );
-			self::logAndMail('plusconscient.net - com_daily_stats CRON JOB ERROR',$entry);
+			self::logAndMail('com_daily_stats CRON JOB ERROR',$entry);
 			
 			// throwing an exception instead of using JError::raiseError() makes it possible to
 			// unit test the caae causing the exception. In the browser, this simply results in
@@ -144,9 +144,15 @@ class DailyStatsDao {
 		return $db->getAffectedRows();
 	 }
 	 
-	 private static function logAndMail($subject, $body) {
+	 public static function testLogAndMail() {
+		$mailSubject = 'com_daily_stats CRON JOB EMAIL TEST';
+		$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "Stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments (gap filled: $gap day(s)). " );
+	 	self::logAndMail($mailSubject, $entry);
+	 }
+	 
+	 private static function logAndMail($subject, $entry) {
     	$log = JLog::getInstance("com_dailystats_log.php");
-	 	$log->addEntry($body);
+	 	$log->addEntry($entry);
 	 	 
 	 	if (defined('PHPUNIT_EXECUTION')) {
 	 		return;
@@ -164,9 +170,10 @@ class DailyStatsDao {
 	 	/* @var $mailThis JMail */
 	 	$mailThis = JFactory::getMailer();
 		$mailThis->setSender($adminMail);
-	 	$mailThis->addRecipient($adminMail); // you can repeat this command to add more recipient
+//	 	$mailThis->addRecipient($adminMail); // Joomla 3
+	 	$mailThis->addRecipient($adminMail[0]); // Joomla 1.5
 	 	$mailThis->setSubject($subject);
-	 	$mailThis->setBody($body);
+	 	$mailThis->setBody($entry['COMMENT']);
 	 	$mailThis->Send();
 	 }
 
