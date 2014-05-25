@@ -63,7 +63,7 @@ class DailyStatsDaoExecDailyStatsCronOneDailyStatsRecAhead1DayTwoArticlsTest ext
 		$this->assertEquals(1,$res['date_downloads'],'date downloads');
 		$this->assertEquals(12,$res['total_downloads_to_date'],'total downloads');
 
-		$this->checkEntryExistInLog("Stats for $today added in DB. 0 rows inserted for new attachment\(s\). 1 rows inserted for existing attachments \(gap filled: 1 day\(s\)\).");
+		$this->checkEntryExistInLog("Daily stats for $today added in DB. 0 rows inserted for new attachment\(s\). 1 rows inserted for existing attachments \(gap filled: 1 day\(s\)\).");
 	}
 	
 	/**
@@ -113,7 +113,7 @@ class DailyStatsDaoExecDailyStatsCronOneDailyStatsRecAhead1DayTwoArticlsTest ext
 		$this->assertEquals(1,$res['date_downloads'],'date downloads');
 		$this->assertEquals(12,$res['total_downloads_to_date'],'total downloads');
 
-		$this->checkEntryExistInLog("Stats for $today added in DB. 0 rows inserted for new attachment\(s\). 1 rows inserted for existing attachments \(gap filled: 1 day\(s\)\).");
+		$this->checkEntryExistInLog("Daily stats for $today added in DB. 0 rows inserted for new attachment\(s\). 1 rows inserted for existing attachments \(gap filled: 1 day\(s\)\).");
 	}
 		
 	/**
@@ -163,7 +163,7 @@ class DailyStatsDaoExecDailyStatsCronOneDailyStatsRecAhead1DayTwoArticlsTest ext
 		$this->assertEquals(1,$res['date_downloads'],'date downloads');
 		$this->assertEquals(12,$res['total_downloads_to_date'],'total downloads');
 
-		$this->checkEntryExistInLog("Stats for $today added in DB. 0 rows inserted for new attachment\(s\). 1 rows inserted for existing attachments \(gap filled: 1 day\(s\)\).");
+		$this->checkEntryExistInLog("Daily stats for $today added in DB. 0 rows inserted for new attachment\(s\). 1 rows inserted for existing attachments \(gap filled: 1 day\(s\)\).");
 	}	
 	
 	/**
@@ -215,7 +215,7 @@ class DailyStatsDaoExecDailyStatsCronOneDailyStatsRecAhead1DayTwoArticlsTest ext
  		$this->assertEquals(1,$res['date_downloads'],'date downloads');
  		$this->assertEquals(12,$res['total_downloads_to_date'],'total downloads');
  		
- 		$this->checkEntryExistInLog("Stats for $today added in DB. 0 rows inserted for new attachment\(s\). 1 rows inserted for existing attachments \(gap filled: 1 day\(s\)\).");
+ 		$this->checkEntryExistInLog("Daily stats for $today added in DB. 0 rows inserted for new attachment\(s\). 1 rows inserted for existing attachments \(gap filled: 1 day\(s\)\).");
  	}
 	
 	private function updateDailyStatRec($id,$forDate) {

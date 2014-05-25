@@ -49,7 +49,7 @@ class DailyStatsDaoExecDailyStatsCronOneDailyStatsRecOneArticleTest extends Dail
 		$this->assertEquals(1,$res['date_downloads'],'date downloads');
 		$this->assertEquals(11,$res['total_downloads_to_date'],'total downloads');
 
-		$this->checkEntryExistInLog("Stats for $today added in DB. 0 rows inserted for new attachment\(s\). 1 rows inserted for existing attachments \(gap filled: 1 day\(s\)\).");
+		$this->checkEntryExistInLog("Daily stats for $today added in DB. 0 rows inserted for new attachment\(s\). 1 rows inserted for existing attachments \(gap filled: 1 day\(s\)\).");
 	}
 	
 	/**
@@ -86,7 +86,7 @@ class DailyStatsDaoExecDailyStatsCronOneDailyStatsRecOneArticleTest extends Dail
 		$this->assertEquals(1,$res['date_downloads'],'date downloads');
 		$this->assertEquals(11,$res['total_downloads_to_date'],'total downloads');
 	
-		$this->checkEntryExistInLog("Stats for $today added in DB. 0 rows inserted for new attachment\(s\). 1 rows inserted for existing attachments. GAP EXCEEDS 1 DAY \(gap filled: 2 day\(s\)\).");
+		$this->checkEntryExistInLog("Daily stats for $today added in DB. 0 rows inserted for new attachment\(s\). 1 rows inserted for existing attachments. GAP EXCEEDS 1 DAY \(gap filled: 2 day\(s\)\).");
 	}
 	
 	/**
@@ -123,7 +123,7 @@ class DailyStatsDaoExecDailyStatsCronOneDailyStatsRecOneArticleTest extends Dail
 		$this->assertEquals(1,$res['date_downloads'],'date downloads');
 		$this->assertEquals(11,$res['total_downloads_to_date'],'total downloads');
 	
-		$this->checkEntryExistInLog("Stats for $today added in DB. 0 rows inserted for new attachment\(s\). 1 rows inserted for existing attachments. GAP EXCEEDS 1 DAY \(gap filled: 20 day\(s\)\).");
+		$this->checkEntryExistInLog("Daily stats for $today added in DB. 0 rows inserted for new attachment\(s\). 1 rows inserted for existing attachments. GAP EXCEEDS 1 DAY \(gap filled: 20 day\(s\)\).");
 	}
 	
 	/**
@@ -152,7 +152,7 @@ class DailyStatsDaoExecDailyStatsCronOneDailyStatsRecOneArticleTest extends Dail
 	
 		$today = date("Y-m-d",strtotime("now"));
 		
-		$this->checkEntryExistInLog("Stats for $today added in DB. 0 rows inserted for new attachment\(s\). 0 rows inserted for existing attachments. GAP EXCEEDS MAX INTERVAL OF 20 DAYS !");
+		$this->checkEntryExistInLog("Daily stats for $today added in DB. 0 rows inserted for new attachment\(s\). 0 rows inserted for existing attachments. GAP EXCEEDS MAX INTERVAL OF 20 DAYS !");
 	}
 	
 	private function updateDailyStatRec($forDate) {

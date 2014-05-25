@@ -42,7 +42,7 @@ class DailyStatsDaoExecDailyStatsCronTwiceEmptyDailyStatsTableTwoArticlesTest ex
 		$this->assertEquals(2,$count,'2 daily_stats records expected');
 		
 		$this->checkEntryExistInLog("daily_stats table successfully bootstraped. 2 rows inserted.");
-		$this->checkEntryExistInLog("Stats for today already exist in daily_stats table. No data inserted.");
+		$this->checkEntryExistInLog("Daily stats for today already exist in daily_stats table. No data inserted.");
 	}
 	
 	public function setUp() {

@@ -56,8 +56,8 @@ class DailyStatsDao {
     		if (strcmp($maxDate,$today) == 0) {
     			// protecting for duplicate insertion of daily stats data
     			
-    			$mailSubject = 'com_daily_stats CRON JOB LAUNCHED AGAIN ON SAME DAY';
-				$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "Stats for today already exist in daily_stats table. No data inserted." );
+    			$mailSubject = 'Daily stats generation LAUNCHED AGAIN ON SAME DAY';
+				$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "Daily stats for today already exist in daily_stats table. No data inserted." );
 				self::logAndMail($mailSubject, $entry);
     			return;
     		}
@@ -95,14 +95,14 @@ class DailyStatsDao {
     		$rowsNumberForNewAttachments = self::executeInsertQuery($db, $query, $log);
     		
     		if ($gap > MAX_DAY_INTERVAL) {
-    			$entry = array ('LEVEL' => '1', 'STATUS' => 'ERROR:', 'COMMENT' => "Stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments. GAP EXCEEDS MAX INTERVAL OF " . MAX_DAY_INTERVAL . " DAYS !" );
+    			$entry = array ('LEVEL' => '1', 'STATUS' => 'ERROR:', 'COMMENT' => "Daily stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments. GAP EXCEEDS MAX INTERVAL OF " . MAX_DAY_INTERVAL . " DAYS !" );
     			$mailSubject = 'com_daily_stats CRON JOB ERROR';
     		} else if ($gap > 1) {
-   				$entry = array ('LEVEL' => '1', 'STATUS' => 'ERROR:', 'COMMENT' => "Stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments. GAP EXCEEDS 1 DAY (gap filled: $gap day(s)). " );
+   				$entry = array ('LEVEL' => '1', 'STATUS' => 'ERROR:', 'COMMENT' => "Daily stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments. GAP EXCEEDS 1 DAY (gap filled: $gap day(s)). " );
    				$mailSubject = 'com_daily_stats CRON JOB ERROR';
     		} else {
     			$mailSubject = 'com_daily_stats CRON JOB COMPLETION REPORT';
-    			$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "Stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments (gap filled: $gap day(s)). " );
+    			$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "Daily stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments (gap filled: $gap day(s)). " );
     		}
     	} else {
        		// daily_stats table is empty and must be bootstraped
@@ -114,7 +114,7 @@ class DailyStatsDao {
 	    	$rowsNumber = self::executeInsertQuery($db, $query, $log);
 //    		self::executeQuery ( $db, "UPDATE $dailyStatsTableName SET date=DATE_SUB(date,INTERVAL 1 DAY);" ); only for creating test data !!
 	    	
-    		$mailSubject = 'com_daily_stats CRON JOB COMPLETION REPORT';
+    		$mailSubject = 'Daily stats generation completed';
 			$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "daily_stats table successfully bootstraped. $rowsNumber rows inserted.");
     	}
     	
@@ -129,7 +129,7 @@ class DailyStatsDao {
 			$errorMsg = $db->getErrorMsg ();
 			//print_r( $e );
 			$entry = array ('LEVEL' => '1', 'STATUS' => 'ERROR:', 'COMMENT' => "INVALID DAILY_STATS RECORD ENCOUNTERED. CRON JOB ABORTED. NO DATA INSERTED. NEEDS IMMEDIATE FIX !\r\n\r\nERROR MSG FOLLOWS:\r\n\r\n$errorMsg\r\n\r\n" );
-			self::logAndMail('com_daily_stats CRON JOB ERROR',$entry);
+			self::logAndMail('Daily stats generation ERROR',$entry);
 			
 			// throwing an exception instead of using JError::raiseError() makes it possible to
 			// unit test the caae causing the exception. In the browser, this simply results in
@@ -145,8 +145,8 @@ class DailyStatsDao {
 	 }
 	 
 	 public static function testLogAndMail() {
-		$mailSubject = 'com_daily_stats CRON JOB EMAIL TEST';
-		$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "Stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments (gap filled: $gap day(s)). " );
+		$mailSubject = 'Daily stats EMAIL TEST';
+		$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "Daily stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments (gap filled: $gap day(s)). " );
 	 	self::logAndMail($mailSubject, $entry);
 	 }
 	 
