@@ -25,9 +25,7 @@ $cron = JRequest::getVar ( 'cron' , 'no' );
 if (strcmp($cron,'yes') == 0) {
     DailyStatsDao::execDailyStatsCron();
 	return;
-}
-
-if (strcmp($cron,'mail') == 0) {
+} else if (strcmp($cron,'mail') == 0) {
     DailyStatsDao::testLogAndMail();
 	return;
 }
