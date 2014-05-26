@@ -128,7 +128,7 @@ class DailyStatsDao {
 		if ($db->getErrorNum ()) {
 			$errorMsg = $db->getErrorMsg ();
 			//print_r( $e );
-			$entry = array ('LEVEL' => '1', 'STATUS' => 'ERROR:', 'COMMENT' => "INVALID DAILY_STATS RECORD ENCOUNTERED. CRON JOB ABORTED. NO DATA INSERTED. NEEDS IMMEDIATE FIX !\r\n\r\nERROR MSG FOLLOWS:\r\n\r\n$errorMsg\r\n\r\n" );
+			$entry = array ('LEVEL' => '1', 'STATUS' => 'ERROR:', 'COMMENT' => "INVALID DAILY_STATS RECORD ENCOUNTERED. CRON JOB ABORTED. NO DATA INSERTED. NEEDS IMMEDIATE FIX !\r\nERROR MSG FOLLOWS:\r\n$errorMsg\r\n" );
 			self::logAndMail('Dailystats Cron ERROR',$entry);
 			
 			// throwing an exception instead of using JError::raiseError() makes it possible to
