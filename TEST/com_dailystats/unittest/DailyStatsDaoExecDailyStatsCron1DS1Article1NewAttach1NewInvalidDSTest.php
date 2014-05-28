@@ -10,7 +10,7 @@ require_once COM_DAILYSTATS_PATH . '..\dailyStatsConstants.php';
  * article 1 and a ds rec was manually created, but with a total download count to date >
  * than the download count of the new attachment. This causes a SQL error and a failure of the
  * daily stats generation process. The class ensures this bug is now handled gracefully (entry
- * in log file and email sending in prod environment).
+ * in log file and error mail sending in prod environment).
  *  
  * @author Jean-Pierre
  *
