@@ -40,7 +40,7 @@ class DailyStatsDaoExecDailyStatsCronOneDailyStatsRecAhead1DayTwoArticlsTest ext
     	$db->setQuery($query);
     	$count = $db->loadResult();
 
-		$this->assertEquals(3,$count,'3 daily_stats records expected, 2 for the past and only one for today for article 2. Article one will no longer get daily stats records');
+		$this->assertEquals(3,$count,'3 daily_stats records expected, 2 for the past and only one for today for article 2. Article one will no longer get daily stats records since its DS are left behind !');
 
 		$today = date("Y-m-d",strtotime("now"));
 

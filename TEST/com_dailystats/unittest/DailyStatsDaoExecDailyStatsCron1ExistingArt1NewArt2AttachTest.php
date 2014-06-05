@@ -74,8 +74,8 @@ class DailyStatsDaoExecDailyStatsCron1ExistingArt1NewArt2AttachTest extends Dail
 	}
 	
 	/**
-	 * Tests daily stats rec generation for 1 existing article with 1 attachment and 1 daily stat rec d
-	 * ated 2 day before cron execution anc 1 new article with 2 attachments.
+	 * Tests daily stats rec generation for 1 existing article with 1 attachment and 1 daily stat rec
+	 * dated 2 day before cron execution and 1 new article with 2 attachments.
 	 */
 	public function testExecDailyStatsCron1ExistingArt1NewArt2Attach2DaysInterval() {
 		// force existing daily stats rec date to yesterday
@@ -133,8 +133,8 @@ class DailyStatsDaoExecDailyStatsCron1ExistingArt1NewArt2AttachTest extends Dail
 	}
 	
 	/**
-	 * Tests daily stats rec generation for 1 existing article with 1 attachment and 1 daily stat rec d
-	 * ated 20 day before cron execution anc 1 new article with 2 attachments.
+	 * Tests daily stats rec generation for 1 existing article with 1 attachment and 1 daily stat rec
+	 * dated 20 day before cron execution anc 1 new article with 2 attachments.
 	 */
 	public function testExecDailyStatsCron1ExistingArt1NewArt2Attach20DaysInterval() {
 		// force existing daily stats rec date to yesterday
