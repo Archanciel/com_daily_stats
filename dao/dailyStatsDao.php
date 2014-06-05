@@ -102,7 +102,7 @@ class DailyStatsDao {
    				$mailSubject = 'Dailystats Cron ERROR';
     		} else {
     			$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "Daily stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments (gap filled: $gap day(s)). " );
-    			$mailSubject = 'Dailystats Cron completed';
+    			$mailSubject = "Dailystats Cron completed. New $rowsNumberForNewAttachments. Existing $rowsNumberForExistingAttachments.";
     		}
     	} else {
        		// daily_stats table is empty and must be bootstraped
@@ -114,7 +114,7 @@ class DailyStatsDao {
 	    	$rowsNumber = self::executeInsertQuery($db, $query, $log);
 //    		self::executeQuery ( $db, "UPDATE $dailyStatsTableName SET date=DATE_SUB(date,INTERVAL 1 DAY);" ); only for creating test data !!
 	    	
-    		$mailSubject = 'Dailystats Cron completed';
+    		$mailSubject = "Dailystats Cron completed. New $rowsNumber. Existing 0.";
 			$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "daily_stats table successfully bootstraped. $rowsNumber rows inserted.");
     	}
     	
