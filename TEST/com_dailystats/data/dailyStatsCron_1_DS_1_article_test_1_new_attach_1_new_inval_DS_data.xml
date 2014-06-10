@@ -73,11 +73,11 @@
 		<column>file_type</column>
 		<column>file_size</column>
 		<column>icon_filename</column>
-		<column>display_filename</column>
+		<column>display_name</column>
 		<column>description</column>
 		<column>url</column>
 		<column>uploader_id</column>
-		<column>article_id</column>
+		<column>parent_id</column>
 		<column>published</column>
 		<column>user_field_1</column>
 		<column>user_field_2</column>
@@ -93,11 +93,11 @@
 			<value></value> <!-- file_type -->
 			<value>20000000</value> <!-- file_size -->
 			<value></value> <!-- icon_filename -->
-			<value></value> <!-- display_filename -->
+			<value></value> <!-- display_name -->
 			<value></value> <!-- description -->
 			<value></value> <!-- url -->
 			<value>0</value> <!-- uploader_id -->
-			<value>1</value> <!-- article_id -->
+			<value>1</value> <!-- parent_id -->
 			<value>1</value> <!-- published -->
 			<value></value> <!-- user_field_1 -->
 			<value></value> <!-- user_field_2 -->
@@ -114,11 +114,11 @@
 			<value></value> <!-- file_type -->
 			<value>20000000</value> <!-- file_size -->
 			<value></value> <!-- icon_filename -->
-			<value></value> <!-- display_filename -->
+			<value></value> <!-- display_name -->
 			<value></value> <!-- description -->
 			<value></value> <!-- url -->
 			<value>0</value> <!-- uploader_id -->
-			<value>1</value> <!-- article_id -->
+			<value>1</value> <!-- parent_id -->
 			<value>1</value> <!-- published -->
 			<value></value> <!-- user_field_1 -->
 			<value></value> <!-- user_field_2 -->
