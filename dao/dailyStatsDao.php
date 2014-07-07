@@ -73,7 +73,7 @@ class DailyStatsDao {
       									(article_id, attachment_id, date, total_hits_to_date, date_hits, total_downloads_to_date, date_downloads) 
 									SELECT T2.id AS article_id, T1.id as attachment_id, CURRENT_DATE, T2.hits, T2.hits - T3.total_hits_to_date, T1.download_count,  T1.download_count - T3.total_downloads_to_date
 									FROM $attachmentsTableName T1, $contentTableName T2, $dailyStatsTableName T3
-									WHERE T1.published = 1 AND T1.parent_id = T2.id AND T2.id = T3.article_id AND T1.id = T3.attachment_id AND DATE_SUB(CURRENT_DATE,INTERVAL $gap DAY) = T3.date;";
+									WHERE T1.published = 1 AND T1.user_field_2 != 1 AND T1.parent_id = T2.id AND T2.id = T3.article_id AND T1.id = T3.attachment_id AND DATE_SUB(CURRENT_DATE,INTERVAL $gap DAY) = T3.date;";
 	    		
 		    	$rowsNumberForExistingAttachments = self::executeInsertQuery($db, $dailyStatsQuery, $log);
 		    	
@@ -91,7 +91,7 @@ class DailyStatsDao {
 				    		WHERE T1.parent_id = T2.id AND T2.state = 1 AND T1.id IN (
 					    		SELECT T1.id
 					    		FROM $attachmentsTableName T1 LEFT JOIN $dailyStatsTableName ON T1.id = $dailyStatsTableName" . ".attachment_id
-					    		WHERE T1.published = 1 AND $dailyStatsTableName" . ".attachment_id IS NULL);";
+					    		WHERE T1.published = 1 AND T1.user_field_2 != 1 AND $dailyStatsTableName" . ".attachment_id IS NULL);";
     		$rowsNumberForNewAttachments = self::executeInsertQuery($db, $query, $log);
     		
     		if ($gap > MAX_DAY_INTERVAL) {
@@ -110,7 +110,7 @@ class DailyStatsDao {
          				(article_id, attachment_id, date, total_hits_to_date, date_hits, total_downloads_to_date, date_downloads)
 					SELECT T1.parent_id, T1.id, CURRENT_DATE, T2.hits, T2.hits, T1.download_count, T1.download_count
 					FROM $attachmentsTableName T1, $contentTableName T2
-					WHERE T1.published = 1 AND T1.parent_id = T2.id AND T2.state = 1;";
+					WHERE T1.published = 1 AND T1.user_field_2 != 1 AND T1.parent_id = T2.id AND T2.state = 1;";
 	    	$rowsNumber = self::executeInsertQuery($db, $query, $log);
 //    		self::executeQuery ( $db, "UPDATE $dailyStatsTableName SET date=DATE_SUB(date,INTERVAL 1 DAY);" ); only for creating test data !!
 	    	
