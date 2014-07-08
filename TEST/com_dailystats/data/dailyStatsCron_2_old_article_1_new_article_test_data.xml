@@ -154,7 +154,7 @@
 		<row>
 			<!-- Attachment for article 1 -->
 			<value>10001</value> <!-- id -->
-			<value></value> <!-- filename -->
+			<value>article_1_attach_10001.mp3</value> <!-- filename -->
 			<value></value> <!-- filename_sys -->
 			<value></value> <!-- file_type -->
 			<value>20000000</value> <!-- file_size -->
@@ -175,7 +175,7 @@
 		<row>
 			<!-- Attachment for article 2 -->
 			<value>10002</value> <!-- id -->
-			<value></value> <!-- filename -->
+			<value>article_2_attach_10002.mp3</value> <!-- filename -->
 			<value></value> <!-- filename_sys -->
 			<value></value> <!-- file_type -->
 			<value>20000000</value> <!-- file_size -->
@@ -196,7 +196,7 @@
 		<row>
 			<!-- Attachment for article 3 -->
 			<value>10003</value> <!-- id -->
-			<value></value> <!-- filename -->
+			<value>article_3_attach_10003.mp3</value> <!-- filename -->
 			<value></value> <!-- filename_sys -->
 			<value></value> <!-- file_type -->
 			<value>20000000</value> <!-- file_size -->

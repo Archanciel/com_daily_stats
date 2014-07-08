@@ -94,6 +94,12 @@ class DailyStatsDao {
 					    		WHERE T1.published = 1 AND T1.user_field_2 != 1 AND $dailyStatsTableName" . ".attachment_id IS NULL);";
     		$rowsNumberForNewAttachments = self::executeInsertQuery($db, $query, $log);
     		
+    		// if new attachments were inserted in DB, obtain the download count of each new attachment in order to log this
+    		// information. This will alert of any problem preventing successful download of the attachment. 
+    		if ($rowsNumberForNewAttachments > 0) {
+    			$downloadCountString = self::retrieveDownloadCountForNewAttachments($rowsNumberForNewAttachments, $dailyStatsTableName, $attachmentsTableName);
+       		}
+    		
     		if ($gap > MAX_DAY_INTERVAL) {
     			$entry = array ('LEVEL' => '1', 'STATUS' => 'ERROR:', 'COMMENT' => "Daily stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments. GAP EXCEEDS MAX INTERVAL OF " . MAX_DAY_INTERVAL . " DAYS !" );
     			$mailSubject = 'Dailystats Cron ERROR';
@@ -112,15 +118,44 @@ class DailyStatsDao {
 					FROM $attachmentsTableName T1, $contentTableName T2
 					WHERE T1.published = 1 AND T1.user_field_2 != 1 AND T1.parent_id = T2.id AND T2.state = 1;";
 	    	$rowsNumber = self::executeInsertQuery($db, $query, $log);
-//    		self::executeQuery ( $db, "UPDATE $dailyStatsTableName SET date=DATE_SUB(date,INTERVAL 1 DAY);" ); only for creating test data !!
+
+     		if ($rowsNumber > 0) {
+    			$downloadCountString = self::retrieveDownloadCountForNewAttachments($rowsNumber, $dailyStatsTableName, $attachmentsTableName);
+       		}
+	    	
+ //    		self::executeQuery ( $db, "UPDATE $dailyStatsTableName SET date=DATE_SUB(date,INTERVAL 1 DAY);" ); only for creating test data !!
 	    	
     		$mailSubject = "Dailystats Cron completed. New $rowsNumber. Existing 0.";
 			$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "daily_stats table successfully bootstraped. $rowsNumber rows inserted.");
     	}
     	
-    	self::logAndMail($mailSubject,$entry);
+    	self::logAndMail($mailSubject,$entry,$downloadCountString);
      }
-	
+     
+     /**
+      * 
+	  * @param String $dailyStatsTableName
+      * @param int $newAttachmentsNumber
+      * @return string 'attachment fileName' 'download count'
+      */
+     private static function retrieveDownloadCountForNewAttachments($newAttachmentsNumber, $dailyStatsTableName, $attachmentsTableName) {
+     	$query =   "SELECT a.filename, d.date_downloads
+					FROM $dailyStatsTableName d, $attachmentsTableName a
+					WHERE d.attachment_id = a.id
+					ORDER BY d.id DESC
+					LIMIT $newAttachmentsNumber";
+
+     	$rows = self::executeQuery($query);
+     	
+     	$retStr = '\n';
+     	
+     	foreach ($rows as $row) {
+     		$retStr .= $row->filename . '; ' . $row->date_downloads . ' downloads.\n';
+     	}
+
+     	return $retStr;
+     }
+     
 	 private static function executeInsertQuery(JDatabase $db, $query, $log) {
 		$db->setQuery ( $query );
 		$db->query ();
@@ -150,7 +185,7 @@ class DailyStatsDao {
 	 	self::logAndMail($mailSubject, $entry);
 	 }
 	 
-	 private static function logAndMail($subject, $entry) {
+	 private static function logAndMail($subject, $entry, $downloadCountString = '') {
     	$log = JLog::getInstance("com_dailystats_log.php");
 	 	$log->addEntry($entry);
 	 	 
@@ -173,7 +208,13 @@ class DailyStatsDao {
 //	 	$mailThis->addRecipient($adminMail); // Joomla 3
 	 	$mailThis->addRecipient($adminMail[0]); // Joomla 1.5
 	 	$mailThis->setSubject($subject);
-	 	$mailThis->setBody($entry['COMMENT']);
+	 	
+	 	if (isset($downloadCountString) && strlen($downloadCountString) > 1) {
+	 		$mailThis->setBody($entry['COMMENT'] . $downloadCountString);
+	 	} else {
+	 		$mailThis->setBody($entry['COMMENT']);
+	 	}
+	 	
 	 	$mailThis->Send();
 	 }
 
