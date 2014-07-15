@@ -147,10 +147,10 @@ class DailyStatsDao {
 
      	$rows = self::executeQuery($query);
      	
-     	$retStr = '\n';
+     	$retStr = "\r\n\r\n";
      	
      	foreach ($rows as $row) {
-     		$retStr .= $row->filename . '; ' . $row->date_downloads . ' downloads.\n';
+     		$retStr .= $row->filename . ": " . $row->date_downloads . " downloads.\r\n";
      	}
 
      	return $retStr;
@@ -179,10 +179,23 @@ class DailyStatsDao {
 		return $db->getAffectedRows();
 	 }
 	 
+	 /**
+      * This method is used to test mail sending. It is called when the following request is 
+      * made on plusconscient:
+      * http://localhost/plusconscient15_dev/index.php?option=com_dailystats&cron=mail. 
+	  */
 	 public static function testLogAndMail() {
 		$mailSubject = 'Daily stats EMAIL TEST';
+		$rowsNumberForNewAttachments = 9;
+		$rowsNumberForExistingAttachments = 99;
+		$gap = 11;
 		$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "Daily stats for $today added in DB. $rowsNumberForNewAttachments rows inserted for new attachment(s). $rowsNumberForExistingAttachments rows inserted for existing attachments (gap filled: $gap day(s)). " );
-	 	self::logAndMail($mailSubject, $entry);
+		
+		$retStr = "\r\n\r\n";
+		$retStr .= "filename_one.mp3" . ": " . "11" . " downloads.\r\n";
+		$retStr .= "filename_two.mp3" . ": " . "222" . " downloads.\r\n";
+		
+	 	self::logAndMail($mailSubject, $entry, $retStr);
 	 }
 	 
 	 private static function logAndMail($subject, $entry, $downloadCountString = '') {
