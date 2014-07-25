@@ -20,7 +20,7 @@ class PopulateDailyStatsDaoReadOnlyTestDataTest extends DailyStatsTestBase {
 	/**
 	 * Uncomment out the body when you want regenerate the read only test data !
 	 * 
-	 * Run the test once with line uncommented to purge the old tst data, then once again with 
+	 * Run the test twice with line uncommented to purge the old tst data, then once again with 
 	 * line commentef out to reinsert the read only tst data.
 	 */
 	public function tearDown() {
