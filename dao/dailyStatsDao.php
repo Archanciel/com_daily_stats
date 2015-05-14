@@ -93,12 +93,12 @@ class DailyStatsDao {
 					    		FROM $attachmentsTableName T1 LEFT JOIN $dailyStatsTableName ON T1.id = $dailyStatsTableName" . ".attachment_id
 					    		WHERE T1.published = 1 AND T1.user_field_2 != 1 AND $dailyStatsTableName" . ".attachment_id IS NULL);";
     		$rowsNumberForNewAttachments = self::executeInsertQuery($db, $query, $log);
-    		$newAttachmentsDownloadCountString = '';
+    		$newAttachmentsDownloadCountInfo = '';
     		
     		// if new attachments were inserted in DB, obtain the download count of each new attachment in order to log this
     		// information. This will alert of any problem preventing successful download of the attachment. 
     		if ($rowsNumberForNewAttachments > 0) {
-    			$newAttachmentsDownloadCountString = self::retrieveDownloadCountForNewAttachments($rowsNumberForNewAttachments, $dailyStatsTableName, $attachmentsTableName);
+    			$newAttachmentsDownloadCountInfo = self::retrieveDownloadCountForNewAttachments($rowsNumberForNewAttachments, $dailyStatsTableName, $attachmentsTableName);
        		}
     		
     		if ($gap > MAX_DAY_INTERVAL) {
@@ -121,7 +121,7 @@ class DailyStatsDao {
 	    	$rowsNumber = self::executeInsertQuery($db, $query, $log);
 
      		if ($rowsNumber > 0) {
-    			$newAttachmentsDownloadCountString = self::retrieveDownloadCountForNewAttachments($rowsNumber, $dailyStatsTableName, $attachmentsTableName);
+    			$newAttachmentsDownloadCountInfo = self::retrieveDownloadCountForNewAttachments($rowsNumber, $dailyStatsTableName, $attachmentsTableName);
        		}
 	    	
  //    		self::executeQuery ( $db, "UPDATE $dailyStatsTableName SET date=DATE_SUB(date,INTERVAL 1 DAY);" ); only for creating test data !!
@@ -130,12 +130,12 @@ class DailyStatsDao {
 			$entry = array ('LEVEL' => '1', 'STATUS' => 'INFO:', 'COMMENT' => "daily_stats table successfully bootstraped. $rowsNumber rows inserted.");
     	}
 
-    	$lastTotalDownloadCountString = self::retrieveLastTotalDownloadCount();
+    	$lastTotalDownloadCountInfo = self::retrieveLastTotalDownloadCountInfo();
     	 
-    	self::logAndMail($mailSubject,$entry,$newAttachmentsDownloadCountString . $lastTotalDownloadCountString);
+    	self::logAndMail($mailSubject,$entry,$newAttachmentsDownloadCountInfo . $lastTotalDownloadCountInfo);
      }
      
-     private static function retrieveLastTotalDownloadCount() {
+     private static function retrieveLastTotalDownloadCountInfo() {
      	$lastDownloadCountString = "\r\n\r\n";
      	 
      	$array = self::getLastAndTotalHitsAndDownloadsArrForAllCategories();
